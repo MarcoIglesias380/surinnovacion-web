@@ -5,7 +5,21 @@ export const metadata: Metadata = {
   title: "SurInnovacion | IA, Innovacion y Futuro",
   description:
     "SurInnovacion integra inteligencia artificial, automatizacion y tecnologia aplicada para transformar negocios desde el sur de Chile.",
-  metadataBase: new URL("https://surinnovacion.cl")
+  metadataBase: new URL("https://surinnovacion.cl"),
+  icons: {
+    icon: [
+      {
+        url: "/brand/isotipo2.png",
+        type: "image/png"
+      }
+    ],
+    apple: [
+      {
+        url: "/brand/isotipo2.png",
+        type: "image/png"
+      }
+    ]
+  }
 };
 
 export default function RootLayout({

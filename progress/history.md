@@ -4,6 +4,43 @@ Append-only. Cada cierre de sesion debe agregar una entrada nueva al final.
 
 ---
 
+## 2026-08-11 - Feature 12: Deploy produccion y dominio
+
+- Agente lider: Codex
+- Resultado: APPROVED
+- Cambios:
+  - Se configuro identidad Git local:
+    `Marco Iglesias <MarcoIglesias380@users.noreply.github.com>`.
+  - Se conecto remoto GitHub:
+    `https://github.com/MarcoIglesias380/surinnovacion-web.git`.
+  - Se creo commit inicial `963fe74` y se subio `main` a GitHub.
+  - Se creo proyecto Vercel `surinnovacion-web` en el equipo
+    `Marco Iglesias' projects`.
+  - Vercel conecto el repo GitHub al proyecto.
+  - Se desplego produccion y quedo alias:
+    `https://surinnovacion-web.vercel.app`.
+  - Se agregaron dominios:
+    `surinnovacion.cl` y `www.surinnovacion.cl`.
+  - En Hostinger se reemplazaron registros `connect.hostinger.com` por:
+    `A @ 76.76.21.21` y `A www 76.76.21.21`.
+  - Se mantuvo `A vps 187.77.255.244`.
+  - `.vercel` quedo ignorado en `.gitignore`.
+- Verificacion:
+  - `npm run typecheck`: paso.
+  - `npm run lint`: paso.
+  - `npm run build`: fallo dentro del sandbox por restriccion conocida de
+    Turbopack al crear proceso/bind interno.
+  - `npm run build` con permiso aprobado fuera del sandbox: paso.
+  - Deploy Vercel: `Ready`.
+  - `dig +short surinnovacion.cl A`: `76.76.21.21`.
+  - `dig +short www.surinnovacion.cl A`: `76.76.21.21`.
+  - `curl -I http://surinnovacion.cl`: `HTTP/1.1 200 OK`.
+  - `curl -I http://www.surinnovacion.cl`: `HTTP/1.1 200 OK`.
+  - `curl -I https://surinnovacion.cl`: `HTTP/2 200`.
+  - `curl -I https://www.surinnovacion.cl`: `HTTP/2 200`.
+
+---
+
 ## 2026-08-11 - Feature 13: Limpieza visual y blog actual
 
 - Agente lider: Codex
