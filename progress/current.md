@@ -27,6 +27,25 @@
 - `.gitignore` ignora `.next/`, `node_modules/`, `.env`, `out/`, `dist/`,
   coverage y logs.
 - No se encontraron `.env*`, logs ni `.DS_Store` dentro del alcance revisado.
+- Commit inicial creado: `963fe74` (`Initial SurInnovacion landing`).
+- Push a GitHub completado en `main`:
+  `https://github.com/MarcoIglesias380/surinnovacion-web.git`.
+- Vercel CLI inicio sesion con el owner y encontro equipo:
+  `Marco Iglesias' projects` (`team_omg6ZqsHhxELhkc4V15cIfNJ`).
+- Deploy de produccion creado:
+  - Proyecto: `surinnovacion-web`.
+  - Project ID: `prj_mdRmz2usapxTHDnp6cHBPrE6CtbB`.
+  - Deployment ID: `dpl_BYtk1D3KTsKaY8RPaFypdA5T6fRe`.
+  - URL alias: `https://surinnovacion-web.vercel.app`.
+  - Estado: `Ready`.
+- Vercel conecto el repo GitHub al proyecto.
+- Dominios agregados al proyecto Vercel:
+  - `surinnovacion.cl`
+  - `www.surinnovacion.cl`
+- DNS actual esta en Hostinger (`ns1.dns-parking.com`,
+  `ns2.dns-parking.com`). Vercel pide configurar registros DNS en Hostinger:
+  - `A surinnovacion.cl 76.76.21.21`
+  - `A www.surinnovacion.cl 76.76.21.21`
 
 ## Verificacion
 
@@ -35,14 +54,15 @@
 - `npm run build` fallo dentro del sandbox por restriccion conocida de
   Turbopack al crear proceso/bind interno.
 - `npm run build` con permiso aprobado fuera del sandbox paso.
-- Pendiente: commit inicial, push a GitHub y estrategia de deploy/dominio.
+- Deploy Vercel paso y quedo en estado `Ready`.
+- Pendiente externo: actualizar DNS en Hostinger y esperar propagacion.
 
 ## Riesgos pendientes
 
-- Falta definir/crear repositorio GitHub remoto.
-- Falta confirmar acceso a cuenta Vercel y dominio/DNS en Hostinger.
-- No modificar DNS sin verificar records actuales y destino de deploy.
+- No tengo acceso directo a Hostinger desde este entorno.
+- La verificacion de `surinnovacion.cl` quedara pendiente hasta que Hostinger
+  propague los registros DNS.
 
 ## Proximo paso
 
-Build de produccion, commit inicial y preparacion del remoto/deploy.
+Actualizar DNS en Hostinger y luego verificar dominio.
