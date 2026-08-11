@@ -172,7 +172,7 @@ export function BlogSection() {
                 }}
                 className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-ion"
               >
-                Leer fuente
+                Leer mas
                 <ExternalLink className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden="true" />
               </button>
             </article>

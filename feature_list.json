@@ -199,7 +199,7 @@
       "title": "Mejorar lectura de fuentes y contacto real",
       "description": "Convertir el CTA del blog en un panel interno con informacion resumida y fuente original, y reemplazar el boton muerto del formulario por un flujo real de WhatsApp.",
       "acceptance": [
-        "El blog abre un panel/modal interno al presionar Leer fuente, con resumen editorial, visual de apoyo y enlace a la fuente original.",
+        "El blog abre un panel/modal interno al presionar Leer mas, con resumen editorial, visual de apoyo y enlace a la fuente original.",
         "El panel del blog no copia articulos completos ni presenta contenido externo como propio.",
         "El formulario elimina el boton Preparar solicitud o lo reemplaza por una accion real.",
         "El contacto usa los campos del formulario para preparar un mensaje real de WhatsApp.",
