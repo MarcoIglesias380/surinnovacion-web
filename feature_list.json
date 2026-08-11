@@ -1,0 +1,183 @@
+{
+  "project": "surinnovacion-web",
+  "description": "Landing premium de SurInnovacion para IA, automatizacion y tecnologia aplicada.",
+  "rules": {
+    "one_feature_at_a_time": true,
+    "require_verification_to_close": true,
+    "valid_status": ["pending", "in_progress", "done", "blocked"]
+  },
+  "features": [
+    {
+      "id": 1,
+      "name": "limpieza-estabilizacion-inicial",
+      "title": "Limpieza y estabilizacion inicial del proyecto",
+      "description": "Reducir ruido del proyecto, corregir advertencias de build, estabilizar dependencias y dejar una base confiable antes de mejorar frontend o backend.",
+      "acceptance": [
+        "El repositorio fuente no depende de artefactos generados como .next ni de caches para funcionar.",
+        "La advertencia de Next.js sobre raiz de workspace queda resuelta o documentada con accion clara.",
+        "Las dependencias dejan de usar latest o queda documentada la razon para mantener alguna.",
+        "npm run lint, npm run typecheck y npm run build pasan con evidencia documentada."
+      ],
+      "status": "done"
+    },
+    {
+      "id": 2,
+      "name": "hero-reactive-dot-grid",
+      "title": "Redisenar hero con grilla reactiva de puntos",
+      "description": "Simplificar el hero, eliminar el isotipo 3D gigante y crear un fondo oscuro con capas de puntos reactivos al cursor.",
+      "acceptance": [
+        "El hero elimina el chip IA - INNOVACION - FUTURO, los subtitulos secundarios y el isotipo 3D protagonista.",
+        "El fondo usa una grilla/campo de puntos con profundidad visual y reaccion suave al cursor.",
+        "El efecto respeta performance, mobile y prefers-reduced-motion.",
+        "El hero mantiene CTA claro hacia contacto y no toca otras secciones."
+      ],
+      "status": "done"
+    },
+    {
+      "id": 3,
+      "name": "estrategia-comercial-imagen-fondo",
+      "title": "Redisenar estrategia comercial con imagen full-section",
+      "description": "Reemplazar los cuadros de problema/solucion por una imagen de fondo de ancho completo con texto ubicado estrategicamente sin tapar el rostro del personaje.",
+      "acceptance": [
+        "La seccion #problema-solucion usa la imagen de referencia como fondo principal y cubre toda la seccion.",
+        "Los cuadros El problema y La solucion se eliminan de la seccion.",
+        "El texto de La innovacion ya no es opcional queda legible y ubicado sin tapar el rostro del personaje.",
+        "La composicion se ve profesional en desktop y mobile, con overlays solo donde aportan legibilidad.",
+        "No se tocan otras secciones fuera del alcance."
+      ],
+      "status": "done"
+    },
+    {
+      "id": 4,
+      "name": "vitrina-proyectos-confianza",
+      "title": "Agregar vitrina de proyectos en confianza tecnologica",
+      "description": "Transformar la seccion de confianza tecnologica en un espacio donde visitantes puedan revisar proyectos reales o en desarrollo de SurInnovacion.",
+      "acceptance": [
+        "La seccion #confianza incorpora una vitrina clara de proyectos como SurInnovacion, Boutique Columba, Bingo/Eventos IA y landings en desarrollo.",
+        "No se inventan metricas, clientes, testimonios ni enlaces publicos inexistentes.",
+        "Los proyectos sin URL publica se muestran como en desarrollo o proximamente, sin botones falsos.",
+        "La vitrina mantiene el carrusel de tecnologias o lo integra sin saturar la seccion.",
+        "La composicion funciona en desktop y mobile sin solapamientos."
+      ],
+      "status": "done"
+    },
+    {
+      "id": 5,
+      "name": "enlaces-vitrina-proyectos",
+      "title": "Agregar enlaces reales a la vitrina de proyectos",
+      "description": "Actualizar la seccion de confianza tecnologica para que los visitantes puedan abrir ejemplos reales de proyectos entregados por el owner.",
+      "acceptance": [
+        "La vitrina incluye enlaces reales proporcionados para Eventos IA, Columba Boutique, Marca Visible y Catalogo Distribuidora Oriente.",
+        "Los enlaces externos abren en una pestana nueva con atributos seguros.",
+        "No se inventan clientes, metricas, resultados ni descripciones no verificadas.",
+        "Los textos y CTAs se ajustan sin romper la composicion desktop/mobile."
+      ],
+      "status": "done"
+    },
+    {
+      "id": 6,
+      "name": "shader-background-ui",
+      "title": "Integrar ShaderBackground como componente UI",
+      "description": "Agregar el componente React/WebGL entregado por el owner en la estructura tipo shadcn y usarlo como fondo visual controlado en la landing.",
+      "acceptance": [
+        "Existe `components/ui/shader-background.tsx` como componente client-side tipado para TypeScript.",
+        "El componente funciona dentro del layout sin depender de rutas globales fijas ni romper el hero.",
+        "La integracion respeta Tailwind, performance basica, cleanup de animacion y fallback razonable si WebGL no esta disponible.",
+        "No se agregan dependencias nuevas ni se ejecuta shadcn init innecesariamente.",
+        "Lint, typecheck, build y revision visual pasan con evidencia."
+      ],
+      "status": "done"
+    },
+    {
+      "id": 7,
+      "name": "cta-cristal-y-marcoiglesias",
+      "title": "Unificar CTAs cristal y agregar MarcoIglesias a proyectos",
+      "description": "Convertir los CTAs principales a un estilo transparente/cristal consistente y sumar marcoiglesias.cl a la vitrina de proyectos.",
+      "acceptance": [
+        "Los CTAs principales del sitio comparten un estilo cristal transparente, visible y consistente.",
+        "Los enlaces y botones mantienen su funcionalidad real sin parecer acciones falsas.",
+        "La vitrina de proyectos incorpora `https://marcoiglesias.cl/` sin inventar metricas ni claims.",
+        "La composicion funciona en desktop y mobile sin solapamientos.",
+        "Lint, typecheck, build y revision visual pasan con evidencia."
+      ],
+      "status": "done"
+    },
+    {
+      "id": 8,
+      "name": "fundador-imagen-bahia-minimal",
+      "title": "Redisenar fundador con imagen bahia y texto minimo",
+      "description": "Integrar la imagen aprobada del fundador mirando la bahia y reducir el texto para que no ensucie la composicion.",
+      "acceptance": [
+        "La seccion #marco usa la imagen aprobada `surinnovacion-fundador-fondo-bahia-v3.png` como fondo principal.",
+        "El texto del fundador es breve, legible y no tapa la zona protagonista de la imagen.",
+        "Se elimina la tarjeta/foto pequena anterior del fundador.",
+        "La imagen queda copiada dentro de `public/` con nombre claro y no depende del Escritorio.",
+        "La composicion funciona en desktop y mobile sin solapamientos."
+      ],
+      "status": "done"
+    },
+    {
+      "id": 9,
+      "name": "contacto-real",
+      "title": "Conectar contacto real",
+      "description": "Convertir el formulario visual en un flujo real de contacto sin perder el acceso directo a WhatsApp.",
+      "acceptance": [
+        "El formulario tiene accion real o se reemplaza por un flujo honesto de WhatsApp/email.",
+        "Los estados de envio, error y exito estan cubiertos.",
+        "La verificacion demuestra el flujo completo."
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 10,
+      "name": "blog-contenido-real",
+      "title": "Convertir blog vitrina en contenido real",
+      "description": "Definir si el blog tendra articulos navegables o si debe presentarse como proxima seccion sin enlaces falsos.",
+      "acceptance": [
+        "No quedan llamadas a leer articulos inexistentes.",
+        "Si se agregan articulos, tienen rutas o contenido real.",
+        "La navegacion y el SEO reflejan el estado real del blog."
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 11,
+      "name": "responsive-performance-visual",
+      "title": "Pulido responsive, performance y visual",
+      "description": "Revisar layout, pesos de assets, animaciones y experiencia movil/escritorio.",
+      "acceptance": [
+        "No hay solapamientos ni textos cortados en mobile y desktop.",
+        "Los assets criticos estan optimizados o justificados.",
+        "La experiencia conserva la identidad premium sin sacrificar carga."
+      ],
+      "status": "pending"
+    },
+    {
+      "id": 12,
+      "name": "deploy-produccion",
+      "title": "Preparar deploy de produccion",
+      "description": "Dejar configuracion, metadata y checklist listos para publicar la landing.",
+      "acceptance": [
+        "El build de produccion pasa.",
+        "Metadata, dominio objetivo y variables necesarias estan documentadas.",
+        "El entregable no incluye archivos generados ni dependencias instaladas."
+      ],
+      "status": "in_progress"
+    },
+    {
+      "id": 13,
+      "name": "limpieza-visual-blog-actual",
+      "title": "Limpieza visual y blog con noticias actuales",
+      "description": "Reducir ruido en header, confianza tecnologica e impacto visual, y reemplazar el blog vitrina por cards con fuentes actuales verificables.",
+      "acceptance": [
+        "El header elimina el control Oscurecer/Aclarar y el CTA Diagnostico Gratuito.",
+        "La seccion #confianza muestra una lista limpia de proyectos sin etiquetas superiores, chips de areas ni loop de tecnologias.",
+        "La seccion #impacto-visual elimina el eyebrow Momento visual, los cuadros del proceso y efectos visuales extra, dejando solo titulo y subtitulo.",
+        "El blog muestra noticias actuales con enlaces reales a fuentes verificables, sin rutas internas inexistentes ni claims inventados.",
+        "La composicion funciona en desktop y mobile sin solapamientos.",
+        "Lint, typecheck, build y revision visual pasan con evidencia."
+      ],
+      "status": "done"
+    }
+  ]
+}
