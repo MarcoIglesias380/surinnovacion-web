@@ -302,6 +302,37 @@ Append-only. Cada cierre de sesion debe agregar una entrada nueva al final.
 
 ---
 
+## 2026-08-11 - Feature 14: Pulir detalle de plataformas y proyectos
+
+- Agente lider: Codex
+- Revisor UX/copy: subagente Popper
+- Resultado: APPROVED
+- Cambios:
+  - `#confianza` cambio a una vitrina mas premium y escaneable.
+  - El titulo ahora es "Plataformas y sitios que puedes revisar".
+  - La bajada explica que son ejemplos publicos de sitios, landings y
+    plataformas desarrolladas o impulsadas por SurInnovacion.
+  - Se unificaron los CTAs como "Abrir proyecto".
+  - Cada proyecto muestra URL visible, numero de orden, descripcion mas clara y
+    boton cristal con icono externo.
+  - Se mantuvieron solo enlaces reales entregados por el owner.
+  - `content/site-map.ts` quedo alineado con el nuevo copy de la seccion.
+- Verificacion:
+  - `./init.sh`: paso al inicio con lint y typecheck.
+  - `npm run lint`: paso.
+  - `npm run typecheck`: paso.
+  - `npm run build` con permiso aprobado fuera del sandbox: paso.
+  - `git diff --check`: paso.
+  - Servidor local existente en `http://localhost:3000`: `HTTP/1.1 200 OK`.
+  - HTML local contiene el nuevo titulo, los 5 proyectos y CTAs "Abrir
+    proyecto" con `target="_blank"` y `rel="noreferrer"`.
+- Nota:
+  - La automatizacion visual con Playwright no estuvo disponible en el runtime
+    local por error de empaquetado del modulo, asi que se complemento con
+    build, revision HTML y apertura local en el panel de Codex.
+
+---
+
 ## 2026-08-06 - Feature 2: Redisenar hero con grilla reactiva de puntos
 
 - Agente lider: Codex

@@ -178,6 +178,20 @@
         "Lint, typecheck, build y revision visual pasan con evidencia."
       ],
       "status": "done"
+    },
+    {
+      "id": 14,
+      "name": "detalle-plataformas-proyectos",
+      "title": "Pulir detalle de plataformas y proyectos",
+      "description": "Mejorar la vitrina de proyectos para que cada plataforma tenga mas jerarquia, contexto claro y acciones limpias sin agregar ruido visual ni claims inventados.",
+      "acceptance": [
+        "La seccion #confianza presenta los proyectos con jerarquia visual mas premium y escaneable.",
+        "Cada proyecto mantiene solo informacion real o neutra, sin metricas, clientes o resultados inventados.",
+        "Los enlaces externos siguen funcionando con atributos seguros.",
+        "La composicion se mantiene limpia en desktop y mobile, sin chips excesivos ni loops visuales.",
+        "Lint, typecheck, build y revision visual pasan con evidencia."
+      ],
+      "status": "done"
     }
   ]
 }

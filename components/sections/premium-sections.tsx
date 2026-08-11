@@ -1,35 +1,41 @@
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 
 const showcaseProjects = [
   {
     title: "Eventos IA",
-    description: "Plataforma para dinamicas y gestion de eventos.",
+    description: "Panel para gestionar dinamicas y experiencias de eventos con IA.",
+    urlLabel: "eventos-ia-surinnovacion.vercel.app",
     href: "https://eventos-ia-surinnovacion.vercel.app/admin",
-    cta: "Ver proyecto"
+    cta: "Abrir proyecto"
   },
   {
     title: "Columba Boutique",
-    description: "Sitio comercial para presencia digital y productos.",
+    description: "Sitio comercial para mostrar marca, catalogo y presencia digital.",
+    urlLabel: "columbaboutique.com",
     href: "https://www.columbaboutique.com/",
-    cta: "Abrir sitio"
+    cta: "Abrir proyecto"
   },
   {
     title: "Marca Visible",
-    description: "Landing comercial enfocada en servicios.",
+    description: "Landing enfocada en comunicacion comercial y captacion.",
+    urlLabel: "marca-visible.vercel.app",
     href: "https://marca-visible.vercel.app/",
-    cta: "Ver proyecto"
+    cta: "Abrir proyecto"
   },
   {
     title: "Catalogo Distribuidora Oriente",
-    description: "Catalogo digital para revisar productos.",
+    description: "Catalogo digital para explorar productos de forma simple.",
+    urlLabel: "catalogo-distribuidora-oriente.vercel.app",
     href: "https://catalogo-distribuidora-oriente.vercel.app/",
-    cta: "Abrir sitio"
+    cta: "Abrir proyecto"
   },
   {
     title: "Marco Iglesias",
-    description: "Sitio personal, perfil y contenido profesional.",
+    description: "Sitio personal para perfil profesional, contenido y divulgacion.",
+    urlLabel: "marcoiglesias.cl",
     href: "https://marcoiglesias.cl/",
-    cta: "Abrir sitio"
+    cta: "Abrir proyecto"
   }
 ];
 
@@ -64,35 +70,43 @@ export function TrustSection() {
       <div className="relative mx-auto max-w-7xl">
         <SectionIntro
           eyebrow="Confianza tecnologica"
-          title="Proyectos que muestran como trabajamos"
-          description="Una vitrina en crecimiento con sitios, experiencias y soluciones digitales que estamos construyendo desde SurInnovacion."
+          title="Plataformas y sitios que puedes revisar"
+          description="Explora ejemplos publicos de sitios, landings y plataformas desarrolladas o impulsadas por SurInnovacion."
         />
 
-        <div className="mt-12 divide-y divide-white/10 overflow-hidden rounded-lg border border-white/10 bg-white/[0.035] backdrop-blur-xl">
-          {showcaseProjects.map((project) => (
+        <div className="mt-12 grid gap-4">
+          {showcaseProjects.map((project, index) => (
             <article
               key={project.title}
-              className="group grid gap-4 p-5 transition hover:bg-white/[0.055] md:grid-cols-[minmax(180px,0.42fr)_1fr_auto] md:items-center md:p-6"
+              className="group relative overflow-hidden rounded-lg border border-white/10 bg-white/[0.04] p-5 shadow-[0_18px_70px_rgba(2,6,23,0.2)] backdrop-blur-xl transition hover:border-cyan-200/28 hover:bg-white/[0.06] md:grid md:grid-cols-[64px_minmax(190px,0.42fr)_1fr_auto] md:items-center md:gap-6 md:p-6"
             >
-              <h3 className="font-display text-2xl font-semibold leading-tight text-white">
-                {project.title}
-              </h3>
-              <p className="text-sm leading-7 text-frost/68">{project.description}</p>
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_24%,rgba(34,211,238,0.11),transparent_28%),linear-gradient(90deg,rgba(255,255,255,0.045),transparent_42%)] opacity-70 transition group-hover:opacity-100" />
+              <div className="relative mb-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/[0.055] font-display text-sm font-semibold text-frost/72 md:mb-0">
+                {String(index + 1).padStart(2, "0")}
+              </div>
+
+              <div className="relative">
+                <h3 className="font-display text-xl font-semibold leading-tight text-white md:text-2xl">
+                  {project.title}
+                </h3>
+                <p className="mt-2 break-words text-xs text-frost/42">{project.urlLabel}</p>
+              </div>
+
+              <p className="relative mt-4 text-sm leading-7 text-frost/74 md:mt-0">{project.description}</p>
 
               {project.href ? (
                 <a
                   href={project.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="liquid-button liquid-button--compact justify-self-start md:justify-self-end"
+                  aria-label={`Abrir ${project.title} en una pestana nueva`}
+                  className="glass-secondary-button relative mt-5 w-full px-4 py-3 md:mt-0 md:w-auto md:justify-self-end"
                 >
                   {project.cta}
-                  <span className="ml-2 transition group-hover:translate-x-1" aria-hidden="true">
-                    -&gt;
-                  </span>
+                  <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
                 </a>
               ) : (
-                <p className="text-xs uppercase tracking-[0.18em] text-frost/45 md:text-right">
+                <p className="relative mt-5 text-xs uppercase tracking-[0.18em] text-frost/45 md:mt-0 md:text-right">
                   URL publica pendiente
                 </p>
               )}
