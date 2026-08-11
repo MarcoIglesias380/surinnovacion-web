@@ -12,7 +12,7 @@
 
 ## Bitacora
 
-- Feature 14 cerrada el 2026-08-11. Ver `progress/history.md`.
+- Feature 15 cerrada el 2026-08-11. Ver `progress/history.md`.
 
 ## Verificacion
 

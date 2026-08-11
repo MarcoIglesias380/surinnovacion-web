@@ -333,6 +333,41 @@ Append-only. Cada cierre de sesion debe agregar una entrada nueva al final.
 
 ---
 
+## 2026-08-11 - Feature 15: Mejorar lectura de fuentes y contacto real
+
+- Agente lider: Codex
+- Revisor UX/accesibilidad: subagente Goodall
+- Resultado: APPROVED
+- Cambios:
+  - `BlogSection` ahora abre un panel interno al presionar `Leer fuente`.
+  - El panel muestra fuente, fecha, categoria, visual editorial con isotipo,
+    resumen propio y bloque "Por que importa para tu empresa".
+  - El panel incluye nota honesta: es resumen editorial basado en fuente externa
+    y el articulo completo pertenece a la fuente original.
+  - Se agrego cierre con boton visible, click fuera, tecla `Escape`, scroll
+    interno y retorno de foco al boton que abrio el panel.
+  - `ContactSection` elimino el boton muerto `Preparar solicitud`.
+  - El formulario ahora tiene un unico CTA real: `Enviar solicitud por
+    WhatsApp`.
+  - El envio valida nombre y mensaje breve, y abre WhatsApp con texto
+    prellenado usando los campos del formulario.
+  - El titulo del formulario cambio a `Solicitar asesoria gratis`, alineado con
+    el CTA del hero.
+- Verificacion:
+  - `./init.sh`: paso al inicio con lint y typecheck.
+  - `npm run lint`: paso.
+  - `npm run typecheck`: paso.
+  - `npm run build` con permiso aprobado fuera del sandbox: paso.
+  - `git diff --check`: paso.
+  - HTML local en `http://localhost:3000/` contiene `Leer fuente`, `Solicitar
+    asesoria gratis` y `Enviar solicitud por WhatsApp`, y ya no contiene
+    `Preparar solicitud`.
+- Nota:
+  - No se copiaron articulos completos; el panel usa resumen editorial y enlace
+    externo a la fuente original.
+
+---
+
 ## 2026-08-06 - Feature 2: Redisenar hero con grilla reactiva de puntos
 
 - Agente lider: Codex
