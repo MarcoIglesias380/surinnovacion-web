@@ -9,9 +9,11 @@ export const metadata: Metadata = {
   description:
     "SurInnovacion crea soluciones con inteligencia artificial, automatizacion, sitios web y asesoria tecnologica para empresas y proyectos desde Puerto Montt, Chile.",
   metadataBase: new URL("https://surinnovacion.cl"),
+  applicationName: "SurInnovacion",
   alternates: {
     canonical: "/"
   },
+  category: "technology",
   keywords: [
     "SurInnovacion",
     "inteligencia artificial Chile",
@@ -59,6 +61,7 @@ export const metadata: Metadata = {
       "Soluciones con inteligencia artificial, automatizacion, sitios web y asesoria tecnologica para empresas y proyectos desde Puerto Montt, Chile.",
     images: ["/brand/isotipo2.png"]
   },
+  manifest: "/manifest.webmanifest",
   icons: {
     icon: [
       {
