@@ -3,39 +3,58 @@ import { ArrowUpRight } from "lucide-react";
 
 const showcaseProjects = [
   {
+    title: "EventDash POS",
+    description: "Sistema pensado para organizar ventas, pagos y operacion en eventos de forma clara, rapida y controlada.",
+    urlLabel: "eventdash-pos-mqlc.vercel.app",
+    href: "https://eventdash-pos-mqlc.vercel.app/admin",
+    cta: "Ver proyecto",
+    imageSrc: "/projects/ed-post-ventas.webp",
+    imageAlt: "Panel principal de EventDash POS"
+  },
+  {
     title: "Eventos IA",
-    description: "Panel para gestionar dinamicas y experiencias de eventos con IA.",
+    description: "Plataforma creada para acompanar experiencias en vivo, con una interfaz visual que ayuda a ordenar y dinamizar la actividad.",
     urlLabel: "eventos-ia-surinnovacion.vercel.app",
     href: "https://eventos-ia-surinnovacion.vercel.app/admin",
-    cta: "Abrir proyecto"
+    cta: "Ver proyecto",
+    imageSrc: "/projects/eventos-ia-bingo.webp",
+    imageAlt: "Consola de control del proyecto Eventos IA"
   },
   {
     title: "Columba Boutique",
-    description: "Sitio comercial para mostrar marca, catalogo y presencia digital.",
+    description: "Sitio web creado para mostrar productos, reforzar la identidad de la marca y acercar la tienda a mas personas.",
     urlLabel: "columbaboutique.com",
     href: "https://www.columbaboutique.com/",
-    cta: "Abrir proyecto"
-  },
-  {
-    title: "Marca Visible",
-    description: "Landing enfocada en comunicacion comercial y captacion.",
-    urlLabel: "marca-visible.vercel.app",
-    href: "https://marca-visible.vercel.app/",
-    cta: "Abrir proyecto"
-  },
-  {
-    title: "Catalogo Distribuidora Oriente",
-    description: "Catalogo digital para explorar productos de forma simple.",
-    urlLabel: "catalogo-distribuidora-oriente.vercel.app",
-    href: "https://catalogo-distribuidora-oriente.vercel.app/",
-    cta: "Abrir proyecto"
+    cta: "Ver proyecto",
+    imageSrc: "/projects/columba-web-catalogo.webp",
+    imageAlt: "Portada del sitio Columba Boutique"
   },
   {
     title: "Marco Iglesias",
-    description: "Sitio personal para perfil profesional, contenido y divulgacion.",
+    description: "Landing profesional disenada para presentar servicios, experiencia y una propuesta personal de forma clara y directa.",
     urlLabel: "marcoiglesias.cl",
     href: "https://marcoiglesias.cl/",
-    cta: "Abrir proyecto"
+    cta: "Ver proyecto",
+    imageSrc: "/projects/landing-web.webp",
+    imageAlt: "Portada del sitio Marco Iglesias"
+  },
+  {
+    title: "Distribuidora Oriente",
+    description: "Catalogo digital que permite mostrar productos de manera ordenada, simple y facil de recorrer.",
+    urlLabel: "catalogo-distribuidora-oriente.vercel.app",
+    href: "https://catalogo-distribuidora-oriente.vercel.app/",
+    cta: "Ver proyecto",
+    imageSrc: "/projects/catalogo-ecommerce.webp",
+    imageAlt: "Portada del catalogo de Distribuidora Oriente"
+  },
+  {
+    title: "Marca Visible",
+    description: "Experiencia digital creada para comunicar una propuesta de valor con mas fuerza, estilo y recordacion.",
+    urlLabel: "marca-visible.vercel.app",
+    href: "https://marca-visible.vercel.app/",
+    cta: "Ver proyecto",
+    imageSrc: "/projects/landing-marca-personal.webp",
+    imageAlt: "Portada del proyecto Marca Visible"
   }
 ];
 
@@ -70,46 +89,72 @@ export function TrustSection() {
       <div className="relative mx-auto max-w-7xl">
         <SectionIntro
           eyebrow="Confianza tecnologica"
-          title="Plataformas y sitios que puedes revisar"
-          description="Explora ejemplos publicos de sitios, landings y plataformas desarrolladas o impulsadas por SurInnovacion."
+          title="Proyectos reales que ya estan en marcha"
+          description="Aqui puedes ver algunos de los proyectos que hemos creado o impulsado. Cada uno responde a una necesidad distinta: vender mejor, mostrar una marca, ordenar procesos o crear experiencias digitales mas claras y utiles."
         />
 
-        <div className="mt-12 grid gap-4">
+        <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {showcaseProjects.map((project, index) => (
             <article
               key={project.title}
-              className="group relative overflow-hidden rounded-lg border border-white/10 bg-white/[0.04] p-5 shadow-[0_18px_70px_rgba(2,6,23,0.2)] backdrop-blur-xl transition hover:border-cyan-200/28 hover:bg-white/[0.06] md:grid md:grid-cols-[64px_minmax(190px,0.42fr)_1fr_auto] md:items-center md:gap-6 md:p-6"
+              className="group relative overflow-hidden rounded-lg border border-white/10 bg-white/[0.04] shadow-[0_18px_70px_rgba(2,6,23,0.2)] backdrop-blur-xl transition hover:border-cyan-200/28 hover:bg-white/[0.06]"
             >
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_24%,rgba(34,211,238,0.11),transparent_28%),linear-gradient(90deg,rgba(255,255,255,0.045),transparent_42%)] opacity-70 transition group-hover:opacity-100" />
-              <div className="relative mb-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/[0.055] font-display text-sm font-semibold text-frost/72 md:mb-0">
-                {String(index + 1).padStart(2, "0")}
-              </div>
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Abrir ${project.title} en una pestana nueva`}
+                className="relative block overflow-hidden border-b border-cyan-100/12 bg-[#061126]/42 p-[1px]"
+              >
+                <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-cyan-100/55 to-transparent" />
+                <div className="pointer-events-none absolute inset-y-4 left-0 w-px bg-gradient-to-b from-transparent via-cyan-100/34 to-transparent" />
+                <div className="pointer-events-none absolute inset-y-4 right-0 w-px bg-gradient-to-b from-transparent via-violet-200/28 to-transparent" />
+                <div className="relative aspect-[16/10] overflow-hidden rounded-[5px] bg-[#020617] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1),0_0_28px_rgba(34,211,238,0.08)]">
+                  <Image
+                    src={project.imageSrc}
+                    alt={project.imageAlt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                    className="scale-[1.045] object-cover transition duration-500 group-hover:scale-[1.075]"
+                  />
+                  <div className="absolute inset-0 rounded-[5px] bg-[linear-gradient(180deg,rgba(255,255,255,0.12),transparent_16%),linear-gradient(0deg,rgba(2,6,23,0.82),rgba(2,6,23,0.18)_46%,rgba(2,6,23,0.03))]" />
+                  <div className="pointer-events-none absolute inset-0 rounded-[5px] ring-1 ring-inset ring-cyan-100/24" />
+                  <div className="pointer-events-none absolute inset-[1px] rounded-[4px] ring-1 ring-inset ring-white/8" />
+                  <div className="absolute left-4 top-4 inline-flex h-10 min-w-10 items-center justify-center rounded-full border border-white/12 bg-[#020617]/70 px-3 font-display text-sm font-semibold text-frost/78 backdrop-blur-xl">
+                    {String(index + 1).padStart(2, "0")}
+                  </div>
+                </div>
+              </a>
 
-              <div className="relative">
-                <h3 className="font-display text-xl font-semibold leading-tight text-white md:text-2xl">
-                  {project.title}
-                </h3>
-                <p className="mt-2 break-words text-xs text-frost/42">{project.urlLabel}</p>
-              </div>
+              <div className="relative flex flex-col gap-4 p-5 md:p-6">
+                <div>
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-start gap-2 text-left transition hover:text-ion"
+                  >
+                    <h3 className="font-display text-xl font-semibold leading-tight text-white md:text-2xl">
+                      {project.title}
+                    </h3>
+                  </a>
+                  <p className="mt-2 break-words text-xs text-frost/42">{project.urlLabel}</p>
+                </div>
 
-              <p className="relative mt-4 text-sm leading-7 text-frost/74 md:mt-0">{project.description}</p>
+                <p className="text-sm leading-7 text-frost/74">{project.description}</p>
 
-              {project.href ? (
                 <a
                   href={project.href}
                   target="_blank"
                   rel="noreferrer"
                   aria-label={`Abrir ${project.title} en una pestana nueva`}
-                  className="glass-secondary-button relative mt-5 w-full px-4 py-3 md:mt-0 md:w-auto md:justify-self-end"
+                  className="glass-secondary-button mt-auto w-full px-4 py-3 sm:w-auto"
                 >
                   {project.cta}
                   <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
                 </a>
-              ) : (
-                <p className="relative mt-5 text-xs uppercase tracking-[0.18em] text-frost/45 md:mt-0 md:text-right">
-                  URL publica pendiente
-                </p>
-              )}
+              </div>
             </article>
           ))}
         </div>

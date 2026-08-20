@@ -27,11 +27,11 @@ export const siteSections: SiteSection[] = [
   {
     id: "confianza",
     eyebrow: "Desde Puerto Montt, Chile",
-    title: "Plataformas y sitios que puedes revisar",
+    title: "Proyectos reales que ya estan en marcha",
     description:
-      "Ejemplos publicos de sitios, landings y plataformas desarrolladas o impulsadas por SurInnovacion.",
+      "Proyectos publicos creados o impulsados por SurInnovacion para vender mejor, mostrar una marca, ordenar procesos y crear experiencias digitales utiles.",
     stage: "base",
-    bullets: ["Eventos IA", "Columba Boutique", "Marca Visible", "Catalogo Oriente", "Marco Iglesias"]
+    bullets: ["EventDash POS", "Eventos IA", "Columba Boutique", "Marco Iglesias", "Distribuidora Oriente", "Marca Visible"]
   },
   {
     id: "problema-solucion",
