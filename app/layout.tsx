@@ -3,11 +3,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "SurInnovacion | Inteligencia Artificial, automatizacion e innovacion",
+    default: "Asesoria en Inteligencia Artificial para empresas | SurInnovacion",
     template: "%s | SurInnovacion"
   },
   description:
-    "SurInnovacion crea soluciones con inteligencia artificial, automatizacion, sitios web y asesoria tecnologica para empresas y proyectos desde Puerto Montt, Chile.",
+    "Asesoria gratuita de 30 minutos para implementar inteligencia artificial y automatizacion en tu empresa. Marco Iglesias, Master en IA, desde Puerto Montt, Chile.",
   metadataBase: new URL("https://surinnovacion.cl"),
   applicationName: "SurInnovacion",
   alternates: {
@@ -16,12 +16,15 @@ export const metadata: Metadata = {
   category: "technology",
   keywords: [
     "SurInnovacion",
+    "asesoria en inteligencia artificial para empresas",
+    "implementar IA en mi empresa",
+    "consultoria IA pymes Chile",
+    "inteligencia artificial Puerto Montt",
+    "automatizacion de procesos Puerto Montt",
+    "Marco Iglesias inteligencia artificial",
+    "divulgador de IA Chile",
     "inteligencia artificial Chile",
-    "automatizacion con IA",
-    "asesoria inteligencia artificial",
-    "Puerto Montt",
-    "sitios web con IA",
-    "consultoria tecnologica"
+    "consultoria tecnologica Los Lagos"
   ],
   authors: [{ name: "Marco Iglesias" }],
   creator: "SurInnovacion",
@@ -38,9 +41,9 @@ export const metadata: Metadata = {
     }
   },
   openGraph: {
-    title: "SurInnovacion | Inteligencia Artificial, automatizacion e innovacion",
+    title: "Asesoria en Inteligencia Artificial para empresas | SurInnovacion",
     description:
-      "Soluciones con inteligencia artificial, automatizacion, sitios web y asesoria tecnologica para empresas y proyectos desde Puerto Montt, Chile.",
+      "Asesoria gratuita de 30 minutos para implementar inteligencia artificial y automatizacion en tu empresa. Marco Iglesias, Master en IA, desde Puerto Montt, Chile.",
     url: "https://surinnovacion.cl",
     siteName: "SurInnovacion",
     locale: "es_CL",
@@ -56,9 +59,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SurInnovacion | Inteligencia Artificial, automatizacion e innovacion",
+    title: "Asesoria en Inteligencia Artificial para empresas | SurInnovacion",
     description:
-      "Soluciones con inteligencia artificial, automatizacion, sitios web y asesoria tecnologica para empresas y proyectos desde Puerto Montt, Chile.",
+      "Asesoria gratuita de 30 minutos para implementar inteligencia artificial y automatizacion en tu empresa. Marco Iglesias, Master en IA, desde Puerto Montt, Chile.",
     images: ["/brand/isotipo2.png"]
   },
   manifest: "/manifest.webmanifest",

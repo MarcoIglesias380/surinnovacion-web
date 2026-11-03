@@ -4,7 +4,12 @@
   "rules": {
     "one_feature_at_a_time": true,
     "require_verification_to_close": true,
-    "valid_status": ["pending", "in_progress", "done", "blocked"]
+    "valid_status": [
+      "pending",
+      "in_progress",
+      "done",
+      "blocked"
+    ]
   },
   "features": [
     {
@@ -131,6 +136,22 @@
         "La verificacion demuestra el flujo completo de punta a punta con un envio real."
       ],
       "status": "blocked"
+    },
+    {
+      "id": 18,
+      "name": "h1-h2-keywords-posicionamiento",
+      "title": "Reescribir H1, H2 y textos con keywords",
+      "description": "Segun docs/estrategia-conversion-seo.md. El H1 publicado no contenia ninguna keyword y el sitio no nombraba la asesoria gratuita en ninguna parte. Solo cambian textos y niveles de encabezado: el visual del hero no se toca.",
+      "acceptance": [
+        "El H1 contiene la keyword principal y conserva la identidad del sur.",
+        "El hero nombra la asesoria gratuita de 30 minutos sin prometer entregables que no existen.",
+        "Cada seccion tiene un H2 real con keywords de busqueda, sin encabezados falsos hechos con parrafos.",
+        "La jerarquia de encabezados es coherente: un solo H1, H2 por seccion y H3 subordinados.",
+        "El title y la meta description apuntan a la keyword comercial y a la oferta.",
+        "El hero no cambia visualmente: mismo layout en desktop y en 390 px, sin desbordes.",
+        "Lint, typecheck, build y revision visual pasan con evidencia."
+      ],
+      "status": "done"
     },
     {
       "id": 10,

@@ -560,3 +560,47 @@ Append-only. Cada cierre de sesion debe agregar una entrada nueva al final.
     17 esta publicada.
   - Decidir el destino de las features 9 y 10, cubiertas en parte por las
     features 15 y 13.
+
+---
+
+# 2026-11-03 - Feature 18: H1, H2 y textos con keywords
+
+- Agente: Claude Code
+- Resultado: APPROVED localmente; pendiente de despliegue.
+- Diagnostico:
+  - El H1 publicado era "El futuro se construye desde el sur.", sin ninguna
+    keyword de busqueda.
+  - El sitio no mencionaba la asesoria gratuita en ninguna parte: cero
+    apariciones de "asesoria", "gratis" o "gratuito" en el texto visible.
+  - Varias secciones usaban parrafos como si fueran encabezados, asi que su
+    estructura era invisible para buscadores y lectores de pantalla.
+- Cambios, solo de texto y de nivel de encabezado, sin tocar reglas CSS del
+  hero:
+  - H1 nuevo: "Inteligencia artificial para tu empresa."
+  - La bajada del hero y el H2 de contacto nombran la asesoria gratuita de 30
+    minutos; el CTA pasa de "Conversemos" a "Asesoria gratuita".
+  - H2 de ciudad, blog y contacto reescritos con keywords comerciales y
+    geograficas.
+  - Los parrafos "Proyectos", "Blog Tech" y "Contacto directo" pasan a ser H2 y
+    H3 reales, heredando el estilo del eyebrow sin cambio visual.
+  - `title`, `description`, OpenGraph, Twitter, `WebPage` del JSON-LD y la lista
+    de keywords apuntan a la keyword comercial y a la oferta.
+  - `sitemap.ts` con `lastModified` al dia.
+- Evidencia:
+  - Texto visible renderizado, antes contra ahora: 170 a 193 palabras,
+    "asesoria" de 0 a 5, "gratuita" de 0 a 4, "empresa" de 2 a 7.
+  - Jerarquia final: un H1, cinco H2 y tres H3, sin saltos de nivel.
+  - `RUN_BUILD=1 ./init.sh` y `git diff --check`: pasaron.
+  - Revision visual en escritorio y 375 px con el sitio corriendo.
+  - Huella del hero en 375 px: el H1 conserva 2 lineas y 68 px, identico al
+    original. El bloque completo termina en 481 px contra 501 px antes, porque
+    la bajada nueva es mas breve. Sin desborde horizontal.
+- Decision del owner:
+  - Se probo primero "Inteligencia artificial aplicada a tu empresa, desde el
+    sur.", que ocupaba 3 lineas y estiraba el bloque 14 px. El owner pidio
+    conservar las dos lineas, asi que quedo la version corta.
+  - El corte del icono en los CTA del hero ya existia en produccion; no lo
+    introdujo esta feature.
+- Nota:
+  - El contenido sigue delgado con 193 palabras. Eso no lo resuelve esta
+    feature sino la pagina `/asesoria-ia`.

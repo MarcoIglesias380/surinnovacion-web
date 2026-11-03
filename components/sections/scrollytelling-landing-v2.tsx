@@ -472,16 +472,16 @@ export function ScrollytellingLandingV2() {
           <div className="story-shade" />
           <div className="story-copy story-copy--intro" style={{ opacity: introOpacity }}>
             <p>Marco Iglesias · Master y divulgador de Inteligencia Artificial</p>
-            <h1>El futuro se construye desde el sur.</h1>
-            <p className="story-intro-lede">Creamos soluciones de IA, automatizacion y productos digitales para convertir ideas en proyectos reales.</p>
+            <h1>Inteligencia artificial para tu empresa.</h1>
+            <p className="story-intro-lede">Asesoria gratuita de 30 minutos para ver donde la IA te conviene, y donde no.</p>
             <div className="story-hero-actions">
               <a href="#proyectos">Ver proyectos <ArrowDownRight aria-hidden="true" /></a>
-              <a href={`${phoneHref}?text=${encodeURIComponent("Hola, quiero conversar sobre un proyecto con SurInnovacion.")}`} target="_blank" rel="noreferrer">Conversemos <MessageCircle aria-hidden="true" /></a>
+              <a href={`${phoneHref}?text=${encodeURIComponent("Hola, quiero coordinar la asesoria gratuita de 30 minutos.")}`} target="_blank" rel="noreferrer">Asesoria gratuita <MessageCircle aria-hidden="true" /></a>
             </div>
           </div>
           <div className="story-copy story-copy--city" style={{ opacity: cityOpacity }}>
             <p>Puerto Montt · Chile</p>
-            <h2>Tecnologia que conecta personas, negocios y territorio.</h2>
+            <h2>Automatizacion e IA para empresas del sur de Chile.</h2>
           </div>
           <div className="story-copy story-copy--future" style={{ opacity: futureOpacity }}>
             <p>SurInnovacion</p>
@@ -489,7 +489,7 @@ export function ScrollytellingLandingV2() {
           </div>
           <span id="proyectos" className="story-anchor story-anchor--projects" aria-hidden="true" />
           <section className="story-hologram story-hologram--projects" style={{ opacity: projectsOpacity }} aria-label="Proyectos">
-            <p>Proyectos</p>
+            <h2>Proyectos de IA y automatizacion</h2>
             <div className="story-projects">{projects.map(([name, description, href]) => <a key={name} href={href} target="_blank" rel="noreferrer"><span><strong>{name}</strong><small>{description}</small></span><ArrowUpRight aria-hidden="true" /></a>)}</div>
           </section>
         </div>
@@ -500,12 +500,12 @@ export function ScrollytellingLandingV2() {
           <div className="story-outro-shade" />
           <div className="story-outro-intro">
             <p>Blog Tech</p>
-            <h2>Ideas para avanzar con inteligencia.</h2>
+            <h2>Divulgacion de IA para decidir mejor.</h2>
             <h3>La innovacion ya no es opcional.</h3>
             <p className="story-outro-description">La IA ya esta cambiando como las empresas venden, atienden, automatizan y crecen.</p>
           </div>
           <section className="story-hologram story-hologram--blog" aria-label="Blog Tech">
-            <p>Blog Tech</p>
+            <h3>Blog Tech</h3>
             <div className="story-sources">{posts.map(([title, source, href]) => <a key={title} href={href} target="_blank" rel="noreferrer"><span>{title}</span><small>{source}</small><ExternalLink aria-hidden="true" /></a>)}</div>
           </section>
         </div>
@@ -515,10 +515,10 @@ export function ScrollytellingLandingV2() {
         <div className="story-contact-shade" />
         <div className="story-contact-copy">
           <p>Contacto</p>
-          <h2>Una idea puede empezar hoy.</h2>
+          <h2>Agenda tu asesoria gratuita de 30 minutos.</h2>
         </div>
         <section className="story-hologram story-hologram--contact" aria-label="Formulario de contacto">
-          <p>Contacto directo</p>
+          <h3>Cuentame de tu empresa</h3>
           <ContactForm />
         </section>
       </section>

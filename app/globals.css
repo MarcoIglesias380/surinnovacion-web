@@ -1785,7 +1785,9 @@ html[data-tone="bright"] .glass-secondary-button {
   backdrop-filter: blur(22px) saturate(1.35);
 }
 
-.story-hologram > p {
+.story-hologram > p,
+.story-hologram > h2,
+.story-hologram > h3 {
   margin: 0 0 0.85rem;
   color: #eafcff;
   font-size: 0.72rem;

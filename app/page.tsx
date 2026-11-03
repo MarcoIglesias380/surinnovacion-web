@@ -66,7 +66,7 @@ const webpageSchema = {
   "@type": "WebPage",
   "@id": "https://surinnovacion.cl/#webpage",
   url: "https://surinnovacion.cl",
-  name: "SurInnovacion | Inteligencia Artificial, automatizacion e innovacion",
+  name: "Asesoria en Inteligencia Artificial para empresas | SurInnovacion",
   isPartOf: {
     "@id": "https://surinnovacion.cl/#website"
   },
