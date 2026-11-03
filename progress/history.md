@@ -517,3 +517,46 @@ Append-only. Cada cierre de sesion debe agregar una entrada nueva al final.
   - `RUN_BUILD=1 ./init.sh`, `npm run lint`, `npm run typecheck`, `npm run build` y `git diff --check`: pasaron.
 - Nota:
   - La implementacion anterior y sus 360 JPG se conservaron como respaldo local no activo para evitar eliminar trabajo no confirmado; la pagina importa exclusivamente `scrollytelling-landing-v2.tsx`.
+
+---
+
+# 2026-11-02 - Cierre operativo de features 16 y 17
+
+- Agente: Claude Code
+- Resultado: APPROVED y publicado en produccion.
+- Alcance: no se abrio ninguna feature nueva. Se cerro la deuda tecnica y de
+  despliegue que dejo la feature 17.
+- Limpieza (`CHECKPOINTS.md` C4):
+  - Se elimino `components/sections/scrollytelling-landing.tsx`. Era la
+    implementacion anterior y ya no la importaba ningun modulo; `app/page.tsx`
+    usa solo `scrollytelling-landing-v2.tsx`. Esto reemplaza la nota de la
+    feature 17 sobre conservar el respaldo local.
+  - Se elimino `public/hero/frames/` con sus 360 JPG. `public/hero/` bajo de
+    39 MB a 9,7 MB y de 552 a 192 archivos.
+  - Los fotogramas se regeneran desde `assets/source/hero-puerto-montt.mov`,
+    que sigue local y fuera de Git.
+- Confirmacion en Git:
+  - Commit `840592d` "Rebuild landing as optimized scrollytelling": 203
+    archivos, +1415 / -96. Incluye el trabajo de las features 16 y 17, los 192
+    WebP de `public/hero/sequence-v2/` y la bitacora.
+  - Se verifico que los 360 JPG eliminados nunca entraron a la historia de Git
+    (`git log --all -- public/hero/frames` sin resultados), por lo que no
+    cargan peso en el repositorio.
+  - `git push origin main`: `476e324..840592d`. `origin/main` quedo al dia.
+- Verificacion:
+  - `RUN_BUILD=1 ./init.sh` antes del commit: lint, typecheck y build pasaron.
+  - `git diff --check`: paso.
+  - Deployment Vercel `https://surinnovacion-39y9c5k23-marco-iglesias-projects.vercel.app`:
+    `Ready` en 26s, disparado por el push.
+  - `https://surinnovacion.cl/hero/sequence-v2/mobile/frame-001.webp`:
+    `HTTP/2 200`, `content-type: image/webp`,
+    `cache-control: public, max-age=31536000, immutable`. La regla de cache de
+    `next.config.ts` quedo activa en produccion.
+  - `https://surinnovacion.cl/hero/frames/frame-001.jpg`: `HTTP/2 404`. La
+    secuencia antigua salio de produccion.
+  - `https://surinnovacion.cl`: `HTTP/2 200`.
+- Pendiente:
+  - Validar la experiencia en un dispositivo movil real ahora que la feature
+    17 esta publicada.
+  - Decidir el destino de las features 9 y 10, cubiertas en parte por las
+    features 15 y 13.
