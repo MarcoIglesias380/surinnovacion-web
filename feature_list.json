@@ -119,14 +119,18 @@
     {
       "id": 9,
       "name": "contacto-real",
-      "title": "Conectar contacto real",
-      "description": "Convertir el formulario visual en un flujo real de contacto sin perder el acceso directo a WhatsApp.",
+      "title": "Conectar contacto real sin perder leads",
+      "description": "Reescrita el 2026-11-02 segun docs/estrategia-conversion-seo.md. El formulario anterior solo abria WhatsApp con un texto prellenado: no enviaba correo ni guardaba nada, y el lead se perdia si el visitante no completaba el envio en la otra aplicacion. Codigo implementado y verificado. Queda bloqueada en el setup de cuentas y DNS que solo puede hacer el owner, detallado en docs/contacto-setup.md.",
       "acceptance": [
-        "El formulario tiene accion real o se reemplaza por un flujo honesto de WhatsApp/email.",
-        "Los estados de envio, error y exito estan cubiertos.",
-        "La verificacion demuestra el flujo completo."
+        "Existe un endpoint propio que recibe el formulario sin depender de servicios externos de formularios.",
+        "El lead se guarda en un almacen durable antes de intentar la notificacion, para que exista aunque el correo falle.",
+        "El formulario cubre estados de carga, exito y error, con WhatsApp como salida alternativa en el error.",
+        "El visitante que no usa WhatsApp puede contactar sin salir del sitio.",
+        "Hay proteccion anti spam sin CAPTCHA y consentimiento explicito de uso de datos.",
+        "Existe correo corporativo en el dominio con notificacion que llega al telefono.",
+        "La verificacion demuestra el flujo completo de punta a punta con un envio real."
       ],
-      "status": "pending"
+      "status": "blocked"
     },
     {
       "id": 10,

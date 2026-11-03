@@ -23,9 +23,17 @@
 - No inventar clientes, casos de exito, cifras, alianzas ni certificaciones.
 - No publicar promesas tecnicas imposibles de verificar.
 - El contacto oficial actual es WhatsApp: `+56 9 9289 1678`.
+- El correo corporativo `contacto@surinnovacion.cl` esta planificado pero aun no
+  existe. No publicarlo en la UI hasta que el buzon reciba correo. Ver
+  `docs/contacto-setup.md`.
+- La oferta comercial vigente es una asesoria gratuita de **30 minutos por
+  videollamada**. No prometer informes, auditorias ni documentos escritos.
 - La ubicacion actual documentada es Valle Volcanes, Puerto Montt.
 - Cualquier backend, formulario, CRM o integracion externa debe quedar
-  documentada antes de implementarse.
+  documentada antes de implementarse. El formulario de contacto esta
+  documentado en `docs/contacto-setup.md`.
+- Los datos personales del formulario se usan solo para responder la consulta.
+  No agregar campos que no se necesiten para eso.
 
 ## Dependencias
 

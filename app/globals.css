@@ -1681,6 +1681,103 @@ html[data-tone="bright"] .glass-secondary-button {
   padding: 0.6rem 0 0;
 }
 
+.story-link:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.story-form input:disabled,
+.story-form textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.story-form__trap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.story-form__consent {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 0.5rem;
+  margin-top: 0.15rem;
+  color: rgba(234, 242, 255, 0.66);
+  font-size: 0.74rem;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.story-form__consent input {
+  width: 0.95rem;
+  height: 0.95rem;
+  margin-top: 0.14rem;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  accent-color: #22d3ee;
+}
+
+.story-form__error {
+  color: #f3b9b9;
+}
+
+.story-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.story-form svg,
+.story-form__sent svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.story-form__spin {
+  animation: story-form-spin 900ms linear infinite;
+}
+
+@keyframes story-form-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.story-form__sent {
+  display: grid;
+  gap: 0.5rem;
+  color: rgba(234, 242, 255, 0.78);
+  font-size: 0.86rem;
+}
+
+.story-form__sent p {
+  margin: 0;
+}
+
+.story-form__sent-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #eafcff;
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-form__spin {
+    animation: none;
+  }
+}
+
 .story-hologram {
   border: 1px solid rgba(160, 244, 255, 0.46);
   background: linear-gradient(135deg, rgba(181, 246, 255, 0.16), transparent 42%, rgba(112, 88, 255, 0.13)), rgba(3, 19, 42, 0.48);

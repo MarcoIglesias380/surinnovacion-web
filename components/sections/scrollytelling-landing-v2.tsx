@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDownRight, ArrowUpRight, ExternalLink, MessageCircle, Send } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Check, ExternalLink, Loader2, MessageCircle, Send } from "lucide-react";
 import Image from "next/image";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 
@@ -33,6 +33,8 @@ const posts = [
 ] as const;
 
 type FormState = { name: string; email: string; whatsapp: string; message: string };
+
+type SubmitStatus = "idle" | "sending" | "sent" | "error";
 
 type FrameTask = {
   index: number;
@@ -236,34 +238,116 @@ function FrameSequence({ profile, progress }: { profile: SequenceProfile; progre
 
 function ContactForm() {
   const [form, setForm] = useState<FormState>({ name: "", email: "", whatsapp: "", message: "" });
+  const [consent, setConsent] = useState(false);
+  const [trap, setTrap] = useState("");
+  const [status, setStatus] = useState<SubmitStatus>("idle");
   const [error, setError] = useState("");
+  const openedAt = useRef(0);
 
-  const submit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!form.name.trim() || !form.message.trim()) {
-      setError("Escribe tu nombre y un mensaje breve.");
-      return;
-    }
-    const message = [
-      "Hola, quiero conversar con SurInnovacion.",
-      `Nombre: ${form.name.trim()}`,
-      form.email.trim() ? `Correo: ${form.email.trim()}` : "",
-      form.whatsapp.trim() ? `WhatsApp: ${form.whatsapp.trim()}` : "",
-      `Mensaje: ${form.message.trim()}`
-    ].filter(Boolean).join("\n");
-    window.open(`${phoneHref}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+  useEffect(() => {
+    openedAt.current = Date.now();
+  }, []);
+
+  const whatsappFallback = `${phoneHref}?text=${encodeURIComponent([
+    "Hola, quiero coordinar la asesoria gratuita de 30 minutos.",
+    form.name.trim() ? `Nombre: ${form.name.trim()}` : "",
+    form.email.trim() ? `Correo: ${form.email.trim()}` : "",
+    form.whatsapp.trim() ? `WhatsApp: ${form.whatsapp.trim()}` : "",
+    form.message.trim() ? `Mensaje: ${form.message.trim()}` : ""
+  ].filter(Boolean).join("\n"))}`;
+
+  const update = (field: keyof FormState) => (event: { target: { value: string } }) => {
+    if (status === "error") setStatus("idle");
+    setError("");
+    setForm((current) => ({ ...current, [field]: event.target.value }));
   };
 
+  const fail = (reason: string) => {
+    setError(reason);
+    setStatus("error");
+  };
+
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (status === "sending") return;
+    if (!form.name.trim() || !form.message.trim()) return fail("Escribe tu nombre y un mensaje breve.");
+    if (!form.email.trim() && !form.whatsapp.trim()) return fail("Deja un correo o un WhatsApp para poder responderte.");
+    if (!consent) return fail("Marca la autorizacion para que pueda contactarte.");
+
+    setStatus("sending");
+    setError("");
+
+    try {
+      const response = await fetch("/api/contacto", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          whatsapp: form.whatsapp,
+          message: form.message,
+          consent,
+          company: trap,
+          elapsedMs: openedAt.current ? Date.now() - openedAt.current : 0
+        })
+      });
+      const payload = (await response.json().catch(() => null)) as
+        | { ok?: boolean; error?: string; fallback?: string }
+        | null;
+      if (!response.ok || !payload?.ok) {
+        return fail(payload?.error ?? "No pudimos registrar tu mensaje. Puedes escribirme por WhatsApp.");
+      }
+      if (payload.fallback === "whatsapp") {
+        window.location.href = whatsappFallback;
+        return;
+      }
+      setStatus("sent");
+    } catch {
+      fail("Se cayo la conexion antes de enviar. Puedes reintentar o escribirme por WhatsApp.");
+    }
+  };
+
+  if (status === "sent") {
+    return (
+      <div className="story-form__sent" role="status">
+        <p className="story-form__sent-title">
+          <Check aria-hidden="true" /> Mensaje recibido
+        </p>
+        <p>Te escribo personalmente para coordinar los 30 minutos.</p>
+        <a className="story-link" href={whatsappFallback} target="_blank" rel="noreferrer">
+          Adelantarlo por WhatsApp <MessageCircle aria-hidden="true" />
+        </a>
+      </div>
+    );
+  }
+
+  const sending = status === "sending";
+
   return (
-    <form className="story-form" onSubmit={submit}>
-      <input aria-label="Nombre" autoComplete="name" placeholder="Nombre" required value={form.name} onChange={(event) => { setError(""); setForm({ ...form, name: event.target.value }); }} />
-      <input aria-label="Correo" autoComplete="email" type="email" placeholder="Correo" value={form.email} onChange={(event) => { setError(""); setForm({ ...form, email: event.target.value }); }} />
-      <input aria-label="WhatsApp" autoComplete="tel" type="tel" inputMode="tel" placeholder="WhatsApp" value={form.whatsapp} onChange={(event) => { setError(""); setForm({ ...form, whatsapp: event.target.value }); }} />
-      <textarea aria-label="Mensaje" placeholder="Cuentame brevemente en que te puedo ayudar" required value={form.message} onChange={(event) => { setError(""); setForm({ ...form, message: event.target.value }); }} />
-      {error ? <p role="alert">{error}</p> : null}
-      <button type="submit" className="story-link">
-        Enviar por WhatsApp <Send className="h-4 w-4" aria-hidden="true" />
-      </button>
+    <form className="story-form" onSubmit={submit} noValidate>
+      <input aria-label="Nombre" autoComplete="name" placeholder="Nombre" required disabled={sending} value={form.name} onChange={update("name")} />
+      <input aria-label="Correo" autoComplete="email" type="email" placeholder="Correo" disabled={sending} value={form.email} onChange={update("email")} />
+      <input aria-label="WhatsApp" autoComplete="tel" type="tel" inputMode="tel" placeholder="WhatsApp" disabled={sending} value={form.whatsapp} onChange={update("whatsapp")} />
+      <textarea aria-label="Mensaje" placeholder="Cuentame brevemente en que te puedo ayudar" required disabled={sending} value={form.message} onChange={update("message")} />
+      <div aria-hidden="true" className="story-form__trap">
+        <label htmlFor="contacto-empresa">Empresa</label>
+        <input id="contacto-empresa" name="company" tabIndex={-1} autoComplete="off" value={trap} onChange={(event) => setTrap(event.target.value)} />
+      </div>
+      <label className="story-form__consent">
+        <input type="checkbox" checked={consent} disabled={sending} onChange={(event) => { if (status === "error") setStatus("idle"); setError(""); setConsent(event.target.checked); }} />
+        <span>Autorizo a SurInnovacion a usar estos datos solo para responder esta consulta.</span>
+      </label>
+      {error ? <p className="story-form__error" role="alert">{error}</p> : null}
+      <div className="story-form__actions">
+        <button type="submit" className="story-link" disabled={sending}>
+          {sending ? <>Enviando <Loader2 className="story-form__spin" aria-hidden="true" /></> : <>Solicitar asesoria gratuita <Send aria-hidden="true" /></>}
+        </button>
+        {status === "error" ? (
+          <a className="story-link" href={whatsappFallback} target="_blank" rel="noreferrer">
+            Escribir por WhatsApp <MessageCircle aria-hidden="true" />
+          </a>
+        ) : null}
+      </div>
     </form>
   );
 }
