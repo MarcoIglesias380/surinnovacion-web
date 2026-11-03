@@ -8,8 +8,8 @@ export type SiteSection = {
 };
 
 export const navItems = [
-  { label: "Impacto", href: "#impacto-visual" },
-  { label: "Nosotros", href: "#marco" },
+  { label: "Historia", href: "#hero" },
+  { label: "Proyectos", href: "#proyectos" },
   { label: "Blog Tech", href: "#blog" },
   { label: "Contacto", href: "#contacto" }
 ];

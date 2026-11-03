@@ -423,3 +423,97 @@ Append-only. Cada cierre de sesion debe agregar una entrada nueva al final.
     proceso/bind interno, pero pasa en ejecucion permitida del sistema.
 
 ---
+# 2026-09-23 - Feature 16: Landing scrollytelling de Puerto Montt futuro
+
+## Ajuste de fluidez
+
+- Se reemplazo la secuencia de 120 cuadros (10 fps) por los 360 cuadros originales del video (30 fps).
+- La escena sticky se corrigio al quitar `overflow-hidden` del contenedor principal; el video permanece visible durante todo el scroll.
+- Los 360 cuadros se precargan para evitar esperas al avanzar o retroceder.
+- Verificacion: `npm run lint`, `npm run typecheck` y `npm run build` pasaron. Produccion verificada en `https://surinnovacion.cl`: la secuencia avanzo hasta el cuadro 117 y permanecio fija en pantalla.
+- Deployment de mejora: `https://surinnovacion-j6xufp2zp-marco-iglesias-projects.vercel.app` (Ready).
+
+## Ajuste de jerarquia y cierre
+
+- Se agrandaron isotipo y wordmark en header y footer; la navegacion superior se redujo para que quede en segundo plano.
+- El ultimo fotograma ahora forma una escena fija de Blog Tech: aparece el titular editorial grande y luego los paneles avanzan sobre el mismo Puerto Montt futuro.
+- El footer incorpora telefono, Valle Volcanes, Puerto Montt, Chile y el credito `Creado por Marco Iglesias & SurInnovacion`.
+- Verificacion: `npm run lint`, `npm run typecheck` y `npm run build` pasaron.
+- Deployment: `https://surinnovacion-j7d0u7umz-marco-iglesias-projects.vercel.app` (Ready).
+
+## Cierre fijo y legibilidad movil
+
+- El ultimo fotograma de Puerto Montt con el tren se mantiene como la escena fija del cierre mientras se explora su contenido.
+- `Ideas para avanzar con inteligencia` y los titulos de Puerto Montt/Tecnologia se redujeron para recuperar jerarquia; el bloque de innovacion ahora se muestra directo, sin desplegable.
+- Proyectos, Blog Tech y Contacto pasan a ser tres accesos cuadrados que abren cuadros frontales accesibles, con cierre por boton, fondo o tecla Escape. Los proyectos conservan nombre, descripcion breve y enlaces reales.
+- Header y footer duplicaron el tamaño visual de logo/isotipo; el footer conserva ubicacion, telefono y credito de Marco Iglesias & SurInnovacion.
+- Revision visual en 1280 px y 390 px: sin cruces entre titular, accesos y formulario. Se verificaron los paneles de proyectos y contacto en movil.
+- Verificacion: `./init.sh`, `npm run lint`, `npm run typecheck`, `git diff --check` y `npm run build` pasaron.
+- Produccion: `https://surinnovacion.cl` y deployment `https://surinnovacion-kwbukzwyb-marco-iglesias-projects.vercel.app` (Ready).
+
+## Navegacion por estaciones narrativas
+
+- La autoridad `Marco Iglesias · Master y divulgador de Inteligencia Artificial` gana presencia visual y el titular `El futuro se construye desde el sur` se redujo para equilibrar el hero.
+- El enlace Proyectos del header navega al momento `Puerto Montt, hacia adelante`, con su cuadro de apertura a la izquierda.
+- Blog Tech lleva directamente a `Ideas para avanzar con inteligencia` y a su cuadro lateral; Contacto tiene ahora una escena propia posterior, claramente separada y con su cuadro frontal.
+- Revision visual: se verificaron en desktop y movil los destinos de Proyectos, Blog Tech y Contacto. En produccion, Proyectos se estabiliza sin el texto de transicion superpuesto.
+- Verificacion: `npm run lint`, `npm run typecheck`, `git diff --check` y `npm run build` pasaron.
+- Produccion: `https://surinnovacion.cl` y deployment `https://surinnovacion-1o2vwcqrs-marco-iglesias-projects.vercel.app` (Ready).
+
+## Paneles holograficos y contenido visible
+
+- El panel de Proyectos se retraso hasta que desaparece `Tecnologia que conecta...`, evitando el choque durante el scrollytelling. Sus enlaces quedan visibles en un holograma de cristal con halo cian/violeta junto a `Puerto Montt, hacia adelante`.
+- Blog Tech queda desplegado en un panel holografico lateral, con enlaces directos a las fuentes visibles sin un boton intermedio.
+- Contacto tiene su formulario desplegado a la derecha del mensaje principal, dentro del mismo lenguaje visual de cristal; en movil los paneles se ordenan verticalmente y conservan espacio de lectura.
+- Revision visual local desktop/movil y publicacion: Proyectos, Blog Tech y Contacto se verificaron sin superposiciones relevantes; la llegada directa a Contacto no deja restos del panel de Blog Tech.
+- Verificacion: `npm run lint`, `npm run typecheck`, `git diff --check` y `npm run build` pasaron.
+- Produccion: `https://surinnovacion.cl` y deployment `https://surinnovacion-b4yk1405a-marco-iglesias-projects.vercel.app` (Ready).
+
+## Pulido movil de navegacion y Blog Tech
+
+- El menu movil ahora usa el mismo cristal holografico de los paneles, con fondo opaco, halo cian/violeta y filas separadas para evitar que los enlaces se mezclen con el hero.
+- La estacion Blog Tech salta al inicio exacto de su escena en movil. Su holograma se ajusta al ancho disponible y limita su altura al viewport con scroll interno si hiciera falta.
+- Se verificaron en 390 × 844 px los destinos de Blog Tech, Proyectos y Contacto; los paneles quedan dentro del ancho de pantalla.
+- Verificacion: `npm run lint`, `npm run typecheck`, `git diff --check` y `npm run build` pasaron.
+- Produccion: `https://surinnovacion.cl` y deployment `https://surinnovacion-frih1ipwm-marco-iglesias-projects.vercel.app` (Ready).
+
+- Resultado: APPROVED y publicado en produccion.
+- Cambios:
+  - Se guardo el video fuente `hero-puerto-montt.mov` en `assets/source/`, excluido de Git y de los assets publicos.
+  - Se generaron 120 fotogramas JPEG optimizados a 1280 px en `public/hero/frames/` (9,9 MB en total).
+  - La landing ahora recorre por scroll la historia de Marco Iglesias junto a la IA, Puerto Montt conectado y Puerto Montt futuro.
+  - Proyectos, la explicacion de innovacion, Blog Tech y contacto se convirtieron en desplegables accesibles; los proyectos ya no usan imagenes y revelan cada enlace real al abrirse.
+  - Header y footer se redujeron a la marca, navegacion esencial y WhatsApp.
+  - El ultimo fotograma de Puerto Montt futuro sostiene el cierre de los desplegables antes del footer.
+- Verificacion:
+  - `./init.sh`, `npm run lint` y `npm run typecheck`: pasaron.
+  - `npm run build`: paso fuera del sandbox por requisito interno de Turbopack.
+  - Revision visual local: hero, secuencia, proyectos, Blog Tech, contacto y footer revisados; no se envio ningun mensaje de WhatsApp.
+  - Produccion: `https://surinnovacion.cl` verificada cargando con el nuevo hero y los controles esperados.
+  - Deployment Vercel: `https://surinnovacion-6777t5za3-marco-iglesias-projects.vercel.app` (Ready).
+
+---
+
+# 2026-10-14 - Feature 17: Optimizar carga, fluidez y rotacion del scrollytelling
+
+- Resultado: APPROVED localmente; pendiente de despliegue.
+- Diagnostico:
+  - Produccion precargaba 360 JPG al montar la pagina y transfirio 29,18 MiB en la prueba completa.
+  - Una rotacion 390x844 a 844x390 a mitad de la escena cambiaba el progreso de 50% a 100% y saltaba del fotograma 180 al 360.
+- Cambios:
+  - Se agregaron perfiles WebP versionados: 120 cuadros y 6,2 MB para escritorio; 72 cuadros y 3,4 MB para movil.
+  - La secuencia activa usa canvas, mantiene el ultimo cuadro disponible y carga solo una ventana proxima con cuatro solicitudes concurrentes.
+  - El cache descarta cuadros fuera de la ventana para limitar memoria y evita precargar la secuencia completa.
+  - La distancia narrativa movil quedo estable en 5200 px y la rotacion conserva el progreso normalizado.
+  - Los assets `sequence-v2` usan `Cache-Control: public, max-age=31536000, immutable`.
+  - Se agrego un estado breve `Preparando experiencia` y se corrigio el ancho del copy en 390 px.
+- Evidencia:
+  - Carga inicial movil: 9 respuestas de cuadros.
+  - Recorrido movil completo: 72 URLs unicas y 3,29 MiB transferidos.
+  - Rotacion al 50%: cuadro 36 antes y despues; progreso 0,5 antes y despues.
+  - Scroll sintetico: 271 muestras, p95 16,7 ms, ningun intervalo mayor a 32 ms.
+  - Consola: sin errores.
+  - Revision visual: 390 px sin overflow horizontal (`scrollWidth` y `clientWidth` iguales a 390).
+  - `RUN_BUILD=1 ./init.sh`, `npm run lint`, `npm run typecheck`, `npm run build` y `git diff --check`: pasaron.
+- Nota:
+  - La implementacion anterior y sus 360 JPG se conservaron como respaldo local no activo para evitar eliminar trabajo no confirmado; la pagina importa exclusivamente `scrollytelling-landing-v2.tsx`.

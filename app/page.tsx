@@ -1,13 +1,7 @@
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
-import { BlogSection, ContactSection, FounderSection } from "@/components/sections/business-sections";
-import { HeroSection } from "@/components/sections/hero-section";
-import {
-  ProblemSolutionSection,
-  TrustSection,
-  VisualImpactSection
-} from "@/components/sections/premium-sections";
+import { ScrollytellingLandingV2 } from "@/components/sections/scrollytelling-landing-v2";
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -105,7 +99,7 @@ const founderSchema = {
 
 export default function Home() {
   return (
-    <main className="site-shell min-h-screen overflow-hidden bg-void pt-[80px] text-frost selection:bg-ion/30 md:pt-[88px]">
+    <main className="site-shell min-h-screen bg-void text-frost selection:bg-ion/30">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -118,18 +112,7 @@ export default function Home() {
         }}
       />
       <SiteHeader />
-      <div className="relative">
-        <div className="site-aurora pointer-events-none absolute inset-x-0 top-0 h-[860px]" />
-        <div className="relative">
-          <HeroSection />
-          <TrustSection />
-          <ProblemSolutionSection />
-          <VisualImpactSection />
-          <FounderSection />
-          <BlogSection />
-          <ContactSection />
-        </div>
-      </div>
+      <ScrollytellingLandingV2 />
       <SiteFooter />
       <ScrollToTop />
     </main>

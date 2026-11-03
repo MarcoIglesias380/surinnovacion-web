@@ -207,6 +207,35 @@
         "Lint, typecheck, build y revision visual pasan con evidencia."
       ],
       "status": "done"
+    },
+    {
+      "id": 16,
+      "name": "landing-scrollytelling-puerto-montt",
+      "title": "Redisenar landing como scrollytelling de Puerto Montt futuro",
+      "description": "Transformar la landing en una experiencia visual minima que acompana el video de Marco Iglesias, desde la colaboracion humano-IA hasta Puerto Montt conectado al futuro.",
+      "acceptance": [
+        "El hero usa una secuencia optimizada de fotogramas del video provisto y responde al scroll hacia adelante y atras.",
+        "Logo e isotipo de SurInnovacion se conservan en una navegacion minima.",
+        "Proyectos, Blog Tech, la explicacion de La innovacion ya no es opcional y contacto se muestran como contenido desplegable y accesible.",
+        "Los proyectos no usan imagenes y muestran nombre, una descripcion breve y enlaces reales solo al desplegarse.",
+        "El ultimo fotograma conduce a un cierre narrativo y a un footer minimalista.",
+        "La experiencia funciona en escritorio, movil y con reduced motion; lint, typecheck, build y revision visual pasan."
+      ],
+      "status": "done"
+    },
+    {
+      "id": 17,
+      "name": "optimizar-scrollytelling-movil",
+      "title": "Optimizar carga, fluidez y rotacion del scrollytelling",
+      "description": "Reducir el peso y la presion de memoria de la secuencia, renderizarla de forma progresiva y conservar el punto narrativo al rotar un dispositivo movil.",
+      "acceptance": [
+        "La version movil no precarga la secuencia completa y transfiere una fraccion del peso anterior.",
+        "Los fotogramas se dibujan sin vacios visibles mientras el siguiente recurso termina de decodificarse.",
+        "La rotacion entre vertical y horizontal conserva el progreso narrativo.",
+        "Los assets de la secuencia tienen cache versionada y no dependen de los 360 JPG originales.",
+        "Lint, typecheck, build y una prueba automatizada de movil y rotacion pasan."
+      ],
+      "status": "done"
     }
   ]
 }

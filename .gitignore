@@ -9,6 +9,9 @@ out/
 dist/
 coverage/
 
+# Material fuente local para producir assets web; no se publica ni versiona.
+assets/source/
+
 .DS_Store
 npm-debug.log*
 yarn-debug.log*

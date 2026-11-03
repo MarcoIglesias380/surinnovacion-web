@@ -1,0 +1,443 @@
+"use client";
+
+import { ArrowDownRight, ArrowUpRight, ExternalLink, MessageCircle, Send } from "lucide-react";
+import Image from "next/image";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
+
+type SequenceProfile = {
+  count: number;
+  directory: string;
+  key: "desktop" | "mobile";
+};
+
+const sequenceProfiles: Record<SequenceProfile["key"], SequenceProfile> = {
+  desktop: { count: 120, directory: "/hero/sequence-v2/desktop", key: "desktop" },
+  mobile: { count: 72, directory: "/hero/sequence-v2/mobile", key: "mobile" }
+};
+
+const phoneHref = "https://wa.me/56992891678";
+
+const projects = [
+  ["EventDash POS", "Gestion de ventas para eventos.", "https://eventdash-pos-mqlc.vercel.app/admin"],
+  ["Eventos IA", "Experiencias en vivo guiadas por IA.", "https://eventos-ia-surinnovacion.vercel.app/admin"],
+  ["Columba Boutique", "Identidad y vitrina digital para una boutique.", "https://www.columbaboutique.com/"],
+  ["Marco Iglesias", "Servicios, experiencia y divulgacion en IA.", "https://marcoiglesias.cl/"],
+  ["Distribuidora Oriente", "Catalogo digital simple de recorrer.", "https://catalogo-distribuidora-oriente.vercel.app/"],
+  ["Marca Visible", "Una propuesta digital con identidad propia.", "https://marca-visible.vercel.app/"]
+] as const;
+
+const posts = [
+  ["IA en empresas", "OpenAI", "https://openai.com/index/how-the-world-is-putting-chatgpt-to-work/"],
+  ["Seguridad y agentes", "Anthropic", "https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals"],
+  ["Modelos y decisiones", "Vercel", "https://vercel.com/blog/ai-gateway-production-index-july-2026"]
+] as const;
+
+type FormState = { name: string; email: string; whatsapp: string; message: string };
+
+type FrameTask = {
+  index: number;
+  resolve: (image: HTMLImageElement | null) => void;
+};
+
+function clamp(value: number) {
+  return Math.max(0, Math.min(1, value));
+}
+
+function getFrameSource(profile: SequenceProfile, index: number) {
+  const boundedIndex = Math.max(0, Math.min(profile.count - 1, index));
+  return `${profile.directory}/frame-${String(boundedIndex + 1).padStart(3, "0")}.webp`;
+}
+
+class ProgressiveFrameLoader {
+  private active = 0;
+  private activeIndexes = new Set<number>();
+  private cache = new Map<number, Promise<HTMLImageElement | null>>();
+  private disposed = false;
+  private queue: FrameTask[] = [];
+  private wanted = new Set<number>();
+
+  constructor(private readonly profile: SequenceProfile, private readonly concurrency = 4) {}
+
+  updateWindow(indexes: number[]) {
+    this.wanted = new Set(indexes);
+    const retainedQueue: FrameTask[] = [];
+
+    this.queue.forEach((task) => {
+      if (this.wanted.has(task.index)) retainedQueue.push(task);
+      else {
+        this.cache.delete(task.index);
+        task.resolve(null);
+      }
+    });
+    this.queue = retainedQueue;
+
+    this.cache.forEach((_, index) => {
+      if (!this.wanted.has(index) && !this.activeIndexes.has(index)) this.cache.delete(index);
+    });
+  }
+
+  load(index: number, priority = false) {
+    if (index < 0 || index >= this.profile.count || this.disposed) return Promise.resolve(null);
+    const cached = this.cache.get(index);
+    if (cached) return cached;
+
+    let resolveTask: (image: HTMLImageElement | null) => void = () => undefined;
+    const promise = new Promise<HTMLImageElement | null>((resolve) => {
+      resolveTask = resolve;
+    });
+    const task = { index, resolve: resolveTask };
+    this.cache.set(index, promise);
+    if (priority) this.queue.unshift(task);
+    else this.queue.push(task);
+    this.pump();
+    return promise;
+  }
+
+  dispose() {
+    this.disposed = true;
+    this.queue.forEach((task) => task.resolve(null));
+    this.queue = [];
+    this.cache.clear();
+    this.wanted.clear();
+  }
+
+  private pump() {
+    while (!this.disposed && this.active < this.concurrency && this.queue.length > 0) {
+      const task = this.queue.shift();
+      if (!task) return;
+      this.active += 1;
+      this.activeIndexes.add(task.index);
+      const image = new window.Image();
+      image.decoding = "async";
+
+      const finish = (loadedImage: HTMLImageElement | null) => {
+        this.active -= 1;
+        this.activeIndexes.delete(task.index);
+        if (!this.wanted.has(task.index)) this.cache.delete(task.index);
+        task.resolve(loadedImage);
+        this.pump();
+      };
+
+      image.onload = () => {
+        image.decode().catch(() => undefined).then(() => finish(image));
+      };
+      image.onerror = () => {
+        this.cache.delete(task.index);
+        finish(null);
+      };
+      image.src = getFrameSource(this.profile, task.index);
+    }
+  }
+}
+
+function useSequenceProfile() {
+  const [profileKey, setProfileKey] = useState<SequenceProfile["key"] | null>(null);
+
+  useEffect(() => {
+    const coarsePointer = window.matchMedia("(pointer: coarse)");
+    const narrowViewport = window.matchMedia("(max-width: 767px)");
+    const update = () => {
+      const mobileDevice = coarsePointer.matches || navigator.maxTouchPoints > 0 || narrowViewport.matches;
+      setProfileKey(mobileDevice ? "mobile" : "desktop");
+    };
+    update();
+    coarsePointer.addEventListener("change", update);
+    narrowViewport.addEventListener("change", update);
+    return () => {
+      coarsePointer.removeEventListener("change", update);
+      narrowViewport.removeEventListener("change", update);
+    };
+  }, []);
+
+  return profileKey ? sequenceProfiles[profileKey] : null;
+}
+
+function FrameSequence({ profile, progress }: { profile: SequenceProfile; progress: number }) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const desiredIndexRef = useRef(-1);
+  const lastImageRef = useRef<HTMLImageElement | null>(null);
+  const loaderRef = useRef<ProgressiveFrameLoader | null>(null);
+  const [ready, setReady] = useState(false);
+
+  const drawImage = useCallback((image: HTMLImageElement) => {
+    const canvas = canvasRef.current;
+    if (!canvas || image.naturalWidth === 0 || image.naturalHeight === 0) return;
+    const bounds = canvas.getBoundingClientRect();
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    const outputWidth = Math.max(1, Math.round(bounds.width * pixelRatio));
+    const outputHeight = Math.max(1, Math.round(bounds.height * pixelRatio));
+    if (canvas.width !== outputWidth || canvas.height !== outputHeight) {
+      canvas.width = outputWidth;
+      canvas.height = outputHeight;
+    }
+    const context = canvas.getContext("2d", { alpha: false });
+    if (!context) return;
+    context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    const scale = Math.max(bounds.width / image.naturalWidth, bounds.height / image.naturalHeight);
+    const width = image.naturalWidth * scale;
+    const height = image.naturalHeight * scale;
+    context.clearRect(0, 0, bounds.width, bounds.height);
+    context.drawImage(image, (bounds.width - width) / 2, (bounds.height - height) / 2, width, height);
+    lastImageRef.current = image;
+  }, []);
+
+  useEffect(() => {
+    const loader = new ProgressiveFrameLoader(profile);
+    loaderRef.current = loader;
+    desiredIndexRef.current = -1;
+    lastImageRef.current = null;
+    return () => {
+      loader.dispose();
+      if (loaderRef.current === loader) loaderRef.current = null;
+    };
+  }, [profile]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const observer = new ResizeObserver(() => {
+      if (lastImageRef.current) drawImage(lastImageRef.current);
+    });
+    observer.observe(canvas);
+    return () => observer.disconnect();
+  }, [drawImage]);
+
+  useEffect(() => {
+    const loader = loaderRef.current;
+    if (!loader) return;
+    const index = Math.round(progress * (profile.count - 1));
+    if (desiredIndexRef.current === index) return;
+    desiredIndexRef.current = index;
+    const offsets = [0, 1, 2, 3, 4, 5, 6, 8, 10, -1, -2, -3];
+    const windowIndexes = offsets
+      .map((offset) => index + offset)
+      .filter((candidate) => candidate >= 0 && candidate < profile.count);
+    loader.updateWindow(windowIndexes);
+    windowIndexes.forEach((frameIndex, order) => {
+      loader.load(frameIndex, order === 0).then((image) => {
+        if (!image || loaderRef.current !== loader || desiredIndexRef.current !== frameIndex) return;
+        drawImage(image);
+        if (canvasRef.current) canvasRef.current.dataset.frame = String(frameIndex + 1);
+        setReady(true);
+      });
+    });
+  }, [drawImage, profile, progress]);
+
+  return (
+    <>
+      <canvas ref={canvasRef} className="story-frame" aria-hidden="true" />
+      <div className={`story-frame-loader${ready ? " story-frame-loader--ready" : ""}`} aria-hidden="true">
+        <span>Preparando experiencia</span>
+        <i />
+      </div>
+    </>
+  );
+}
+
+function ContactForm() {
+  const [form, setForm] = useState<FormState>({ name: "", email: "", whatsapp: "", message: "" });
+  const [error, setError] = useState("");
+
+  const submit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!form.name.trim() || !form.message.trim()) {
+      setError("Escribe tu nombre y un mensaje breve.");
+      return;
+    }
+    const message = [
+      "Hola, quiero conversar con SurInnovacion.",
+      `Nombre: ${form.name.trim()}`,
+      form.email.trim() ? `Correo: ${form.email.trim()}` : "",
+      form.whatsapp.trim() ? `WhatsApp: ${form.whatsapp.trim()}` : "",
+      `Mensaje: ${form.message.trim()}`
+    ].filter(Boolean).join("\n");
+    window.open(`${phoneHref}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+  };
+
+  return (
+    <form className="story-form" onSubmit={submit}>
+      <input aria-label="Nombre" autoComplete="name" placeholder="Nombre" required value={form.name} onChange={(event) => { setError(""); setForm({ ...form, name: event.target.value }); }} />
+      <input aria-label="Correo" autoComplete="email" type="email" placeholder="Correo" value={form.email} onChange={(event) => { setError(""); setForm({ ...form, email: event.target.value }); }} />
+      <input aria-label="WhatsApp" autoComplete="tel" type="tel" inputMode="tel" placeholder="WhatsApp" value={form.whatsapp} onChange={(event) => { setError(""); setForm({ ...form, whatsapp: event.target.value }); }} />
+      <textarea aria-label="Mensaje" placeholder="Cuentame brevemente en que te puedo ayudar" required value={form.message} onChange={(event) => { setError(""); setForm({ ...form, message: event.target.value }); }} />
+      {error ? <p role="alert">{error}</p> : null}
+      <button type="submit" className="story-link">
+        Enviar por WhatsApp <Send className="h-4 w-4" aria-hidden="true" />
+      </button>
+    </form>
+  );
+}
+
+export function ScrollytellingLandingV2() {
+  const sceneRef = useRef<HTMLElement | null>(null);
+  const progressRef = useRef(0);
+  const [progress, setProgress] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const profile = useSequenceProfile();
+
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReducedMotion(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    let animationFrame = 0;
+    let restoreTimer = 0;
+    let preservedProgress: number | null = null;
+    let landscape = window.innerWidth > window.innerHeight;
+
+    const update = () => {
+      const scene = sceneRef.current;
+      if (!scene) return;
+      const bounds = scene.getBoundingClientRect();
+      const distance = Math.max(scene.offsetHeight - window.innerHeight, 1);
+      const nextProgress = reducedMotion ? 1 : clamp(-bounds.top / distance);
+      progressRef.current = nextProgress;
+      setProgress((current) => Math.abs(current - nextProgress) > 0.001 ? nextProgress : current);
+    };
+
+    const requestUpdate = () => {
+      if (preservedProgress !== null) return;
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(update);
+    };
+
+    const restoreOrientationProgress = () => {
+      const scene = sceneRef.current;
+      if (!scene || preservedProgress === null) return;
+      const savedProgress = preservedProgress;
+      const distance = Math.max(scene.offsetHeight - window.innerHeight, 1);
+      window.scrollTo({ top: scene.offsetTop + distance * savedProgress, behavior: "auto" });
+      preservedProgress = null;
+      update();
+    };
+
+    const handleResize = () => {
+      const nextLandscape = window.innerWidth > window.innerHeight;
+      if (nextLandscape !== landscape && preservedProgress === null) {
+        preservedProgress = progressRef.current;
+        landscape = nextLandscape;
+      }
+      if (preservedProgress !== null) {
+        window.clearTimeout(restoreTimer);
+        restoreTimer = window.setTimeout(() => {
+          requestAnimationFrame(() => requestAnimationFrame(restoreOrientationProgress));
+        }, 180);
+        return;
+      }
+      requestUpdate();
+    };
+
+    requestUpdate();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", handleResize);
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      window.clearTimeout(restoreTimer);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [reducedMotion]);
+
+  useEffect(() => {
+    const moveToNarrativeStation = () => {
+      if (window.location.hash === "#contacto") {
+        const contact = document.getElementById("contacto");
+        if (contact) window.scrollTo({ top: contact.offsetTop, behavior: "smooth" });
+        return;
+      }
+      if (window.location.hash === "#blog") {
+        const blog = document.getElementById("blog");
+        if (blog) window.scrollTo({ top: blog.offsetTop, behavior: "smooth" });
+        return;
+      }
+      if (window.location.hash !== "#proyectos") return;
+      const scene = sceneRef.current;
+      if (!scene) return;
+      const distance = Math.max(scene.offsetHeight - window.innerHeight, 1);
+      window.scrollTo({ top: scene.offsetTop + distance * 0.84, behavior: "smooth" });
+    };
+    moveToNarrativeStation();
+    window.addEventListener("hashchange", moveToNarrativeStation);
+    return () => window.removeEventListener("hashchange", moveToNarrativeStation);
+  }, []);
+
+  const renderedProgress = reducedMotion ? 1 : progress;
+  const introOpacity = reducedMotion ? 1 : clamp((0.27 - progress) / 0.07);
+  const cityOpacity = reducedMotion ? 0 : clamp(Math.min((progress - 0.27) / 0.07, (0.72 - progress) / 0.07));
+  const futureOpacity = reducedMotion ? 0 : clamp(Math.min((progress - 0.6) / 0.07, (0.94 - progress) / 0.07));
+  const projectsOpacity = reducedMotion ? 1 : clamp(Math.min((progress - 0.76) / 0.07, (0.94 - progress) / 0.04));
+  const contactProfile = profile ?? sequenceProfiles.mobile;
+  const contactFrameSource = getFrameSource(contactProfile, contactProfile.count - 1);
+
+  return (
+    <>
+      <section ref={sceneRef} id="hero" className="story-scene">
+        <div className="story-sticky">
+          {profile ? (
+            <FrameSequence key={profile.key} profile={profile} progress={renderedProgress} />
+          ) : (
+            <>
+              <canvas className="story-frame" aria-hidden="true" />
+              <div className="story-frame-loader" aria-hidden="true"><span>Preparando experiencia</span><i /></div>
+            </>
+          )}
+          <div className="story-shade" />
+          <div className="story-copy story-copy--intro" style={{ opacity: introOpacity }}>
+            <p>Marco Iglesias · Master y divulgador de Inteligencia Artificial</p>
+            <h1>El futuro se construye desde el sur.</h1>
+            <p className="story-intro-lede">Creamos soluciones de IA, automatizacion y productos digitales para convertir ideas en proyectos reales.</p>
+            <div className="story-hero-actions">
+              <a href="#proyectos">Ver proyectos <ArrowDownRight aria-hidden="true" /></a>
+              <a href={`${phoneHref}?text=${encodeURIComponent("Hola, quiero conversar sobre un proyecto con SurInnovacion.")}`} target="_blank" rel="noreferrer">Conversemos <MessageCircle aria-hidden="true" /></a>
+            </div>
+          </div>
+          <div className="story-copy story-copy--city" style={{ opacity: cityOpacity }}>
+            <p>Puerto Montt · Chile</p>
+            <h2>Tecnologia que conecta personas, negocios y territorio.</h2>
+          </div>
+          <div className="story-copy story-copy--future" style={{ opacity: futureOpacity }}>
+            <p>SurInnovacion</p>
+            <h2>Puerto Montt, hacia adelante.</h2>
+          </div>
+          <span id="proyectos" className="story-anchor story-anchor--projects" aria-hidden="true" />
+          <section className="story-hologram story-hologram--projects" style={{ opacity: projectsOpacity }} aria-label="Proyectos">
+            <p>Proyectos</p>
+            <div className="story-projects">{projects.map(([name, description, href]) => <a key={name} href={href} target="_blank" rel="noreferrer"><span><strong>{name}</strong><small>{description}</small></span><ArrowUpRight aria-hidden="true" /></a>)}</div>
+          </section>
+        </div>
+      </section>
+      <section id="blog" className="story-outro">
+        <div className="story-outro-stage">
+          <Image className="story-outro-frame" src="/sections/fundador-bahia-marco-v3.png" alt="Marco Iglesias frente a la bahia de Puerto Montt" fill sizes="100vw" quality={82} />
+          <div className="story-outro-shade" />
+          <div className="story-outro-intro">
+            <p>Blog Tech</p>
+            <h2>Ideas para avanzar con inteligencia.</h2>
+            <h3>La innovacion ya no es opcional.</h3>
+            <p className="story-outro-description">La IA ya esta cambiando como las empresas venden, atienden, automatizan y crecen.</p>
+          </div>
+          <section className="story-hologram story-hologram--blog" aria-label="Blog Tech">
+            <p>Blog Tech</p>
+            <div className="story-sources">{posts.map(([title, source, href]) => <a key={title} href={href} target="_blank" rel="noreferrer"><span>{title}</span><small>{source}</small><ExternalLink aria-hidden="true" /></a>)}</div>
+          </section>
+        </div>
+      </section>
+      <section id="contacto" className="story-contact-stage">
+        <Image className="story-contact-frame" src={contactFrameSource} alt="" fill unoptimized aria-hidden="true" />
+        <div className="story-contact-shade" />
+        <div className="story-contact-copy">
+          <p>Contacto</p>
+          <h2>Una idea puede empezar hoy.</h2>
+        </div>
+        <section className="story-hologram story-hologram--contact" aria-label="Formulario de contacto">
+          <p>Contacto directo</p>
+          <ContactForm />
+        </section>
+      </section>
+    </>
+  );
+}
