@@ -270,3 +270,48 @@ La linea de plataformas y la de CRM no tienen ningun trabajo publico que
 mostrar, ahora que EventDash y Eventos IA salieron de la vitrina. El texto no
 inventa casos, pero esas dos lineas se sostienen solo en la descripcion del
 servicio. Conviene sumar algun ejemplo verificable cuando exista.
+
+## 2026-11-12, correccion: capas invisibles capturaban los clics
+
+El owner reporto que al pinchar "Asesoria gratuita" en el hero terminaba en
+marcoiglesias.cl.
+
+### Causa
+
+El scrollytelling superpone capas y solo las separa por opacidad. Una capa con
+`opacity: 0` sigue recibiendo clics, y el panel de proyectos ademas declaraba
+`pointer-events: auto` en CSS.
+
+Medido en produccion, en 375x812:
+
+- Boton "Asesoria gratuita": de y=417 a y=463.
+- Panel de proyectos invisible: empieza en y=438, mismo ancho.
+- Se superponen 25 de los 46 px de alto del boton.
+
+Es decir, la mitad inferior del boton entregaba el toque al panel invisible, y
+dentro de ese panel estan los enlaces de proyectos. Segun la altura exacta del
+telefono, el toque caia sobre "Marco Iglesias", que apunta a marcoiglesias.cl.
+
+### Correccion
+
+Se agrego `capaVisible(opacity)`, que apaga `pointer-events` cuando la opacidad
+baja de 0,05, y se aplico a las cuatro capas con opacidad animada: intro,
+ciudad, futuro y panel de proyectos. Solo recibe clics lo que se ve.
+
+### Verificacion
+
+- Arriba del todo: ningun punto de los dos botones del hero cae en otro enlace.
+  Los puntos que no dan en el enlace reciben su propio contenedor, que son los
+  huecos normales de un enlace en linea.
+- Panel de proyectos invisible: `pointer-events: none`.
+- Con el panel visible (progreso 0,86): `pointer-events: auto` y sus enlaces
+  reciben su clic.
+- Se reviso una sospecha de segundo fallo y se descarto: el cuarto proyecto
+  queda bajo el borde de la pantalla, pero el panel desplaza internamente
+  (479 px de contenido en 339 px) y el enlace es alcanzable y clicable.
+- `RUN_BUILD=1 ./init.sh` y `git diff --check`: pasaron.
+
+Nota pendiente: con `prefers-reduced-motion`, el hero y el panel de proyectos
+quedan ambos con opacidad 1 y se superponen igual. Ahi el panel si es visible,
+asi que no es una trampa invisible, pero tapa parte de los botones. No se toco
+porque implica cambiar el layout del hero.

@@ -2,7 +2,7 @@
 
 import { ArrowDownRight, ArrowUpRight, Check, ExternalLink, Loader2, MessageCircle, Send } from "lucide-react";
 import Image from "next/image";
-import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import { CSSProperties, FormEvent, useCallback, useEffect, useRef, useState } from "react";
 
 type SequenceProfile = {
   count: number;
@@ -54,6 +54,14 @@ type FrameTask = {
 
 function clamp(value: number) {
   return Math.max(0, Math.min(1, value));
+}
+
+// Las capas del scrollytelling se superponen y solo se separan por opacidad.
+// Una capa con opacity 0 sigue siendo clicable, asi que el panel de proyectos
+// invisible se quedaba con los toques de los botones del hero. Se apaga el
+// puntero junto con la opacidad para que solo reciba clics lo que se ve.
+function capaVisible(opacity: number): CSSProperties {
+  return { opacity, pointerEvents: opacity < 0.05 ? "none" : "auto" };
 }
 
 function getFrameSource(profile: SequenceProfile, index: number, avif = false) {
@@ -507,7 +515,7 @@ export function ScrollytellingLandingV2() {
             </>
           )}
           <div className="story-shade" />
-          <div className="story-copy story-copy--intro" style={{ opacity: introOpacity }}>
+          <div className="story-copy story-copy--intro" style={capaVisible(introOpacity)}>
             <p>Marco Iglesias · Master y divulgador de Inteligencia Artificial</p>
             <h1>Inteligencia artificial para tu empresa.</h1>
             <p className="story-intro-lede">IA, sitios web, plataformas y CRM. Asesoria gratuita de 30 minutos.</p>
@@ -516,16 +524,16 @@ export function ScrollytellingLandingV2() {
               <a href={`${phoneHref}?text=${encodeURIComponent("Hola, quiero coordinar la asesoria gratuita de 30 minutos.")}`} target="_blank" rel="noreferrer">Asesoria gratuita <MessageCircle aria-hidden="true" /></a>
             </div>
           </div>
-          <div className="story-copy story-copy--city" style={{ opacity: cityOpacity }}>
+          <div className="story-copy story-copy--city" style={capaVisible(cityOpacity)}>
             <p>Puerto Montt · Chile</p>
             <h2>Automatizacion e IA para empresas del sur de Chile.</h2>
           </div>
-          <div className="story-copy story-copy--future" style={{ opacity: futureOpacity }}>
+          <div className="story-copy story-copy--future" style={capaVisible(futureOpacity)}>
             <p>SurInnovacion</p>
             <h2>Puerto Montt, hacia adelante.</h2>
           </div>
           <span id="proyectos" className="story-anchor story-anchor--projects" aria-hidden="true" />
-          <section className="story-hologram story-hologram--projects" style={{ opacity: projectsOpacity }} aria-label="Proyectos">
+          <section className="story-hologram story-hologram--projects" style={capaVisible(projectsOpacity)} aria-label="Proyectos">
             <h2>Proyectos de IA y automatizacion</h2>
             <div className="story-projects">{projects.map(([name, description, href]) => <a key={name} href={href} target="_blank" rel="noreferrer"><span><strong>{name}</strong><small>{description}</small></span><ArrowUpRight aria-hidden="true" /></a>)}</div>
           </section>
