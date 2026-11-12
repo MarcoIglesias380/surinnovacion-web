@@ -2,21 +2,32 @@ import type { Metadata } from "next";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { founderSchema, organizationSchema } from "@/content/schema";
 import Link from "next/link";
 
 const phoneHref = "https://wa.me/56992891678?text=" + encodeURIComponent("Hola, quiero coordinar la asesoria gratuita de 30 minutos.");
 
 export const metadata: Metadata = {
-  title: "Asesoria gratuita en Inteligencia Artificial para empresas",
+  title: "Asesoria gratuita en Inteligencia Artificial",
   description:
-    "Videollamada de 30 minutos para ver donde la inteligencia artificial le conviene a tu empresa y donde no. Sin costo. Marco Iglesias, Master en IA, desde Puerto Montt.",
+    "Videollamada de 30 minutos para ver donde la inteligencia artificial le conviene a tu empresa y donde no. Sin costo. Marco Iglesias, Master en IA.",
   alternates: { canonical: "/asesoria-ia" },
   openGraph: {
     title: "Asesoria gratuita en Inteligencia Artificial para empresas | SurInnovacion",
     description:
       "Videollamada de 30 minutos para ver donde la inteligencia artificial le conviene a tu empresa y donde no. Sin costo.",
     url: "https://surinnovacion.cl/asesoria-ia",
-    type: "article"
+    type: "article",
+    siteName: "SurInnovacion",
+    locale: "es_CL",
+    images: [
+      {
+        url: "/brand/isotipo2.png",
+        width: 500,
+        height: 500,
+        alt: "Isotipo de SurInnovacion"
+      }
+    ]
   }
 };
 
@@ -91,7 +102,9 @@ export default function AsesoriaIA() {
     <main className="site-shell min-h-screen bg-void text-frost selection:bg-ion/30">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify([serviceSchema, faqSchema]) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([organizationSchema, founderSchema, serviceSchema, faqSchema])
+        }}
       />
       <SiteHeader />
       <article className="doc-page">

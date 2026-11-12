@@ -3,11 +3,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Asesoria en Inteligencia Artificial para empresas | SurInnovacion",
+    default: "Asesoria en Inteligencia Artificial para empresas",
     template: "%s | SurInnovacion"
   },
   description:
-    "Asesoria gratuita de 30 minutos para implementar inteligencia artificial y automatizacion en tu empresa. Marco Iglesias, Master en IA, desde Puerto Montt, Chile.",
+    "Asesoria gratuita de 30 minutos para implementar inteligencia artificial y automatizacion en tu empresa. Marco Iglesias, Master en IA en Puerto Montt.",
   metadataBase: new URL("https://surinnovacion.cl"),
   applicationName: "SurInnovacion",
   alternates: {
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Asesoria en Inteligencia Artificial para empresas | SurInnovacion",
     description:
-      "Asesoria gratuita de 30 minutos para implementar inteligencia artificial y automatizacion en tu empresa. Marco Iglesias, Master en IA, desde Puerto Montt, Chile.",
+      "Asesoria gratuita de 30 minutos para implementar inteligencia artificial y automatizacion en tu empresa. Marco Iglesias, Master en IA en Puerto Montt.",
     url: "https://surinnovacion.cl",
     siteName: "SurInnovacion",
     locale: "es_CL",
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Asesoria en Inteligencia Artificial para empresas | SurInnovacion",
     description:
-      "Asesoria gratuita de 30 minutos para implementar inteligencia artificial y automatizacion en tu empresa. Marco Iglesias, Master en IA, desde Puerto Montt, Chile.",
+      "Asesoria gratuita de 30 minutos para implementar inteligencia artificial y automatizacion en tu empresa. Marco Iglesias, Master en IA en Puerto Montt.",
     images: ["/brand/isotipo2.png"]
   },
   manifest: "/manifest.webmanifest",

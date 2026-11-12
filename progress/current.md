@@ -82,3 +82,75 @@ footer. Leccion: no truncar la salida de verificacion.
 
 Que el owner complete `docs/contacto-setup.md` para cerrar la feature 9. En
 paralelo se puede abrir `/marco-iglesias`.
+
+## 2026-11-12, trabajo adicional: skill de SEO y correcciones
+
+El owner pidio revisar siete cursos de SEO en video, crear una skill y volver a
+analizar la web.
+
+### Los videos
+
+Los siete son cursos en espanol de SEO con IA, GEO y SEO Local (The BIG /
+Romuald Fons, y Pedro SEO), unas 17 horas en total. **No se pudo acceder a las
+transcripciones**: YouTube devuelve vacio en todos los formatos del endpoint de
+subtitulos y `yt-dlp` no esta instalado. Si se obtuvieron los temarios completos
+con marcas de tiempo desde las descripciones, que son contenido real y
+verificable. El temario del curso de 6 horas trae mas de 50 capitulos y fue la
+base de la estructura de la skill.
+
+### Skill creada
+
+`.claude/skills/seo-geo-local/`, 883 lineas:
+
+- `SKILL.md`: metodo de auditoria, orden de prioridades, intencion de busqueda,
+  contenido citable por IA, negocios locales y reglas de redaccion.
+- `references/on-page.md`, `seo-local.md`, `geo-buscadores-ia.md` y
+  `datos-estructurados.md`.
+- `scripts/auditar.py`: auditor de una URL sin dependencias externas. Extrae
+  title, description, canonical, jerarquia de encabezados, palabras visibles,
+  tipos de Schema, enlazado, imagenes y sitemap, y emite hallazgos ordenados por
+  gravedad. Se escribio porque este mismo analisis se habia rehecho a mano cinco
+  veces durante la sesion.
+
+La skill declara su procedencia: sigue el temario de esos cursos, pero las
+recomendaciones vienen de documentacion de Google y practica conocida, no de una
+transcripcion.
+
+Para usarla en todos los proyectos y no solo en este:
+`cp -r .claude/skills/seo-geo-local ~/.claude/skills/`
+
+### Correcciones que encontro la auditoria
+
+Cuatro eran defectos introducidos en las features 18 y 19:
+
+| Hallazgo | Antes | Ahora |
+|---|---|---|
+| Title de la portada | 65 caracteres, se cortaba en Google | 49 |
+| Description de la portada | 161 | 150 |
+| Title de /asesoria-ia | 74 | 60 |
+| Description de /asesoria-ia | 166 | 146 |
+| og:image en /asesoria-ia | perdida al sobrescribir openGraph en la pagina hija | restaurada |
+| Nodo de organizacion en /asesoria-ia | el `@id` apuntaba a un nodo de otra pagina | incluido en la pagina |
+
+En el title de la portada se quito el sufijo de marca para conservar la keyword
+completa dentro del limite. El esquema de organizacion y fundador se extrajo a
+`content/schema.ts` para que las dos paginas usen la misma fuente y no se
+desincronicen.
+
+Tambien se corrigio un falso positivo del propio script: `alt=""` en una imagen
+decorativa marcada con `aria-hidden` es correcto, no un fallo de accesibilidad.
+
+### Estado tras las correcciones
+
+- `/asesoria-ia`: 0 hallazgos.
+- Portada: 2 hallazgos, ambos conocidos y estructurales.
+  - 144 palabras visibles. Lo resolveria sumar contenido al cierre de la
+    landing, que no toca el hero pero si cambia la experiencia; queda a decision
+    del owner.
+  - Sin `FAQPage` en la portada. No se agrega marcando preguntas que no estan
+    visibles, porque eso es motivo de penalizacion.
+
+### Verificacion
+
+- `RUN_BUILD=1 ./init.sh`: lint, typecheck y build pasaron.
+- `scripts/auditar.py` contra las dos paginas, antes y despues.
