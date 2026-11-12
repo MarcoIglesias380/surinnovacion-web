@@ -604,3 +604,48 @@ Append-only. Cada cierre de sesion debe agregar una entrada nueva al final.
 - Nota:
   - El contenido sigue delgado con 193 palabras. Eso no lo resuelve esta
     feature sino la pagina `/asesoria-ia`.
+
+---
+
+# 2026-11-12 - Feature 19: Pagina /asesoria-ia con la oferta y FAQ
+
+- Agente: Claude Code
+- Resultado: APPROVED localmente; pendiente de despliegue.
+- Diagnostico:
+  - La landing tenia 193 palabras y no explicaba la oferta en ninguna parte.
+    Las keywords de la feature 18 estaban bien puestas pero sin contenido que
+    las respaldara, asi que la pagina no podia competir por la busqueda
+    comercial.
+- Cambios:
+  - Nueva ruta estatica `/asesoria-ia` con 816 palabras de contenido propio:
+    que pasa en los 30 minutos, que NO incluye, para quien es segun tamano de
+    empresa, como funciona, por donde suelen empezar las empresas, quien
+    asesora y preguntas frecuentes.
+  - La seccion "que no incluye" declara explicitamente que no hay informe
+    escrito, que no se accede a datos del cliente y que no se prometen
+    resultados ni porcentajes de ahorro.
+  - Marcado `Service` con `Offer` en 0 CLP y `FAQPage` con siete preguntas.
+    Las preguntas se renderizan y se serializan desde el mismo arreglo, de modo
+    que el schema no puede desviarse de lo visible.
+  - Estilos nuevos con prefijo `doc-` en `globals.css`, sobre los tokens de
+    marca existentes. Sin dependencias nuevas.
+  - La navegacion incorpora "Asesoria" y sus enlaces pasan a absolutos
+    (`/#proyectos` en vez de `#proyectos`) para funcionar desde cualquier ruta.
+  - `sitemap.ts` declara la ruta nueva.
+- Evidencia:
+  - `RUN_BUILD=1 ./init.sh` y `git diff --check`: pasaron. `/asesoria-ia` queda
+    como ruta estatica prerenderizada.
+  - Contenido medido sobre el HTML renderizado: 816 palabras, "empresa" 12,
+    "asesoria" 7, "inteligencia artificial" 5.
+  - Jerarquia: un H1, siete H2 y cuatro H3 bajo "Para quien es".
+  - `FAQPage` y `Service` presentes en el HTML servido.
+  - Revision visual en escritorio y 375 px: sin desborde horizontal, CTAs a
+    ancho completo de 49 px en movil.
+  - Header y footer verificados en ambas paginas tras migrarlos a `Link`.
+- Correccion de un reporte previo:
+  - Durante la sesion se reporto que lint pasaba cuando fallaba: la salida se
+    habia truncado con `tail -6`. El error era
+    `@next/next/no-html-link-for-pages`, por usar `<a>` hacia rutas internas.
+    Se corrigio con `next/link` en la pagina nueva, el header y el footer.
+- Nota:
+  - Queda pendiente `/marco-iglesias`, la pagina de autoridad del plan.

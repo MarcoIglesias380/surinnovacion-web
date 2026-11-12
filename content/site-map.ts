@@ -8,10 +8,11 @@ export type SiteSection = {
 };
 
 export const navItems = [
-  { label: "Historia", href: "#hero" },
-  { label: "Proyectos", href: "#proyectos" },
-  { label: "Blog Tech", href: "#blog" },
-  { label: "Contacto", href: "#contacto" }
+  { label: "Historia", href: "/#hero" },
+  { label: "Asesoria", href: "/asesoria-ia" },
+  { label: "Proyectos", href: "/#proyectos" },
+  { label: "Blog Tech", href: "/#blog" },
+  { label: "Contacto", href: "/#contacto" }
 ];
 
 export const siteSections: SiteSection[] = [

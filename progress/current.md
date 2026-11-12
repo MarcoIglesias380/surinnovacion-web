@@ -1,103 +1,84 @@
 # Sesion actual
 
 - Feature en curso: ninguna
-- Ultimas trabajadas: 9 (`blocked`) y 18 (`done`)
-- Inicio: 2026-11-02
+- Ultimas trabajadas: 19 (`done`), 18 (`done`), 9 (`blocked`)
+- Inicio: 2026-11-12
 - Agente: Claude Code
 
 ## Plan
 
 - Cerrar la feature 9 cuando el owner complete `docs/contacto-setup.md`.
-- Abrir despues la feature de pagina `/asesoria-ia` y seccion de oferta, que es
-  la que resuelve el problema de contenido delgado.
+- Abrir despues la pagina `/marco-iglesias` de autoridad, y la feature de
+  analitica y Search Console.
 
 ## Bitacora
 
+- 2026-11-12: feature 19 cerrada. Pagina `/asesoria-ia` con la oferta y FAQ.
+- 2026-11-12: se desplego la feature 18, que habia quedado sin pushear.
 - 2026-11-03: feature 18 cerrada. H1, H2 y metadata con keywords.
 - 2026-11-02: feature 9 implementada y desplegada, queda `blocked` en el setup
   del owner. Endpoint `POST /api/contacto` en produccion.
 - 2026-11-02: evaluacion de conversion, leads y SEO en
   `docs/estrategia-conversion-seo.md`.
-- 2026-11-02: limpieza de codigo muerto, commit `840592d` y despliegue de las
-  features 16 y 17. Ver `progress/history.md`.
 
-## Feature 18: que se implemento
+## Feature 19: que se implemento
 
-Diagnostico: el H1 publicado era "El futuro se construye desde el sur.", sin
-ninguna keyword de busqueda. La oferta de asesoria no aparecia en ninguna parte
-del sitio y varias secciones usaban parrafos como si fueran encabezados.
+Diagnostico: la landing tenia 193 palabras y no explicaba la oferta en ninguna
+parte. Las keywords estaban bien puestas desde la feature 18, pero no habia
+contenido que las respaldara, asi que la pagina no podia competir por la
+busqueda comercial.
 
-Cambios, solo de texto y de nivel de encabezado:
-
-| Elemento | Antes | Ahora |
-|---|---|---|
-| H1 | El futuro se construye desde el sur. | Inteligencia artificial para tu empresa. |
-| Bajada hero | Creamos soluciones de IA, automatizacion y productos digitales... | Asesoria gratuita de 30 minutos para ver donde la IA te conviene, y donde no. |
-| CTA hero | Conversemos | Asesoria gratuita |
-| H2 ciudad | Tecnologia que conecta personas, negocios y territorio. | Automatizacion e IA para empresas del sur de Chile. |
-| H2 blog | Ideas para avanzar con inteligencia. | Divulgacion de IA para decidir mejor. |
-| H2 contacto | Una idea puede empezar hoy. | Agenda tu asesoria gratuita de 30 minutos. |
-| Panel proyectos | parrafo "Proyectos" | H2 "Proyectos de IA y automatizacion" |
-| Panel blog | parrafo "Blog Tech" | H3 "Blog Tech" |
-| Panel contacto | parrafo "Contacto directo" | H3 "Cuentame de tu empresa" |
-
-Tambien:
-
-- `title` y `description` apuntan a la keyword comercial y nombran la oferta,
-  replicados en OpenGraph, Twitter y el `WebPage` del JSON-LD.
-- Lista de `keywords` reemplazada por la del documento de estrategia.
-- `sitemap.ts` con `lastModified` al dia; estaba fijo en agosto.
-- El texto prellenado del CTA de WhatsApp coincide con la oferta de 30 minutos.
-
-Jerarquia final: un H1, cinco H2 y tres H3, sin saltos de nivel.
+- Nueva ruta `/asesoria-ia`, estatica, con 816 palabras de contenido propio.
+- Secciones: que pasa en los 30 minutos, que NO incluye, para quien es segun
+  tamano de empresa, como funciona, por donde suelen empezar las empresas,
+  quien asesora y preguntas frecuentes.
+- La seccion "que no incluye" es deliberada: declara que no hay informe
+  escrito, que no se accede a datos del cliente y que no se prometen
+  resultados ni porcentajes de ahorro.
+- Marcado `Service` con `Offer` en 0 CLP y `FAQPage` con las siete preguntas.
+  Las preguntas se renderizan y se serializan desde el mismo arreglo, asi que
+  el schema no puede desviarse de lo que se ve.
+- Estilos nuevos con prefijo `doc-` en `globals.css`, usando los tokens de
+  marca existentes. No se agregaron dependencias.
+- La navegacion incorpora "Asesoria" y sus enlaces pasan a ser absolutos
+  (`/#proyectos` en vez de `#proyectos`) para que funcionen desde cualquier
+  ruta, no solo desde la portada.
+- `sitemap.ts` declara la ruta nueva.
 
 ## Verificacion
 
-- `RUN_BUILD=1 ./init.sh`: lint, typecheck y build pasaron.
+- `RUN_BUILD=1 ./init.sh`: lint, typecheck y build pasaron. `/asesoria-ia`
+  queda como ruta estatica prerenderizada.
 - `git diff --check`: paso.
-- Revision visual en escritorio y en 375 px con el sitio corriendo.
-- Medicion del texto visible renderizado, antes contra ahora:
-  - palabras: 170 a 193
-  - "asesoria": 0 a 5
-  - "gratuita": 0 a 4
-  - "empresa": 2 a 7
-  - "inteligencia artificial": 2 a 3
-  - "sur de Chile": 0 a 1
-- Encabezados de los paneles: heredan el estilo del eyebrow sin cambios
-  (11,52 px, mayusculas, peso 700, mismo margen). El cambio es semantico.
+- Contenido medido sobre el HTML renderizado: 816 palabras, "empresa" 12 veces,
+  "asesoria" 7, "inteligencia artificial" 5.
+- Jerarquia: un H1, siete H2 y cuatro H3 subordinados a "Para quien es".
+- `FAQPage` y `Service` presentes en el HTML servido.
+- Revision visual en escritorio y en 375 px: sin desborde horizontal
+  (`scrollWidth` igual a `clientWidth`), CTAs a ancho completo de 49 px de alto
+  en movil.
+- Header y footer verificados en ambas paginas despues de cambiarlos a `Link`.
 
-### Huella del hero en 375 px
+### Correccion de un reporte previo
 
-El owner pidio conservar las dos lineas del H1, asi que se eligio la version
-corta. Medido contra produccion:
-
-| | Antes | Ahora |
-|---|---|---|
-| H1 | 2 lineas, 68 px, de 240 a 308 | 2 lineas, 68 px, de 240 a 308 |
-| Bajada | 4 lineas, 77 px | 3 lineas, 58 px |
-| Fin del bloque | 501 px | 481 px |
-
-El H1 ocupa exactamente la misma huella que el original y el bloque completo
-queda 20 px mas corto, porque la bajada nueva es mas breve. Sin desborde
-horizontal. No se toco ninguna regla CSS del hero.
-
-Una version mas larga, "Inteligencia artificial aplicada a tu empresa, desde
-el sur.", se probo y se descarto: ocupaba 3 lineas y estiraba el bloque 14 px.
-
-Comprobado tambien que el corte del icono en los CTA del hero ya existia en
-produccion antes de este cambio: no lo introdujo esta feature.
+Durante esta sesion reporte que lint habia pasado cuando en realidad fallaba:
+habia truncado la salida con `tail -6` y los errores quedaron fuera de la
+ventana. El error era `@next/next/no-html-link-for-pages` por usar `<a>` hacia
+rutas internas. Se corrigio con `next/link` en la pagina nueva, el header y el
+footer. Leccion: no truncar la salida de verificacion.
 
 ## Riesgos pendientes
 
-- El contenido sigue siendo delgado: 197 palabras no alcanzan para rankear. Lo
-  resuelve la feature de `/asesoria-ia`, no esta.
-- La feature 9 no se puede cerrar hasta que exista el buzon y las variables
-  esten en Vercel.
-- El limite por IP del formulario sigue sin implementarse.
-- Sin analitica no hay forma de medir si el cambio de copy mejora la conversion.
-- Las features 10 y 11 siguen `pending` con alcance parcialmente cubierto.
+- La feature 9 sigue bloqueada: el DNS no tiene MX ni SPF, el buzon no existe y
+  el formulario no captura leads.
+- Sin analitica no hay forma de medir si el contenido nuevo convierte.
+- No esta confirmado que el sitio este indexado. Falta verificar el dominio en
+  Google Search Console y enviar el sitemap; requiere la cuenta del owner.
+- Las features 10 y 11 siguen `pending`.
+- `/asesoria-ia` enlaza a la portada y a marcoiglesias.cl, pero todavia no
+  existe `/marco-iglesias`, que es la pagina de autoridad del plan.
 
 ## Proximo paso
 
-Abrir la feature de pagina `/asesoria-ia` con la seccion de oferta y el marcado
-FAQ, que es lo que mas sube el techo de posicionamiento.
+Que el owner complete `docs/contacto-setup.md` para cerrar la feature 9. En
+paralelo se puede abrir `/marco-iglesias`.

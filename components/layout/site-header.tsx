@@ -4,6 +4,7 @@ import { navItems } from "@/content/site-map";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,7 +32,7 @@ export function SiteHeader() {
       className="site-header fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-void/35 backdrop-blur-xl"
     >
       <nav className="relative mx-auto flex max-w-[1440px] items-center justify-between gap-3 px-4 py-2 md:px-6 lg:gap-6">
-        <a href="#hero" className="brand-lockup group flex min-w-0 items-center gap-2.5 md:gap-3" aria-label="SurInnovacion inicio" onClick={closeMenu}>
+        <Link href="/#hero" className="brand-lockup group flex min-w-0 items-center gap-2.5 md:gap-3" aria-label="SurInnovacion inicio" onClick={closeMenu}>
           <span className="brand-mark brand-mark--icon relative grid h-14 w-14 shrink-0 place-items-center overflow-visible md:h-16 md:w-16">
             <Image
               src="/brand/isotipo2.png"
@@ -52,7 +53,7 @@ export function SiteHeader() {
               priority
             />
           </span>
-        </a>
+        </Link>
         <div className="hidden items-center gap-5 text-[0.68rem] uppercase tracking-[0.14em] text-frost/64 lg:flex xl:gap-7">
           {navItems.map((item) => (
             <a key={item.href} href={item.href} className="relative transition hover:text-ion">

@@ -154,6 +154,23 @@
       "status": "done"
     },
     {
+      "id": 19,
+      "name": "pagina-asesoria-ia",
+      "title": "Crear pagina /asesoria-ia con la oferta y FAQ",
+      "description": "Segun docs/estrategia-conversion-seo.md. La landing tiene menos de 200 palabras y no explica la oferta en ninguna parte, asi que no puede competir por la keyword comercial. Esta pagina da la sustancia: que incluye la asesoria, que no incluye, para quien es y como funciona, con marcado FAQPage.",
+      "acceptance": [
+        "Existe la ruta /asesoria-ia con contenido util y propio, no relleno.",
+        "La pagina explica que incluye y que NO incluye la asesoria, sin prometer entregables que no existen.",
+        "El copy respeta la oferta vigente: videollamada de 30 minutos, sin informe escrito.",
+        "No se inventan clientes, cifras, casos de exito ni certificaciones.",
+        "La pagina tiene H1 con la keyword comercial y H2 por seccion.",
+        "Incluye marcado FAQPage y Service valido.",
+        "Queda enlazada desde la navegacion y declarada en el sitemap.",
+        "Funciona en escritorio y movil; lint, typecheck, build y revision visual pasan."
+      ],
+      "status": "done"
+    },
+    {
       "id": 10,
       "name": "blog-contenido-real",
       "title": "Convertir blog vitrina en contenido real",
