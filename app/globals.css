@@ -2237,3 +2237,49 @@ html[data-tone="bright"] .glass-secondary-button {
   font-weight: 500;
   line-height: 1.55;
 }
+
+.doc-proyectos {
+  display: grid;
+  margin-top: 1.5rem;
+}
+
+.doc-proyectos a {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  border-top: 1px solid var(--line-soft);
+  padding: 1rem 0;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.doc-proyectos a:last-child {
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.doc-proyectos a:hover,
+.doc-proyectos a:focus-visible {
+  color: var(--brand-ion);
+  outline: none;
+}
+
+.doc-proyectos strong,
+.doc-proyectos small {
+  display: block;
+}
+
+.doc-proyectos strong {
+  font-weight: 600;
+}
+
+.doc-proyectos small {
+  margin-top: 0.2rem;
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+}
+
+.doc-proyectos svg {
+  width: 1rem;
+  height: 1rem;
+}

@@ -343,3 +343,44 @@ disponibles son "Master en Inteligencia Artificial", "divulgador" y "fundador".
 Una pagina de autoridad sobre eso seria relleno. Hacen falta datos concretos del
 owner: donde y cuando curso el Master, donde hace divulgacion, desde cuando
 trabaja en tecnologia y cualquier charla o publicacion con fecha.
+
+## 2026-11-12, pagina de autoridad
+
+El owner entrego su formacion: **Master en Inteligencia Artificial, cursado en
+BIG School (Barcelona) con titulacion de la Universidad Isabel I (Espana),
+terminado.** Confirmo que es un unico master con doble titulacion, no dos
+formaciones separadas.
+
+Al verificar las instituciones aparecio un matiz: BIG School tiene acuerdo con
+la Universidad Isabel I desde 2024, y estos programas son titulos propios, no
+masteres oficiales del registro espanol. Por eso la pagina nombra el master y
+ambas instituciones **sin usar la palabra "oficial"**, que seria una afirmacion
+distinta y no verificada.
+
+### Cambios
+
+- Nueva ruta estatica `/marco-iglesias`: formacion, que hace, trabajo que se
+  puede abrir, como trabaja y desde donde. 384 palabras, deliberadamente breve:
+  se escribio solo lo verificable en vez de rellenar.
+- `content/schema.ts`: el `Person` suma `alumniOf` con las dos instituciones,
+  `jobTitle`, `knowsAbout` y su `url`. Mejora en las cuatro paginas, porque el
+  nodo es compartido.
+- Enlazada desde `/servicios` (seccion "Quien hace el trabajo") y desde
+  `/asesoria-ia`. El sitemap declara cuatro URLs.
+- El title de la pagina omite el sufijo de marca con `absolute`: con el llegaba
+  a 65 caracteres y Google lo cortaba.
+
+### Verificacion
+
+- Auditoria: 1 hallazgo, de nivel bajo, por no tener `FAQPage`. Se dejo asi a
+  proposito: no se inventaron preguntas para rellenar.
+- En 375 px: sin desborde horizontal, H1 en dos lineas.
+- `RUN_BUILD=1 ./init.sh` y `git diff --check`: pasaron.
+
+### Pendiente
+
+- No se publico nada sobre divulgacion porque no hay dato verificable de donde
+  la hace. Si hay charlas, canal o publicaciones con fecha, es lo mas citable
+  que se puede sumar.
+- Queda a decision del owner si quiere aclarar en la pagina que el master es
+  titulo propio y no oficial. Declararlo genera confianza, pero es su llamado.

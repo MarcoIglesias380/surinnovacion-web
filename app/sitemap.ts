@@ -15,6 +15,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9
     },
     {
+      url: "https://surinnovacion.cl/marco-iglesias",
+      lastModified: new Date("2026-11-12"),
+      changeFrequency: "yearly",
+      priority: 0.7
+    },
+    {
       url: "https://surinnovacion.cl/asesoria-ia",
       lastModified: new Date("2026-11-12"),
       changeFrequency: "monthly",

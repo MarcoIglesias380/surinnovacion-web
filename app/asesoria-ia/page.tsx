@@ -212,8 +212,9 @@ export default function AsesoriaIA() {
         <section className="doc-section">
           <h2>Quien te va a asesorar</h2>
           <p>
-            Soy Marco Iglesias, Master en Inteligencia Artificial, divulgador y fundador de SurInnovacion.
-            Trabajo desde Puerto Montt para empresas de todo Chile.
+            Soy Marco Iglesias, Master en Inteligencia Artificial por BIG School y la Universidad
+            Isabel I, y fundador de SurInnovacion. Trabajo desde Puerto Montt para empresas de todo
+            Chile. <Link href="/marco-iglesias">Mas sobre mi formacion y mi trabajo</Link>.
           </p>
           <p>
             Hago divulgacion de IA porque creo que el problema no es la falta de herramientas sino la

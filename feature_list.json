@@ -188,6 +188,21 @@
       "status": "done"
     },
     {
+      "id": 21,
+      "name": "pagina-autoridad-marco-iglesias",
+      "title": "Pagina de autoridad /marco-iglesias",
+      "description": "Las afirmaciones del sitio sobre agentes de IA y plataformas a medida descansaban en una sola linea de credenciales. Esta pagina las respalda con formacion verificable y trabajo publicado. Se escribio recien cuando el owner entrego datos concretos; antes se dejo pendiente a proposito para no publicar relleno.",
+      "acceptance": [
+        "La pagina nombra la formacion con institucion y pais, sin llamarla oficial si no lo es.",
+        "No se inventan anos de experiencia, clientes, cifras, charlas ni premios.",
+        "El trabajo publicado se puede abrir y verificar desde la pagina.",
+        "El schema Person declara alumniOf con las dos instituciones.",
+        "Queda enlazada desde /servicios y /asesoria-ia, y declarada en el sitemap.",
+        "Lint, typecheck, build y auditoria pasan."
+      ],
+      "status": "done"
+    },
+    {
       "id": 10,
       "name": "blog-contenido-real",
       "title": "Convertir blog vitrina en contenido real",

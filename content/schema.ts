@@ -45,8 +45,30 @@ export const founderSchema = {
   "@type": "Person",
   "@id": ID_FUNDADOR,
   name: "Marco Iglesias",
+  url: `${SITIO}/marco-iglesias`,
+  jobTitle: "Fundador de SurInnovacion",
   description: "Master en Inteligencia Artificial, divulgador de la IA y fundador de SurInnovacion.",
   worksFor: { "@id": ID_ORGANIZACION },
+  alumniOf: [
+    {
+      "@type": "EducationalOrganization",
+      name: "BIG School",
+      address: { "@type": "PostalAddress", addressLocality: "Barcelona", addressCountry: "ES" }
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Universidad Isabel I",
+      address: { "@type": "PostalAddress", addressCountry: "ES" }
+    }
+  ],
+  knowsAbout: [
+    "Inteligencia artificial",
+    "Agentes de IA",
+    "Automatizacion de procesos",
+    "Desarrollo web",
+    "Comercio electronico",
+    "CRM"
+  ],
   address: {
     "@type": "PostalAddress",
     addressLocality: "Puerto Montt",

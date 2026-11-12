@@ -183,6 +183,14 @@ export default function Servicios() {
         ))}
 
         <section className="doc-section">
+          <h2>Quien hace el trabajo</h2>
+          <p>
+            Marco Iglesias, Master en Inteligencia Artificial por BIG School y la Universidad Isabel I,
+            desde Puerto Montt. <Link href="/marco-iglesias">Ver formacion y trabajo publicado</Link>.
+          </p>
+        </section>
+
+        <section className="doc-section">
           <h2>Como empieza cualquiera de estas lineas</h2>
           <ol className="doc-steps">
             <li>
