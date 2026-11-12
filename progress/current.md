@@ -315,3 +315,46 @@ Nota pendiente: con `prefers-reduced-motion`, el hero y el panel de proyectos
 quedan ambos con opacidad 1 y se superponen igual. Ahi el panel si es visible,
 asi que no es una trampa invisible, pero tapa parte de los botones. No se toco
 porque implica cambiar el layout del hero.
+
+## 2026-11-12, hallazgo: marcoiglesias.cl no era lo que decia la vitrina
+
+Al preparar la pagina de autoridad se audito `marcoiglesias.cl` y resulto ser
+**el salon de belleza del owner**: 36 anos de oficio, marcado `BeautySalon`, en
+Avenida Cuarta Terraza 5098, Valle Volcanes. La misma direccion que
+SurInnovacion declara en sus datos estructurados.
+
+En la vitrina ese proyecto estaba descrito como "Servicios, experiencia y
+divulgacion en IA". Era falso y estaba en produccion: quien lo pinchaba
+esperando trabajo de IA aterrizaba en precios de peluqueria.
+
+### Decisiones del owner
+
+- **Los dos negocios se mantienen aparte.** El salon sale de la vitrina y no se
+  menciona en el sitio.
+- **El CRM del salon si se muestra como caso.**
+
+### Cambios
+
+- Se retiro el proyecto "Marco Iglesias" de la vitrina y el enlace al salon de
+  `/asesoria-ia`. Cero referencias a `marcoiglesias.cl` en las paginas activas.
+  Queda una mencion en `premium-sections.tsx`, que es codigo muerto ya
+  identificado y no lo importa ninguna pagina.
+- Se agrego "CRM para salon de belleza" a la vitrina **sin URL**, porque el
+  sistema contiene fichas de clientas reales y publicar acceso expondria datos
+  de terceros. Se describe como en uso diario sin acceso publico, sin boton
+  falso, segun la regla de la feature 4.
+- La vitrina ahora renderiza un elemento no enlazado cuando un proyecto no tiene
+  URL, en vez de un enlace vacio.
+- La linea de CRM en `/servicios` deja de ser la unica sin nada que mostrar:
+  menciona el sistema en produccion, sin identificar de quien es el negocio.
+
+### Pendiente
+
+- La direccion del salon y la de SurInnovacion coinciden en el schema. Es un
+  dato real y no se modifico, pero significa que quien compare puede conectar
+  ambos negocios. El owner eligio mantenerlos aparte sabiendo esto.
+- **La pagina `/marco-iglesias` no se escribio.** Con el salon fuera de alcance,
+  los unicos datos verificables disponibles son "Master en Inteligencia
+  Artificial", "divulgador" y "fundador". Una pagina de autoridad construida
+  sobre eso seria relleno, que es justo lo que la revision de evidencia
+  desaconseja. Faltan datos concretos del owner antes de escribirla.

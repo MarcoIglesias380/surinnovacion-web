@@ -221,9 +221,8 @@ export default function AsesoriaIA() {
             asesoria busca acortar.
           </p>
           <p>
-            Puedes revisar <Link href="/#proyectos">proyectos reales en los que he trabajado</Link> o mi{" "}
-            <a href="https://marcoiglesias.cl/" target="_blank" rel="noreferrer">sitio personal</a> antes de
-            escribirme.
+            Puedes revisar <Link href="/#proyectos">proyectos reales en los que he trabajado</Link> antes de
+            escribirme. Estan en linea y los puedes abrir ahora mismo.
           </p>
         </section>
 

@@ -2237,3 +2237,33 @@ html[data-tone="bright"] .glass-secondary-button {
   font-weight: 500;
   line-height: 1.55;
 }
+
+/* Proyecto en uso sin acceso publico: se ve como los demas pero no es un enlace. */
+.story-projects__sin-enlace {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  border-top: 1px solid rgba(234, 242, 255, 0.18);
+  padding: 1rem 0;
+  color: rgba(234, 242, 255, 0.72);
+}
+
+.story-projects__sin-enlace:last-child {
+  border-bottom: 1px solid rgba(234, 242, 255, 0.18);
+}
+
+.story-projects__sin-enlace strong,
+.story-projects__sin-enlace small {
+  display: block;
+}
+
+.story-projects__sin-enlace strong {
+  font-weight: 600;
+}
+
+.story-projects__sin-enlace small {
+  margin-top: 0.2rem;
+  color: rgba(234, 242, 255, 0.55);
+  font-size: 0.82rem;
+}
