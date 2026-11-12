@@ -8,21 +8,32 @@ type SequenceProfile = {
   count: number;
   directory: string;
   key: "desktop" | "mobile";
+  avifDirectory?: string;
 };
 
 const sequenceProfiles: Record<SequenceProfile["key"], SequenceProfile> = {
   desktop: { count: 120, directory: "/hero/sequence-v2/desktop", key: "desktop" },
-  mobile: { count: 72, directory: "/hero/sequence-v2/mobile", key: "mobile" }
+  mobile: {
+    count: 72,
+    directory: "/hero/sequence-v2/mobile",
+    key: "mobile",
+    avifDirectory: "/hero/sequence-v2/mobile-avif"
+  }
 };
+
+// Un AVIF de 1x1 para preguntarle al navegador si sabe decodificarlo. En movil
+// los mismos cuadros pesan 36% menos en AVIF y ademas quedan mas fieles al
+// video original, pero Safari solo lo admite desde iOS 16, asi que el perfil
+// WebP se mantiene como respaldo.
+const AVIF_DE_PRUEBA =
+  "data:image/avif;base64,AAAAHGZ0eXBhdmlmAAAAAG1pZjFhdmlmbWlhZgAAANZtZXRhAAAAAAAAACFoZGxyAAAAAAAAAABwaWN0AAAAAAAAAAAAAAAAAAAAAA5waXRtAAAAAAABAAAAImlsb2MAAAAAREAAAQABAAAAAAD6AAEAAAAAAAAAFwAAACNpaW5mAAAAAAABAAAAFWluZmUCAAAAAAEAAGF2MDEAAAAAVmlwcnAAAAA4aXBjbwAAAAxhdjFDgSACAAAAABRpc3BlAAAAAAAAAAEAAAABAAAAEHBpeGkAAAAAAwgICAAAABZpcG1hAAAAAAAAAAEAAQOBAgMAAAAfbWRhdBIACgc4AAYQENBpMgofkD///8QAAK/u";
 
 const phoneHref = "https://wa.me/56992891678";
 
 const projects = [
-  ["EventDash POS", "Gestion de ventas para eventos.", "https://eventdash-pos-mqlc.vercel.app/admin"],
-  ["Eventos IA", "Experiencias en vivo guiadas por IA.", "https://eventos-ia-surinnovacion.vercel.app/admin"],
   ["Columba Boutique", "Identidad y vitrina digital para una boutique.", "https://www.columbaboutique.com/"],
+  ["Ecommerce Ferreteria", "Catalogo digital de ferreteria, simple de recorrer.", "https://catalogo-distribuidora-oriente.vercel.app/"],
   ["Marco Iglesias", "Servicios, experiencia y divulgacion en IA.", "https://marcoiglesias.cl/"],
-  ["Distribuidora Oriente", "Catalogo digital simple de recorrer.", "https://catalogo-distribuidora-oriente.vercel.app/"],
   ["Marca Visible", "Una propuesta digital con identidad propia.", "https://marca-visible.vercel.app/"]
 ] as const;
 
@@ -45,9 +56,25 @@ function clamp(value: number) {
   return Math.max(0, Math.min(1, value));
 }
 
-function getFrameSource(profile: SequenceProfile, index: number) {
+function getFrameSource(profile: SequenceProfile, index: number, avif = false) {
   const boundedIndex = Math.max(0, Math.min(profile.count - 1, index));
-  return `${profile.directory}/frame-${String(boundedIndex + 1).padStart(3, "0")}.webp`;
+  const numero = String(boundedIndex + 1).padStart(3, "0");
+  return avif && profile.avifDirectory
+    ? `${profile.avifDirectory}/frame-${numero}.avif`
+    : `${profile.directory}/frame-${numero}.webp`;
+}
+
+function useAvifSupport() {
+  const [soportado, setSoportado] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const prueba = new window.Image();
+    prueba.onload = () => setSoportado(prueba.width > 0);
+    prueba.onerror = () => setSoportado(false);
+    prueba.src = AVIF_DE_PRUEBA;
+  }, []);
+
+  return soportado;
 }
 
 class ProgressiveFrameLoader {
@@ -58,7 +85,11 @@ class ProgressiveFrameLoader {
   private queue: FrameTask[] = [];
   private wanted = new Set<number>();
 
-  constructor(private readonly profile: SequenceProfile, private readonly concurrency = 4) {}
+  constructor(
+    private readonly profile: SequenceProfile,
+    private readonly avif: boolean,
+    private readonly concurrency = 4
+  ) {}
 
   updateWindow(indexes: number[]) {
     this.wanted = new Set(indexes);
@@ -127,7 +158,7 @@ class ProgressiveFrameLoader {
         this.cache.delete(task.index);
         finish(null);
       };
-      image.src = getFrameSource(this.profile, task.index);
+      image.src = getFrameSource(this.profile, task.index, this.avif);
     }
   }
 }
@@ -154,7 +185,7 @@ function useSequenceProfile() {
   return profileKey ? sequenceProfiles[profileKey] : null;
 }
 
-function FrameSequence({ profile, progress }: { profile: SequenceProfile; progress: number }) {
+function FrameSequence({ profile, avif, progress }: { profile: SequenceProfile; avif: boolean; progress: number }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const desiredIndexRef = useRef(-1);
   const lastImageRef = useRef<HTMLImageElement | null>(null);
@@ -184,7 +215,7 @@ function FrameSequence({ profile, progress }: { profile: SequenceProfile; progre
   }, []);
 
   useEffect(() => {
-    const loader = new ProgressiveFrameLoader(profile);
+    const loader = new ProgressiveFrameLoader(profile, avif);
     loaderRef.current = loader;
     desiredIndexRef.current = -1;
     lastImageRef.current = null;
@@ -192,7 +223,7 @@ function FrameSequence({ profile, progress }: { profile: SequenceProfile; progre
       loader.dispose();
       if (loaderRef.current === loader) loaderRef.current = null;
     };
-  }, [profile]);
+  }, [avif, profile]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -358,6 +389,7 @@ export function ScrollytellingLandingV2() {
   const [progress, setProgress] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(false);
   const profile = useSequenceProfile();
+  const avifSoportado = useAvifSupport();
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -461,8 +493,13 @@ export function ScrollytellingLandingV2() {
     <>
       <section ref={sceneRef} id="hero" className="story-scene">
         <div className="story-sticky">
-          {profile ? (
-            <FrameSequence key={profile.key} profile={profile} progress={renderedProgress} />
+          {profile && avifSoportado !== null ? (
+            <FrameSequence
+              key={`${profile.key}-${avifSoportado ? "avif" : "webp"}`}
+              profile={profile}
+              avif={avifSoportado}
+              progress={renderedProgress}
+            />
           ) : (
             <>
               <canvas className="story-frame" aria-hidden="true" />

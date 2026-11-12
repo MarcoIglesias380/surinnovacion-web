@@ -154,3 +154,66 @@ decorativa marcada con `aria-hidden` es correcto, no un fallo de accesibilidad.
 
 - `RUN_BUILD=1 ./init.sh`: lint, typecheck y build pasaron.
 - `scripts/auditar.py` contra las dos paginas, antes y despues.
+
+## 2026-11-12, tercera tanda: proyectos, contexto de negocio y AVIF movil
+
+### Contexto de negocio que faltaba registrar
+
+El owner aclaro que SurInnovacion vende **asesorias, sitios web y plataformas,
+CRM** y trabajos relacionados. El sitio publicado comunica solo la linea de
+asesoria en IA. Queda anotado en `docs/conventions.md` como decision pendiente:
+ampliar el mensaje a las demas lineas o mantener el foco actual.
+
+### Vitrina de proyectos
+
+- Se retiraron EventDash POS y Eventos IA a pedido del owner.
+- "Distribuidora Oriente" paso a llamarse "Ecommerce Ferreteria", conservando su
+  enlace, y su descripcion ahora dice de que rubro es.
+- Quedan cuatro proyectos: Columba Boutique, Ecommerce Ferreteria, Marco
+  Iglesias y Marca Visible.
+
+### Secuencia movil en AVIF
+
+Pregunta del owner: si los fotogramas pesan mucho y si deberian ser WebP.
+
+**Ya eran WebP.** El problema real era otro: el perfil movil usaba los mismos
+1280x720 que escritorio y, sobre todo, esos WebP venian de los JPG ya
+comprimidos de la primera version, no del video 4K original. Medido contra la
+fuente, el error medio del WebP actual es de 9,27 sobre 255.
+
+Se genero un perfil AVIF desde el 4K (`assets/source/hero-puerto-montt.mov`,
+3840x2160) a 1280x720, calidad 42:
+
+| | WebP actual | AVIF nuevo |
+|---|---|---|
+| Peso por cuadro | 50 KB | 31 KB |
+| Error contra el original | 9,27 | 2,54 |
+| 72 cuadros | 3,4 MB | 2,3 MB |
+
+Es decir, **36% mas liviano y a la vez 3,6 veces mas fiel**. Se descarto
+regenerar el WebP desde el 4K porque mejora la calidad pero sube el peso a
+4,1 MB, y el objetivo era bajarlo.
+
+El perfil WebP se conserva intacto como respaldo. El cargador detecta soporte
+AVIF con una imagen de 1x1 y elige el directorio; Safari admite AVIF desde
+iOS 16, y quien no lo soporte recibe exactamente lo que recibe hoy. El fondo de
+la seccion de contacto sigue en WebP a proposito, para que el render del
+servidor sea determinista.
+
+Solo se agrego el perfil movil. Escritorio no se toco porque el problema
+planteado era de datos moviles.
+
+### Verificacion
+
+- Recorrido movil sintetico de 60 pasos en 375x812: **1,79 MB transferidos**,
+  57 cuadros AVIF y 1 WebP (el fondo de contacto, esperado).
+- Fluidez: p95 de 13,9 ms y maximo de 14 ms por cuadro, bajo el presupuesto de
+  16,7 ms de 60 fps.
+- Lienzo de 750x1624 dibujando imagen real (brillo medio 124, rango 3-252).
+- Los cuadros nuevos se verificaron contra los antiguos: mismo instante del
+  video, sin desfase.
+- Vitrina renderizando los cuatro proyectos correctos.
+- `RUN_BUILD=1 ./init.sh`: lint, typecheck y build pasaron.
+
+`public/hero` paso de 9,7 MB a 12 MB en el repositorio, a cambio de 1,2 MB menos
+de descarga por visita movil.

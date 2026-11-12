@@ -28,6 +28,14 @@
   `docs/contacto-setup.md`.
 - La oferta comercial vigente es una asesoria gratuita de **30 minutos por
   videollamada**. No prometer informes, auditorias ni documentos escritos.
+- Lo que vende SurInnovacion hoy: **asesorias, sitios web y plataformas, CRM** y
+  trabajos relacionados. La asesoria gratuita es la puerta de entrada, no el
+  catalogo completo. Nota: el sitio publicado hoy comunica solo la linea de
+  asesoria en IA; ampliar el mensaje a las demas lineas es una decision
+  pendiente del owner.
+- La vitrina de proyectos muestra solo trabajos con enlace publico vigente. Los
+  proyectos se retiran de la lista cuando el owner lo pide, sin dejar fichas
+  muertas.
 - La ubicacion actual documentada es Valle Volcanes, Puerto Montt.
 - Cualquier backend, formulario, CRM o integracion externa debe quedar
   documentada antes de implementarse. El formulario de contacto esta
