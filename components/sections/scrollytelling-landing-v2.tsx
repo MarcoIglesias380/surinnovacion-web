@@ -30,13 +30,11 @@ const AVIF_DE_PRUEBA =
 
 const phoneHref = "https://wa.me/56992891678";
 
-// href vacio = sistema en uso sin acceso publico. Se muestra como caso, nunca
-// como un boton que no lleva a ninguna parte.
 const projects = [
   ["Columba Boutique", "Identidad y vitrina digital para una boutique.", "https://www.columbaboutique.com/"],
   ["Ecommerce Ferreteria", "Catalogo digital de ferreteria, simple de recorrer.", "https://catalogo-distribuidora-oriente.vercel.app/"],
-  ["Marca Visible", "Una propuesta digital con identidad propia.", "https://marca-visible.vercel.app/"],
-  ["CRM para salon de belleza", "Agenda, fichas de clientas y seguimiento. En uso diario, sin acceso publico.", ""]
+  ["Marco Iglesias", "Sitio de un salon de belleza: servicios, precios y reservas.", "https://marcoiglesias.cl/"],
+  ["Marca Visible", "Una propuesta digital con identidad propia.", "https://marca-visible.vercel.app/"]
 ] as const;
 
 const posts = [
@@ -537,20 +535,7 @@ export function ScrollytellingLandingV2() {
           <span id="proyectos" className="story-anchor story-anchor--projects" aria-hidden="true" />
           <section className="story-hologram story-hologram--projects" style={capaVisible(projectsOpacity)} aria-label="Proyectos">
             <h2>Proyectos de IA y automatizacion</h2>
-            <div className="story-projects">
-              {projects.map(([name, description, href]) =>
-                href ? (
-                  <a key={name} href={href} target="_blank" rel="noreferrer">
-                    <span><strong>{name}</strong><small>{description}</small></span>
-                    <ArrowUpRight aria-hidden="true" />
-                  </a>
-                ) : (
-                  <div key={name} className="story-projects__sin-enlace">
-                    <span><strong>{name}</strong><small>{description}</small></span>
-                  </div>
-                )
-              )}
-            </div>
+            <div className="story-projects">{projects.map(([name, description, href]) => <a key={name} href={href} target="_blank" rel="noreferrer"><span><strong>{name}</strong><small>{description}</small></span><ArrowUpRight aria-hidden="true" /></a>)}</div>
           </section>
         </div>
       </section>

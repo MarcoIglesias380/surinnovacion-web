@@ -76,8 +76,7 @@ const servicios = [
       "Saber quien es quien, que se le ofrecio y cuando corresponde volver a hablarle.",
     cuerpo: [
       "La mayoria de los negocios chicos no pierde ventas por falta de interesados, sino por no hacer seguimiento. Un CRM es simplemente el lugar donde esa informacion deja de vivir en la cabeza de alguien o en un cuaderno.",
-      "Se arma segun como vende tu negocio, no al reves. Un CRM que obliga a cambiar la forma de trabajar termina sin usarse, y entonces no sirve de nada.",
-      "Hay uno funcionando hoy en un salon de belleza de Puerto Montt: agenda, fichas de clientas y seguimiento, usado todos los dias. No tiene acceso publico porque contiene datos de personas reales, pero es un sistema en produccion y no una demostracion."
+      "Se arma segun como vende tu negocio, no al reves. Un CRM que obliga a cambiar la forma de trabajar termina sin usarse, y entonces no sirve de nada."
     ]
   }
 ] as const;
