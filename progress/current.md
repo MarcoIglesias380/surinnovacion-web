@@ -217,3 +217,56 @@ planteado era de datos moviles.
 
 `public/hero` paso de 9,7 MB a 12 MB en el repositorio, a cambio de 1,2 MB menos
 de descarga por visita movil.
+
+## 2026-11-12, cuarta tanda: las cinco lineas de negocio
+
+El owner pidio ampliar el mensaje del sitio a todo lo que vende, y agrego una
+linea que no estaba en la lista inicial: **integrar agentes de IA en las
+plataformas**.
+
+### Decisiones tomadas
+
+El owner no respondio dos de las tres preguntas, asi que se resolvieron asi y
+quedan abiertas a correccion:
+
+- **Cinco lineas**, con los agentes integrados como linea propia y primera, no
+  escondida dentro de "plataformas". Es donde se cruzan la IA y el desarrollo,
+  que es la combinacion que lo diferencia.
+- **La asesoria gratuita cubre todas las lineas.** Una sola puerta de entrada;
+  obligar al visitante a autoclasificarse antes de escribir pierde contactos.
+- **Una pagina `/servicios`**, no cinco paginas por linea. Cinco paginas flacas
+  se vuelven en contra, y eso lo confirmo la revision de evidencia.
+- **El H1 de la portada se mantiene en IA.** Es la keyword mas fuerte y el
+  diferenciador; ampliarlo para abarcar todo diluiria lo unico que ya funciona.
+
+### Cambios
+
+- Nueva ruta estatica `/servicios` con 804 palabras: agentes integrados,
+  asesoria en IA, sitios web y ecommerce, plataformas a medida y CRM, mas como
+  empieza un proyecto y seis preguntas frecuentes.
+- Las preguntas de precio y plazo se responden sin inventar numeros: se explica
+  por que no se publican y que la asesoria sirve para dimensionar.
+- Marcado `ItemList` con un `Service` por linea, mas `FAQPage` y el nodo de
+  organizacion.
+- La bajada del hero pasa a "IA, sitios web, plataformas y CRM. Asesoria
+  gratuita de 30 minutos."
+- La navegacion suma "Servicios"; el sitemap declara tres URLs.
+
+### Verificacion
+
+- Auditoria de `/servicios`: **0 hallazgos**. Title 60, description 150, un H1 y
+  ocho H2, 12 enlaces internos.
+- Hero en 375 px: el H1 conserva sus 2 lineas y 68 px. La bajada bajo de 3
+  lineas a 2, asi que el bloque termina en 462 px contra 481 px antes y 501 px
+  en el estado original. **El hero quedo mas compacto, no mas alto.**
+- Menu en 1280 px: los seis enlaces en una sola linea, sin desborde y con 164 px
+  de holgura respecto del logo.
+- `/servicios` en 375 px: sin desborde horizontal, CTAs a ancho completo.
+- `RUN_BUILD=1 ./init.sh` y `git diff --check`: pasaron.
+
+### Pendiente
+
+La linea de plataformas y la de CRM no tienen ningun trabajo publico que
+mostrar, ahora que EventDash y Eventos IA salieron de la vitrina. El texto no
+inventa casos, pero esas dos lineas se sostienen solo en la descripcion del
+servicio. Conviene sumar algun ejemplo verificable cuando exista.

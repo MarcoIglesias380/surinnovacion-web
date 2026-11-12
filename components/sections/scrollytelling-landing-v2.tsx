@@ -510,7 +510,7 @@ export function ScrollytellingLandingV2() {
           <div className="story-copy story-copy--intro" style={{ opacity: introOpacity }}>
             <p>Marco Iglesias · Master y divulgador de Inteligencia Artificial</p>
             <h1>Inteligencia artificial para tu empresa.</h1>
-            <p className="story-intro-lede">Asesoria gratuita de 30 minutos para ver donde la IA te conviene, y donde no.</p>
+            <p className="story-intro-lede">IA, sitios web, plataformas y CRM. Asesoria gratuita de 30 minutos.</p>
             <div className="story-hero-actions">
               <a href="#proyectos">Ver proyectos <ArrowDownRight aria-hidden="true" /></a>
               <a href={`${phoneHref}?text=${encodeURIComponent("Hola, quiero coordinar la asesoria gratuita de 30 minutos.")}`} target="_blank" rel="noreferrer">Asesoria gratuita <MessageCircle aria-hidden="true" /></a>

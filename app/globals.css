@@ -2229,3 +2229,11 @@ html[data-tone="bright"] .glass-secondary-button {
     justify-content: center;
   }
 }
+
+.doc-resumen {
+  margin-bottom: 1.1rem;
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.55;
+}

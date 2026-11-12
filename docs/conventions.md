@@ -28,11 +28,16 @@
   `docs/contacto-setup.md`.
 - La oferta comercial vigente es una asesoria gratuita de **30 minutos por
   videollamada**. No prometer informes, auditorias ni documentos escritos.
-- Lo que vende SurInnovacion hoy: **asesorias, sitios web y plataformas, CRM** y
-  trabajos relacionados. La asesoria gratuita es la puerta de entrada, no el
-  catalogo completo. Nota: el sitio publicado hoy comunica solo la linea de
-  asesoria en IA; ampliar el mensaje a las demas lineas es una decision
-  pendiente del owner.
+- Lo que vende SurInnovacion, en `/servicios`: **agentes de IA integrados en
+  plataformas, asesoria en IA, sitios web y ecommerce, plataformas a medida y
+  CRM**. La asesoria gratuita de 30 minutos es la puerta de entrada a todas, no
+  solo a la de IA.
+- El H1 de la portada se mantiene centrado en inteligencia artificial a
+  proposito: es el diferenciador y la keyword mas fuerte. Las demas lineas se
+  comunican en `/servicios`, no diluyendo la portada.
+- No publicar precios ni plazos fijos por servicio. El alcance se define en la
+  conversacion; publicar un numero que despues no se cumple es justo lo que la
+  pagina promete no hacer.
 - La vitrina de proyectos muestra solo trabajos con enlace publico vigente. Los
   proyectos se retiran de la lista cuando el owner lo pide, sin dejar fichas
   muertas.

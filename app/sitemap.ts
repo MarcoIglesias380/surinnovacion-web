@@ -9,6 +9,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1
     },
     {
+      url: "https://surinnovacion.cl/servicios",
+      lastModified: new Date("2026-11-12"),
+      changeFrequency: "monthly",
+      priority: 0.9
+    },
+    {
       url: "https://surinnovacion.cl/asesoria-ia",
       lastModified: new Date("2026-11-12"),
       changeFrequency: "monthly",

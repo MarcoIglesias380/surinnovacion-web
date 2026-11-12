@@ -171,6 +171,23 @@
       "status": "done"
     },
     {
+      "id": 20,
+      "name": "pagina-servicios-cinco-lineas",
+      "title": "Comunicar las cinco lineas de negocio en /servicios",
+      "description": "El sitio comunicaba solo la linea de asesoria en IA, cuando SurInnovacion tambien vende sitios web y ecommerce, plataformas a medida, CRM y agentes de IA integrados en plataformas. Esta ultima es la mas diferenciadora y no existia en ninguna parte del sitio.",
+      "acceptance": [
+        "Existe /servicios con las cinco lineas explicadas, cada una con su H2.",
+        "Los agentes de IA integrados aparecen como linea propia, no escondidos dentro de plataformas.",
+        "No se publican precios ni plazos fijos, ni se inventan clientes o resultados.",
+        "La asesoria gratuita se comunica como puerta de entrada a todas las lineas.",
+        "El H1 de la portada se mantiene centrado en IA para no diluir la keyword fuerte.",
+        "La pagina queda enlazada desde la navegacion y declarada en el sitemap.",
+        "El hero no crece en movil respecto del estado anterior.",
+        "Lint, typecheck, build y auditoria pasan."
+      ],
+      "status": "done"
+    },
+    {
       "id": 10,
       "name": "blog-contenido-real",
       "title": "Convertir blog vitrina en contenido real",

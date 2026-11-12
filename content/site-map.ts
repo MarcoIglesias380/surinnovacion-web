@@ -9,6 +9,7 @@ export type SiteSection = {
 
 export const navItems = [
   { label: "Historia", href: "/#hero" },
+  { label: "Servicios", href: "/servicios" },
   { label: "Asesoria", href: "/asesoria-ia" },
   { label: "Proyectos", href: "/#proyectos" },
   { label: "Blog Tech", href: "/#blog" },
