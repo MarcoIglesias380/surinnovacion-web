@@ -21,6 +21,22 @@ Dos consecuencias practicas:
 - Importan las preguntas que nadie escribe en un buscador pero si le hace a una
   IA: "me conviene a mi", "cuanto demora", "que pasa si no funciona".
 
+## Que dice el estudio de referencia
+
+El trabajo academico de referencia es *GEO: Generative Engine Optimization*
+(Aggarwal y otros, KDD 2024), con unas 10.000 consultas de prueba. Encontro que
+agregar **citas de fuentes, estadisticas y comillas de terceros** sube de forma
+significativa la visibilidad en respuestas generativas, hasta en torno a un 40%,
+mientras que el relleno de palabras clave resulto practicamente inutil.
+
+El dato mas util para un negocio sin marca: la visibilidad del sitio en quinta
+posicion subio un 115,1%, y la del primero bajo en promedio. Estas tecnicas
+favorecen mas a quien no lidera.
+
+Una revision critica de 2026 advierte que ese 40% es un maximo relativo bajo una
+configuracion concreta y que las heuristicas se transfieren mal entre motores.
+La direccion esta respaldada; las cifras exactas, no. Detalle en `evidencia.md`.
+
 ## Que hace que un contenido se cite
 
 **Responde primero, desarrolla despues.** Los modelos extraen fragmentos cortos y
@@ -86,6 +102,20 @@ tiempo:
 
 Si te describen mal, el problema casi siempre es que tu web no dice eso con
 claridad, o que lo dice distinto en otros sitios.
+
+## Cuanto trafico hay realmente detras
+
+Conviene entrar con la expectativa correcta. Segun datos de Pew Research (marzo
+2025), cuando aparece un resumen de IA los usuarios hacen clic en resultados
+tradicionales el 8% de las veces, frente al 15% cuando no aparece, y pinchan los
+enlaces del propio resumen solo el 1% de las veces. Google cuestiono esa
+metodologia. Seer Interactive (febrero 2026) midio que las paginas citadas
+reciben 120% mas clics que las no citadas, pero 38% menos que en un resultado sin
+resumen de IA.
+
+Leido junto: ser citado es mucho mejor que no serlo, y aun asi la torta se
+achica. Por eso importa tanto que la mencion en si describa bien al negocio,
+porque buena parte del valor ocurre sin clic. Fuentes en `evidencia.md`.
 
 ## Lo que no hay que hacer
 

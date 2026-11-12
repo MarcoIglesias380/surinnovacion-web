@@ -189,7 +189,11 @@ def auditar(url):
     if not p.lang:
         anotar("medio", "accesibilidad", "El <html> no declara lang.")
     if len(palabras) < LIMITES["palabras_min"]:
-        anotar("alto", "contenido", f"Solo {len(palabras)} palabras visibles. Por debajo de ~{LIMITES['palabras_min']} es muy dificil competir, y una IA tiene poco que citar.")
+        # El numero de palabras no es un factor de posicionamiento (Google lo ha
+        # dicho explicitamente). Se avisa igual porque una pagina tan corta suele
+        # dejar la pregunta a medias y no da nada propio que una IA pueda citar,
+        # pero el diagnostico real es de cobertura, no de cantidad.
+        anotar("alto", "contenido", f"Solo {len(palabras)} palabras visibles. El largo en si no posiciona; revisa si la pagina responde la pregunta completa y si deja algo propio que citar.")
 
     niveles = [int(t[1]) for t, _ in p.encabezados]
     for i in range(1, len(niveles)):
@@ -216,7 +220,9 @@ def auditar(url):
         if not any(t in schema for t in ("LocalBusiness", "ProfessionalService", "Organization")):
             anotar("medio", "datos-estructurados", "Falta un tipo de negocio (LocalBusiness, ProfessionalService u Organization).")
         if "FAQPage" not in schema:
-            anotar("bajo", "geo", "Sin FAQPage. Las preguntas marcadas son de lo que mejor se cita en respuestas de IA.")
+            # Los resultados enriquecidos de FAQ se retiraron en mayo de 2026: el
+            # valor que queda es de comprension y de extraccion por modelos.
+            anotar("bajo", "geo", "Sin FAQPage. Ya no da resultado enriquecido en Google, pero el formato pregunta-respuesta se extrae bien en buscadores con IA.")
     if p.og and "og:image" not in p.og:
         anotar("bajo", "social", "Sin og:image: al compartir el enlace no se ve tarjeta.")
     if robots is None:

@@ -43,8 +43,11 @@ de servicio y una de blog fallan de formas distintas.
 El error mas comun es optimizar detalles sobre un sitio que no tiene nada que
 decir. Este es el orden que de verdad mueve la aguja:
 
-1. **Que el sitio tenga contenido.** Una pagina de 150 palabras no compite, por
-   bien puestas que esten las keywords, y una IA no tiene de donde citarte.
+1. **Que la pagina responda la pregunta completa.** El numero de palabras no es
+   un factor de posicionamiento y Google lo ha dicho explicitamente. Lo que falla
+   en una pagina de 150 palabras no es su largo, sino que deja la duda a medias y
+   no ofrece nada propio que una IA pueda citar. Diagnostica cobertura, no
+   cantidad.
 2. **Que cada pagina tenga una intencion clara.** Una pagina, una busqueda, una
    accion.
 3. **Que la estructura lo refleje.** H1 unico con la keyword, H2 por bloque,
@@ -52,8 +55,10 @@ decir. Este es el orden que de verdad mueve la aguja:
 4. **Que los metadatos no se corten.** Title entre 30 y 60 caracteres,
    description entre 70 y 160.
 5. **Que haya datos estructurados** que describan el negocio y las preguntas.
-6. **Que exista prueba de quien eres** (E-E-A-T): autor identificable, trabajo
-   verificable, datos de contacto reales.
+6. **Que exista prueba de quien eres.** Autor identificable, trabajo verificable,
+   datos de contacto reales. Ojo con E-E-A-T: no es un factor del algoritmo sino
+   un concepto de las guias que Google entrega a sus evaluadores humanos. No hay
+   casilla que marcar; lo que vale son las senales de fondo.
 7. **Recien ahi**, enlaces externos y afinado tecnico.
 
 Si el paso 1 falla, los demas rinden poco. Dilo claramente en vez de entregar una
@@ -90,7 +95,10 @@ que poder extraerse y atribuirse. Lo que funciona:
   solo tu puedes afirmar es lo que te hace citable. Un texto que repite lo que ya
   dicen mil paginas no da motivo para nombrarte.
 - **Preguntas frecuentes reales**, con las palabras que usa la gente, marcadas
-  con `FAQPage`.
+  con `FAQPage`. Aviso: Google dejo de mostrar los resultados enriquecidos de FAQ
+  en mayo de 2026. El marcado sigue sirviendo para comprension y porque el formato
+  pregunta-respuesta se extrae bien, pero ya no da espacio visual en Google. Quien
+  lo venda como tal esta vendiendo una funcion muerta.
 - **Entidades claras**: nombre del negocio, persona, ciudad y servicio escritos
   explicitamente, no insinuados. Las IA trabajan con entidades, no con adjetivos.
 - **Fechas y autoria visibles.**
@@ -175,13 +183,25 @@ Leelas cuando el trabajo entre en ese terreno:
   hace citable un contenido, rastreadores y como comprobar si te nombran.
 - `references/datos-estructurados.md` — que Schema usar segun el caso, con
   ejemplos listos para copiar y los errores que invalidan el marcado.
+- `references/evidencia.md` — **leela antes de afirmar algo como un hecho ante un
+  cliente.** Separa lo respaldado por estudios o por Google de lo que circula como
+  verdad aceptada, con fuentes y con las cifras que no se pudieron confirmar.
 
 ## Procedencia
 
 El temario de esta skill sigue el de siete cursos en espanol de SEO con IA, SEO
 local y GEO (The BIG / Romuald Fons, y Pedro SEO), tomado de sus capitulos
-publicos. Las recomendaciones concretas provienen de la documentacion de Google y
-de practica conocida, no de una transcripcion de esos videos. Cuando una
-afirmacion dependa de algo que cambia rapido (limites exactos, nombres de
-rastreadores, comportamiento de un buscador con IA), verificala antes de
-presentarla como un hecho.
+publicos. Las recomendaciones concretas provienen de la documentacion de Google,
+de investigacion publicada y de practica conocida, no de una transcripcion de
+esos videos.
+
+Esas recomendaciones se contrastaron despues contra estudios y fuentes primarias,
+y tres afirmaciones habituales en formacion de SEO no resistieron: el minimo de
+palabras, la FAQ marcada como via a un resultado enriquecido, y E-E-A-T tratado
+como factor del algoritmo. Estan corregidas en el cuerpo y documentadas en
+`references/evidencia.md`.
+
+Cuando una afirmacion dependa de algo que cambia rapido (limites exactos, nombres
+de rastreadores, comportamiento de un buscador con IA), verificala antes de
+presentarla como un hecho. Y cuando esta skill y una fuente primaria se
+contradigan, gana la fuente primaria.

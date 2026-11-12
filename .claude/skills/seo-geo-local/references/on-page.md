@@ -2,6 +2,11 @@
 
 Lo que se controla desde el HTML de cada pagina.
 
+Una aclaracion que ahorra discusiones: **el numero de palabras no es un factor de
+posicionamiento**. Google lo ha dicho de forma explicita. La correlacion entre
+textos largos y buenas posiciones existe, pero se explica porque esos textos
+cubren el tema completo, no porque midan mas. Ver `evidencia.md`.
+
 ## Title
 
 Lo que se lee en el resultado de Google y lo primero que decide el clic.

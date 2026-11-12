@@ -16,7 +16,7 @@ recomienda y lo mas facil de mantener.
 | Empresa sin atencion presencial | `Organization` |
 | Persona (autor, fundador) | `Person` |
 | Un servicio concreto | `Service` con `offers` |
-| Preguntas frecuentes visibles | `FAQPage` |
+| Preguntas frecuentes visibles | `FAQPage` (ver nota abajo) |
 | Articulo o guia | `Article` con `author` y `datePublished` |
 | Ruta de navegacion | `BreadcrumbList` |
 | Producto con precio | `Product` con `offers` |
@@ -69,6 +69,16 @@ con la ficha de Google.
 ```
 
 ## Preguntas frecuentes
+
+**Antes de usarlo:** Google dejo de mostrar los resultados enriquecidos de FAQ en
+Search el 7 de mayo de 2026, y durante ese ano retiro tambien el informe en
+Search Console y el soporte en la prueba de resultados enriquecidos. El tipo
+`FAQPage` **no** esta obsoleto y Google declara que sigue usando esos datos para
+entender la pagina, asi que mantener un marcado valido no hace dano y ayuda a que
+el formato pregunta-respuesta se extraiga bien en buscadores con IA.
+
+Lo que ya no corresponde es prometer que la FAQ se vera desplegada en Google.
+Detalle y fuentes en `evidencia.md`.
 
 ```json
 {
