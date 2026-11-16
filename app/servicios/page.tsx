@@ -156,7 +156,7 @@ const faqSchema = {
 
 export default function Servicios() {
   return (
-    <main className="site-shell min-h-screen bg-void text-frost selection:bg-ion/30">
+    <main className="site-shell commercial-page min-h-screen bg-void text-frost selection:bg-ion/30">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -166,91 +166,83 @@ export default function Servicios() {
       <SiteHeader />
       <article className="doc-page">
         <header className="doc-hero">
-          <p className="doc-eyebrow">Servicios</p>
           <h1>Consultoría en innovación y mejora de procesos</h1>
           <p className="doc-lede">
-            SurInnovacion ayuda a empresas a aprovechar mejor sus recursos técnicos y
-            administrativos. Desde Puerto Montt atendemos a empresas de todo Chile. La primera
-            videollamada dura 30 minutos y es gratuita.
+            Evalúo cómo trabaja tu empresa y desarrollo sistemas a medida para mejorar
+            la administración o la producción. Atiendo desde Puerto Montt a todo Chile.
           </p>
           <div className="doc-actions">
             <a className="doc-cta" href={phoneHref} target="_blank" rel="noreferrer">
               Agendar asesoría por WhatsApp <MessageCircle aria-hidden="true" />
             </a>
-            <a className="doc-cta doc-cta--ghost" href="#mejora-de-procesos">
-              Ver qué evaluamos <ArrowUpRight aria-hidden="true" />
+            <a className="doc-cta doc-cta--ghost" href="#soluciones">
+              Explorar soluciones <ArrowUpRight aria-hidden="true" />
             </a>
           </div>
         </header>
 
-        {servicios.map((s) => (
-          <section className="doc-section" id={s.id} key={s.id}>
-            <h2>{s.titulo}</h2>
-            <p className="doc-resumen">{s.resumen}</p>
-            {s.cuerpo.map((parrafo) => (
-              <p key={parrafo.slice(0, 40)}>{parrafo}</p>
-            ))}
-            {"enlace" in s && s.enlace ? (
-              <p>
-                <Link href={s.enlace.href}>{s.enlace.texto}</Link>
-              </p>
-            ) : null}
-          </section>
-        ))}
-
-        <section className="doc-section">
-          <h2>Quien hace el trabajo</h2>
-          <p>
-            Marco Iglesias, Master en Inteligencia Artificial por BIG School y la Universidad Isabel I,
-            desde Puerto Montt. <Link href="/marco-iglesias">Ver formacion y trabajo publicado</Link>.
-          </p>
-        </section>
-
-        <section className="doc-section">
-          <h2>Cómo pasamos de la evaluación a una solución</h2>
-          <ol className="doc-steps">
-            <li>
-              <strong>Cuéntame qué te está costando.</strong> Por WhatsApp, describe tu empresa
-              y un proceso que quieras mejorar.
-            </li>
-            <li>
-              <strong>Revisamos el proceso.</strong> En la videollamada gratuita ubicamos el
-              problema y acordamos qué conviene revisar primero.
-            </li>
-            <li>
-              <strong>Te propongo algo concreto.</strong> Con alcance, plazo y precio definidos antes
-              de empezar, no sobre la marcha.
-            </li>
-            <li>
-              <strong>Decides tu.</strong> Si no te convence, te quedas igual con el criterio de la
-              conversacion.
-            </li>
-          </ol>
-        </section>
-
-        <section className="doc-section" id="preguntas">
-          <h2>Preguntas frecuentes</h2>
-          <div className="doc-faq">
-            {faqs.map(([question, answer]) => (
-              <details key={question}>
-                <summary>{question}</summary>
-                <p>{answer}</p>
+        <section className="doc-section" id="soluciones">
+          <h2>Soluciones para tu empresa</h2>
+          <div className="commercial-disclosures">
+            {servicios.map((s) => (
+              <details id={s.id} key={s.id}>
+                <summary>
+                  {s.titulo}
+                  <span>{s.resumen}</span>
+                </summary>
+                <div className="commercial-detail">
+                  {s.cuerpo.map((parrafo) => <p key={parrafo}>{parrafo}</p>)}
+                  {"enlace" in s && s.enlace ? (
+                    <p><Link href={s.enlace.href}>{s.enlace.texto}</Link></p>
+                  ) : null}
+                </div>
               </details>
             ))}
           </div>
         </section>
 
+        <section className="doc-section">
+          <h2>Cómo empezamos</h2>
+          <div className="commercial-disclosures">
+            <details>
+              <summary>De la primera llamada a una propuesta</summary>
+              <div className="commercial-detail">
+                <ol className="doc-steps">
+                  <li>Cuéntame por WhatsApp qué proceso necesitas mejorar.</li>
+                  <li>En la videollamada revisamos el problema y definimos por dónde empezar.</li>
+                  <li>Si hay un proyecto, te propongo un alcance, un plazo y un precio antes de empezar.</li>
+                </ol>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section className="doc-section" id="preguntas">
+          <h2>Preguntas frecuentes</h2>
+          <div className="commercial-disclosures">
+            <details>
+              <summary>Ver preguntas y respuestas</summary>
+              <div className="commercial-detail doc-faq">
+                {faqs.map(([question, answer]) => (
+                  <details key={question}>
+                    <summary>{question}</summary>
+                    <p>{answer}</p>
+                  </details>
+                ))}
+              </div>
+            </details>
+          </div>
+        </section>
+
         <section className="doc-closing">
-          <h2>Conversemos 30 minutos y lo vemos</h2>
-          <p>
-            No necesitas tener claro cual de estas lineas te sirve. Esa es justamente la parte que
-            resolvemos en la primera conversacion.
-          </p>
+          <h2>Cuéntame qué proceso quieres mejorar</h2>
+          <p>La primera videollamada dura 30 minutos y es gratuita.</p>
           <div className="doc-actions">
             <a className="doc-cta" href={phoneHref} target="_blank" rel="noreferrer">
               Escribir por WhatsApp <MessageCircle aria-hidden="true" />
             </a>
           </div>
+          <p><Link href="/marco-iglesias">Conoce a Marco Iglesias</Link></p>
         </section>
       </article>
       <SiteFooter />

@@ -661,3 +661,8 @@ Append-only. Cada cierre de sesion debe agregar una entrada nueva al final.
 
 - Se creó un índice editorial y tres artículos sobre lanzamientos de modelos, datos de adopción empresarial e infraestructura.
 - Lint, typecheck, build y revisión de HTML, canonicals, citas y sitemap pasaron.
+
+## 2026-11-15 - Feature 11: Cabeceras y lectura progresiva
+
+- Se integró un fondo común inspirado en el hero en Servicios, Asesoría y la portada del Blog.
+- Las páginas comerciales conservan sus títulos y muestran los detalles bajo demanda. Compilación y prueba local de fondo y desplegables en móvil y escritorio completadas.

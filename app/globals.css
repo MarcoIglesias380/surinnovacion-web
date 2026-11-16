@@ -1981,6 +1981,109 @@ html[data-tone="bright"] .glass-secondary-button {
   }
 }
 
+.commercial-page {
+  position: relative;
+}
+
+.commercial-page::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 36rem;
+  background:
+    linear-gradient(180deg, rgba(2, 6, 23, 0.36), rgba(2, 6, 23, 0.52) 55%, var(--bg-void, #020617)),
+    linear-gradient(90deg, rgba(2, 6, 23, 0.83), rgba(2, 6, 23, 0.24)),
+    url("/sections/bahia-innovacion.webp") 65% 46% / cover no-repeat;
+  content: "";
+  pointer-events: none;
+}
+
+.commercial-page > .doc-page {
+  position: relative;
+}
+
+.commercial-page .doc-hero {
+  padding-bottom: 3rem;
+}
+
+.commercial-page .doc-hero h1 {
+  color: #fff;
+}
+
+.commercial-page .doc-lede {
+  margin-top: 1.25rem;
+  color: #e3f0ff;
+}
+
+.commercial-page .doc-cta--ghost {
+  background: rgba(2, 6, 23, 0.45);
+}
+
+.commercial-disclosures {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.commercial-disclosures > details {
+  scroll-margin-top: 6rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 0.55rem;
+  background: rgba(2, 6, 23, 0.78);
+}
+
+.commercial-disclosures > details > summary {
+  position: relative;
+  padding: 1rem 3rem 1rem 1.15rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+
+.commercial-disclosures > details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.commercial-disclosures > details > summary::after {
+  position: absolute;
+  top: 1rem;
+  right: 1.15rem;
+  color: var(--brand-ion);
+  content: "+";
+}
+
+.commercial-disclosures > details[open] > summary::after {
+  content: "−";
+}
+
+.commercial-disclosures summary:focus-visible {
+  outline: 2px solid var(--brand-ion);
+  outline-offset: -3px;
+}
+
+.commercial-disclosures > details > summary > span {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.commercial-detail {
+  padding: 0 1.15rem 1.15rem;
+}
+
+.commercial-detail > p:last-child {
+  margin-bottom: 0;
+}
+
+.commercial-page #soluciones {
+  scroll-margin-top: 6rem;
+}
+
+.commercial-page .doc-closing > p:last-child {
+  margin-top: 1rem;
+}
+
 /* Paginas de contenido tipo documento, como /asesoria-ia */
 
 .doc-page {

@@ -1,6 +1,8 @@
 # Sesion actual
 
 - Feature en curso: ninguna
+- Feature 11, avance parcial: Servicios, Asesoría y portada del Blog comparten un fondo WebP de 99 804 bytes, generado a partir del concepto visual del hero. En Servicios y Asesoría el detalle se abre con controles nativos.
+- Verificación del avance: `RUN_BUILD=1 ./init.sh` pasó fuera del sandbox por la escritura de caché de Next.js. Chrome a 375×812 y 1440×900 confirmó el fondo, ausencia de desborde horizontal y apertura/cierre con Espacio y clic.
 - Última feature verificada: 10, blog editorial con tres análisis y fuentes primarias.
 
 ## 2026-11-15, blog de IA e innovación

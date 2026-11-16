@@ -13,14 +13,13 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   return (
-    <main className="site-shell min-h-screen bg-void text-frost">
+    <main className="site-shell commercial-page min-h-screen bg-void text-frost">
       <SiteHeader />
       <div className="doc-page">
         <header className="doc-hero">
           <h1>Noticias de IA e innovación para empresas</h1>
           <p className="doc-lede">
-            Qué pasó en 2026, qué datos lo respaldan y qué merece seguimiento en 2027.
-            Cada análisis enlaza los anuncios o informes originales.
+            Qué está cambiando en IA y qué significa para las empresas, con datos y fuentes originales.
           </p>
         </header>
         {articles.map((article) => (

@@ -99,7 +99,7 @@ const serviceSchema = {
 
 export default function AsesoriaIA() {
   return (
-    <main className="site-shell min-h-screen bg-void text-frost selection:bg-ion/30">
+    <main className="site-shell commercial-page min-h-screen bg-void text-frost selection:bg-ion/30">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -109,149 +109,73 @@ export default function AsesoriaIA() {
       <SiteHeader />
       <article className="doc-page">
         <header className="doc-hero">
-          <p className="doc-eyebrow">Asesoria gratuita</p>
-          <h1>Asesoria gratuita en inteligencia artificial para tu empresa</h1>
+          <h1>Asesoría gratuita en inteligencia artificial para tu empresa</h1>
           <p className="doc-lede">
-            Una videollamada de 30 minutos para mirar como trabaja hoy tu empresa y decirte donde la
-            inteligencia artificial te conviene, y donde no. Sin costo y sin compromiso de contratar nada
-            despues.
+            En 30 minutos revisamos un proceso de tu empresa y vemos si la IA puede ayudarte.
           </p>
           <div className="doc-actions">
-            <Link className="doc-cta" href="/#contacto">
-              Agendar por el formulario <ArrowUpRight aria-hidden="true" />
-            </Link>
-            <a className="doc-cta doc-cta--ghost" href={phoneHref} target="_blank" rel="noreferrer">
-              Escribir por WhatsApp <MessageCircle aria-hidden="true" />
+            <a className="doc-cta" href={phoneHref} target="_blank" rel="noreferrer">
+              Coordinar por WhatsApp <MessageCircle aria-hidden="true" />
             </a>
           </div>
         </header>
 
         <section className="doc-section">
-          <h2>Que pasa en esos 30 minutos</h2>
-          <p>
-            No es una presentacion de servicios. La llamada parte por tu operacion, no por la tecnologia.
-          </p>
-          <ul className="doc-list">
-            <li>Me cuentas como trabaja tu empresa hoy: que tareas se repiten, donde se pierde tiempo y que parte de la atencion consume mas gente.</li>
-            <li>Miramos que de eso se puede resolver con herramientas que ya existen y estan maduras, y que todavia no.</li>
-            <li>Te digo en que orden conviene empezar, si es que conviene empezar ahora.</li>
-            <li>Sales con un criterio para decidir, lo hagas conmigo o por tu cuenta.</li>
-          </ul>
-        </section>
-
-        <section className="doc-section">
-          <h2>Que no incluye</h2>
-          <p>
-            Prefiero decirlo antes que despues, para que llegues con la expectativa correcta.
-          </p>
-          <ul className="doc-list doc-list--plain">
-            <li>No es un informe escrito ni una auditoria. Es una conversacion.</li>
-            <li>No reviso tus sistemas por dentro ni accedo a tus datos.</li>
-            <li>No termina en una cotizacion automatica. Si tiene sentido trabajar juntos, eso se conversa aparte.</li>
-            <li>No prometo resultados ni porcentajes de ahorro. Cualquiera que te los prometa antes de conocer tu operacion te esta vendiendo humo.</li>
-          </ul>
-        </section>
-
-        <section className="doc-section">
-          <h2>Para quien es</h2>
-          <div className="doc-grid">
-            <div>
-              <h3>Empresa grande</h3>
-              <p>Equipos que ya probaron IA en algun area y necesitan ordenar el criterio antes de escalarlo al resto de la operacion.</p>
-            </div>
-            <div>
-              <h3>Empresa mediana</h3>
-              <p>Operaciones con procesos manuales que estan creciendo mas rapido que el equipo que los sostiene.</p>
-            </div>
-            <div>
-              <h3>Empresa chica o emprendimiento</h3>
-              <p>Donde una o dos personas hacen todo y cada hora que se recupera se nota de inmediato.</p>
-            </div>
-            <div>
-              <h3>Profesional independiente</h3>
-              <p>Quien trabaja por su cuenta y quiere usar IA en su propio trabajo sin perder semanas probando herramientas.</p>
-            </div>
+          <h2>Qué revisamos en la llamada</h2>
+          <div className="commercial-disclosures">
+            <details>
+              <summary>Cómo funciona y qué incluye</summary>
+              <div className="commercial-detail">
+                <p>Me cuentas dónde se repite trabajo o se pierde tiempo. Revisamos las opciones y te propongo un primer paso que puedas evaluar.</p>
+                <p>Es una videollamada inicial, sin costo ni compromiso. No incluye auditoría, informe escrito ni acceso a tus sistemas o datos. Si necesitas una implementación, acordamos su alcance por separado.</p>
+              </div>
+            </details>
+            <details>
+              <summary>Para quién es la asesoría</summary>
+              <div className="commercial-detail">
+                <p>Para pymes, equipos de empresas grandes y profesionales independientes que quieren evaluar la IA en una tarea concreta o revisar un piloto antes de escalarlo.</p>
+              </div>
+            </details>
+            <details>
+              <summary>Ejemplos de procesos que podemos revisar</summary>
+              <div className="commercial-detail">
+                <ul className="doc-list">
+                  <li>Responder consultas frecuentes de clientes.</li>
+                  <li>Reducir la digitación repetida entre correos, planillas y sistemas.</li>
+                  <li>Preparar fichas de producto o sacar partido a los datos que ya registras.</li>
+                </ul>
+              </div>
+            </details>
           </div>
-          <p className="doc-note">
-            Si no te reconoces en ninguna, escribeme igual y te digo derechamente si te puedo ayudar o no.
-          </p>
-        </section>
-
-        <section className="doc-section">
-          <h2>Como funciona</h2>
-          <ol className="doc-steps">
-            <li>
-              <strong>Me escribes.</strong> Por el formulario del sitio o por WhatsApp, contandome brevemente a que se dedica tu empresa.
-            </li>
-            <li>
-              <strong>Coordinamos.</strong> Te respondo para fijar dia y hora segun tu disponibilidad.
-            </li>
-            <li>
-              <strong>Conversamos 30 minutos.</strong> Por videollamada, con tu operacion sobre la mesa.
-            </li>
-            <li>
-              <strong>Decides tu.</strong> Con un criterio claro de por donde empezar y que dejar para despues.
-            </li>
-          </ol>
-        </section>
-
-        <section className="doc-section">
-          <h2>Por donde suelen empezar las empresas</h2>
-          <p>
-            Estas son las areas donde la automatizacion y la IA estan mas maduras hoy. No todas aplican a
-            todos: buena parte de la conversacion es descartar las que no te sirven.
-          </p>
-          <ul className="doc-list">
-            <li><strong>Atencion a clientes.</strong> Responder lo que se pregunta una y otra vez, y filtrar antes de que llegue a una persona del equipo.</li>
-            <li><strong>Tareas administrativas repetitivas.</strong> Informacion que hoy se copia a mano de un sistema a otro, o de un correo a una planilla.</li>
-            <li><strong>Contenido y catalogo.</strong> Descripciones, fichas de producto y material de venta que hoy toman horas de alguien.</li>
-            <li><strong>Datos que ya registras.</strong> Ordenar lo que tu negocio ya genera para poder mirarlo y decidir con eso.</li>
-          </ul>
-        </section>
-
-        <section className="doc-section">
-          <h2>Quien te va a asesorar</h2>
-          <p>
-            Soy Marco Iglesias, Master en Inteligencia Artificial por BIG School y la Universidad
-            Isabel I, y fundador de SurInnovacion. Trabajo desde Puerto Montt para empresas de todo
-            Chile. <Link href="/marco-iglesias">Mas sobre mi formacion y mi trabajo</Link>.
-          </p>
-          <p>
-            Hago divulgacion de IA porque creo que el problema no es la falta de herramientas sino la
-            distancia entre esas herramientas y el negocio que las necesita. Esa distancia es la que esta
-            asesoria busca acortar.
-          </p>
-          <p>
-            Puedes revisar <Link href="/#proyectos">proyectos reales en los que he trabajado</Link> antes de
-            escribirme. Estan en linea y los puedes abrir ahora mismo.
-          </p>
         </section>
 
         <section className="doc-section" id="preguntas">
           <h2>Preguntas frecuentes</h2>
-          <div className="doc-faq">
-            {faqs.map(([question, answer]) => (
-              <details key={question}>
-                <summary>{question}</summary>
-                <p>{answer}</p>
-              </details>
-            ))}
+          <div className="commercial-disclosures">
+            <details>
+              <summary>Ver preguntas y respuestas</summary>
+              <div className="commercial-detail doc-faq">
+                {faqs.map(([question, answer]) => (
+                  <details key={question}>
+                    <summary>{question}</summary>
+                    <p>{answer}</p>
+                  </details>
+                ))}
+              </div>
+            </details>
           </div>
         </section>
 
         <section className="doc-closing">
-          <h2>Agenda tu asesoria gratuita de 30 minutos</h2>
-          <p>
-            Cuentame brevemente a que te dedicas y coordinamos. Si no te puedo ayudar, te lo digo de
-            inmediato y no pierdes el tiempo.
-          </p>
+          <h2>Conversemos sobre tu proceso</h2>
+          <p>Te asesora <Link href="/marco-iglesias">Marco Iglesias</Link>, fundador de SurInnovacion.</p>
           <div className="doc-actions">
-            <Link className="doc-cta" href="/#contacto">
-              Ir al formulario <ArrowUpRight aria-hidden="true" />
-            </Link>
-            <a className="doc-cta doc-cta--ghost" href={phoneHref} target="_blank" rel="noreferrer">
+            <a className="doc-cta" href={phoneHref} target="_blank" rel="noreferrer">
               Escribir por WhatsApp <MessageCircle aria-hidden="true" />
             </a>
+            <Link className="doc-cta doc-cta--ghost" href="/#contacto">
+              Ir al formulario <ArrowUpRight aria-hidden="true" />
+            </Link>
           </div>
         </section>
       </article>
