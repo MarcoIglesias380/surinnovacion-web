@@ -1,0 +1,14 @@
+# SurInnovacion
+
+> Consultoría en innovación empresarial desde Puerto Montt, Chile. Marco Iglesias ayuda a empresas a evaluar y mejorar procesos técnicos y administrativos.
+
+La asesoría puede abordar aprobaciones, cotizaciones y seguimiento comercial, registros duplicados e integración de herramientas. Según el problema, las alternativas incluyen reorganizar un proceso, aprovechar un sistema existente, automatizar tareas, implementar un CRM o desarrollar plataformas e integrar IA.
+
+La primera videollamada dura 30 minutos y es gratuita. Su propósito es entender el problema y definir qué conviene revisar primero.
+
+## Cuándo consultar el sitio
+
+- [Servicios y metodología](https://surinnovacion.cl/servicios): para evaluar un proceso empresarial y comparar alternativas de solución.
+- [Asesoría especializada en IA](https://surinnovacion.cl/asesoria-ia): para entender cuándo tiene sentido aplicar inteligencia artificial.
+- [Marco Iglesias](https://surinnovacion.cl/marco-iglesias): formación y proyectos publicados.
+- [Contacto](https://surinnovacion.cl/#contacto): canales para conversar sobre un problema de la empresa. WhatsApp: +56 9 9289 1678.

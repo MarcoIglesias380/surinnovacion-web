@@ -1,6 +1,15 @@
 # Sesion actual
 
 - Feature en curso: ninguna
+- Última feature verificada: 22, posicionamiento de innovación empresarial. Pendiente de publicación.
+
+## 2026-11-15, SEO y GEO
+
+- [Auditoría y plan de medición](auditoria-seo-geo-2026-11-15.md).
+- `RUN_BUILD=1 ./init.sh` pasó lint, typecheck y build. El chequeo inicial sin permisos de escritura falló al actualizar la caché de TypeScript.
+- Verificados en HTML estático los H1 únicos, canonicals, JSON-LD y sitemap.
+- Chrome a 375 y 1440 px: portada y Servicios sin desborde horizontal; botones de WhatsApp visibles y alcanzables.
+- Ajuste posterior solicitado por el owner: hero reducido a titular y bajada sobre sistemas a medida para administración o producción. Se retiraron los dos CTA del hero. `RUN_BUILD=1 ./init.sh` pasó y Chrome confirmó texto dentro de pantalla a 375×812 y 1440×900.
 - Ultimas trabajadas: 19 (`done`), 18 (`done`), 9 (`blocked`)
 - Inicio: 2026-11-12
 - Agente: Claude Code

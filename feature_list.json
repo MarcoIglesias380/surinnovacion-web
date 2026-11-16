@@ -203,6 +203,18 @@
       "status": "done"
     },
     {
+      "id": 22,
+      "name": "posicionamiento-innovacion-empresarial",
+      "title": "Posicionar la evaluación y mejora de procesos empresariales",
+      "description": "Alinear portada, servicios y datos de descubrimiento con la oferta de evaluación, asesoría e implementación.",
+      "acceptance": [
+        "La oferta y el alcance de la primera videollamada están en el HTML.",
+        "Los enlaces, metadatos y datos estructurados coinciden con la oferta visible.",
+        "Se verifica compilación y se documenta la diferencia entre producción y el repositorio."
+      ],
+      "status": "done"
+    },
+    {
       "id": 10,
       "name": "blog-contenido-real",
       "title": "Convertir blog vitrina en contenido real",

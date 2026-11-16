@@ -649,3 +649,10 @@ Append-only. Cada cierre de sesion debe agregar una entrada nueva al final.
     Se corrigio con `next/link` en la pagina nueva, el header y el footer.
 - Nota:
   - Queda pendiente `/marco-iglesias`, la pagina de autoridad del plan.
+
+## 2026-11-15 - Feature 22: Posicionamiento de innovación empresarial
+
+- Portada y Servicios explican la evaluación de procesos, la asesoría y la implementación. Se mantuvo la ruta especializada en IA.
+- Se verificaron build, HTML, navegación y botones de contacto a 375 y 1440 px.
+- Cambios locales. El dominio publicado aún tiene el mensaje anterior.
+- [Auditoría SEO y GEO](auditoria-seo-geo-2026-11-15.md).

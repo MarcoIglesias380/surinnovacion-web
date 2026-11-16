@@ -32,9 +32,9 @@
   plataformas, asesoria en IA, sitios web y ecommerce, plataformas a medida y
   CRM**. La asesoria gratuita de 30 minutos es la puerta de entrada a todas, no
   solo a la de IA.
-- El H1 de la portada se mantiene centrado en inteligencia artificial a
-  proposito: es el diferenciador y la keyword mas fuerte. Las demas lineas se
-  comunican en `/servicios`, no diluyendo la portada.
+- La portada presenta innovación empresarial y evaluación de procesos técnicos
+  y administrativos. `/servicios` describe las alternativas de implementación
+  y `/asesoria-ia` desarrolla la oferta especializada en inteligencia artificial.
 - No publicar precios ni plazos fijos por servicio. El alcance se define en la
   conversacion; publicar un numero que despues no se cumple es justo lo que la
   pagina promete no hacer.

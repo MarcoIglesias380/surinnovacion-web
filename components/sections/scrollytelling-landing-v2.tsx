@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDownRight, ArrowUpRight, Check, ExternalLink, Loader2, MessageCircle, Send } from "lucide-react";
+import { ArrowUpRight, Check, ExternalLink, Loader2, MessageCircle, Send } from "lucide-react";
 import Image from "next/image";
 import { CSSProperties, FormEvent, useCallback, useEffect, useRef, useState } from "react";
 
@@ -516,17 +516,12 @@ export function ScrollytellingLandingV2() {
           )}
           <div className="story-shade" />
           <div className="story-copy story-copy--intro" style={capaVisible(introOpacity)}>
-            <p>Marco Iglesias · Master y divulgador de Inteligencia Artificial</p>
-            <h1>Inteligencia artificial para tu empresa.</h1>
-            <p className="story-intro-lede">IA, sitios web, plataformas y CRM. Asesoria gratuita de 30 minutos.</p>
-            <div className="story-hero-actions">
-              <a href="#proyectos">Ver proyectos <ArrowDownRight aria-hidden="true" /></a>
-              <a href={`${phoneHref}?text=${encodeURIComponent("Hola, quiero coordinar la asesoria gratuita de 30 minutos.")}`} target="_blank" rel="noreferrer">Asesoria gratuita <MessageCircle aria-hidden="true" /></a>
-            </div>
+            <h1>Sistemas a medida para tu empresa</h1>
+            <p>Diseño e implemento soluciones para ordenar tu administración o mejorar tus procesos de producción.</p>
           </div>
           <div className="story-copy story-copy--city" style={capaVisible(cityOpacity)}>
             <p>Puerto Montt · Chile</p>
-            <h2>Automatizacion e IA para empresas del sur de Chile.</h2>
+            <h2>Mejora de procesos y tecnología para empresas.</h2>
           </div>
           <div className="story-copy story-copy--future" style={capaVisible(futureOpacity)}>
             <p>SurInnovacion</p>
@@ -534,7 +529,7 @@ export function ScrollytellingLandingV2() {
           </div>
           <span id="proyectos" className="story-anchor story-anchor--projects" aria-hidden="true" />
           <section className="story-hologram story-hologram--projects" style={capaVisible(projectsOpacity)} aria-label="Proyectos">
-            <h2>Proyectos de IA y automatizacion</h2>
+            <h2>Proyectos digitales publicados</h2>
             <div className="story-projects">{projects.map(([name, description, href]) => <a key={name} href={href} target="_blank" rel="noreferrer"><span><strong>{name}</strong><small>{description}</small></span><ArrowUpRight aria-hidden="true" /></a>)}</div>
           </section>
         </div>

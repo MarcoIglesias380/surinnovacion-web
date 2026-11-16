@@ -4,13 +4,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: "https://surinnovacion.cl",
-      lastModified: new Date("2026-11-12"),
+      lastModified: new Date("2026-11-15"),
       changeFrequency: "weekly",
       priority: 1
     },
     {
       url: "https://surinnovacion.cl/servicios",
-      lastModified: new Date("2026-11-12"),
+      lastModified: new Date("2026-11-15"),
       changeFrequency: "monthly",
       priority: 0.9
     },

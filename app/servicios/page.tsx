@@ -7,17 +7,19 @@ import { founderSchema, organizationSchema, ID_ORGANIZACION } from "@/content/sc
 
 const phoneHref =
   "https://wa.me/56992891678?text=" +
-  encodeURIComponent("Hola, quiero coordinar la asesoria gratuita de 30 minutos.");
+  encodeURIComponent("Hola, quiero coordinar una asesoría para revisar los procesos de mi empresa.");
+
+const servicesTitle = "Consultoría y mejora de procesos";
+const servicesDescription =
+  "Evaluación de procesos administrativos y técnicos, asesoría y soluciones a medida. Automatización, CRM, plataformas web e IA según tu operación.";
 
 export const metadata: Metadata = {
-  title: "Servicios: IA, sitios web, plataformas y CRM",
-  description:
-    "Asesoria en inteligencia artificial, sitios web y ecommerce, plataformas a medida, CRM y agentes de IA integrados. Desde Puerto Montt para todo Chile.",
+  title: servicesTitle,
+  description: servicesDescription,
   alternates: { canonical: "/servicios" },
   openGraph: {
-    title: "Servicios: IA, sitios web, plataformas y CRM | SurInnovacion",
-    description:
-      "Asesoria en inteligencia artificial, sitios web y ecommerce, plataformas a medida, CRM y agentes de IA integrados.",
+    title: `${servicesTitle} | SurInnovacion`,
+    description: servicesDescription,
     url: "https://surinnovacion.cl/servicios",
     type: "article",
     siteName: "SurInnovacion",
@@ -27,6 +29,16 @@ export const metadata: Metadata = {
 };
 
 const servicios = [
+  {
+    id: "mejora-de-procesos",
+    titulo: "Evaluación y mejora de procesos empresariales",
+    resumen:
+      "Revisamos con tu equipo dónde se pierde tiempo, se repite trabajo o se desaprovechan herramientas.",
+    cuerpo: [
+      "En lo administrativo, podemos revisar aprobaciones, cotizaciones, seguimiento de clientes y traspasos de información entre áreas. En lo técnico, podemos revisar herramientas que no se comunican, registros duplicados y tareas que dependen de planillas o de una sola persona.",
+      "La asesoría compara opciones según el esfuerzo, el costo y la capacidad de tu equipo para sostenerlas. Una mejora puede ser ordenar los pasos de un proceso, aprovechar un sistema que ya tienes, integrar herramientas o implementar una solución a medida."
+    ]
+  },
   {
     id: "agentes",
     titulo: "Agentes de IA integrados en tus plataformas",
@@ -82,6 +94,10 @@ const servicios = [
 ] as const;
 
 const faqs = [
+  [
+    "¿Puedo pedir una evaluación aunque no sepa qué tecnología necesito?",
+    "Sí. En la primera videollamada revisamos cómo se hace hoy una tarea, quién participa, qué herramientas se usan y dónde aparece el problema. Con eso puedes decidir qué conviene revisar primero."
+  ],
   [
     "Puedo contratar solo una de estas lineas?",
     "Si. La mayoria de los proyectos empieza por una sola cosa concreta. Si despues tiene sentido sumar otra, se conversa en ese momento."
@@ -151,18 +167,18 @@ export default function Servicios() {
       <article className="doc-page">
         <header className="doc-hero">
           <p className="doc-eyebrow">Servicios</p>
-          <h1>Inteligencia artificial, sitios web, plataformas y CRM</h1>
+          <h1>Consultoría en innovación y mejora de procesos</h1>
           <p className="doc-lede">
-            Cinco formas de resolver el mismo problema de fondo: que la tecnologia trabaje para tu
-            negocio en vez de darte mas trabajo. Todas empiezan por la misma conversacion de 30
-            minutos sin costo.
+            SurInnovacion ayuda a empresas a aprovechar mejor sus recursos técnicos y
+            administrativos. Desde Puerto Montt atendemos a empresas de todo Chile. La primera
+            videollamada dura 30 minutos y es gratuita.
           </p>
           <div className="doc-actions">
-            <Link className="doc-cta" href="/#contacto">
-              Agendar la asesoria gratuita <ArrowUpRight aria-hidden="true" />
-            </Link>
-            <a className="doc-cta doc-cta--ghost" href={phoneHref} target="_blank" rel="noreferrer">
-              Escribir por WhatsApp <MessageCircle aria-hidden="true" />
+            <a className="doc-cta" href={phoneHref} target="_blank" rel="noreferrer">
+              Agendar asesoría por WhatsApp <MessageCircle aria-hidden="true" />
+            </a>
+            <a className="doc-cta doc-cta--ghost" href="#mejora-de-procesos">
+              Ver qué evaluamos <ArrowUpRight aria-hidden="true" />
             </a>
           </div>
         </header>
@@ -191,15 +207,15 @@ export default function Servicios() {
         </section>
 
         <section className="doc-section">
-          <h2>Como empieza cualquiera de estas lineas</h2>
+          <h2>Cómo pasamos de la evaluación a una solución</h2>
           <ol className="doc-steps">
             <li>
-              <strong>Me escribes.</strong> Por el formulario o por WhatsApp, contandome brevemente a
-              que se dedica tu negocio y que te esta costando.
+              <strong>Cuéntame qué te está costando.</strong> Por WhatsApp, describe tu empresa
+              y un proceso que quieras mejorar.
             </li>
             <li>
-              <strong>Conversamos 30 minutos.</strong> Sin costo. Ahi queda claro cual de estas lineas
-              resuelve tu problema, o si ninguna lo hace.
+              <strong>Revisamos el proceso.</strong> En la videollamada gratuita ubicamos el
+              problema y acordamos qué conviene revisar primero.
             </li>
             <li>
               <strong>Te propongo algo concreto.</strong> Con alcance, plazo y precio definidos antes
@@ -231,10 +247,7 @@ export default function Servicios() {
             resolvemos en la primera conversacion.
           </p>
           <div className="doc-actions">
-            <Link className="doc-cta" href="/#contacto">
-              Ir al formulario <ArrowUpRight aria-hidden="true" />
-            </Link>
-            <a className="doc-cta doc-cta--ghost" href={phoneHref} target="_blank" rel="noreferrer">
+            <a className="doc-cta" href={phoneHref} target="_blank" rel="noreferrer">
               Escribir por WhatsApp <MessageCircle aria-hidden="true" />
             </a>
           </div>

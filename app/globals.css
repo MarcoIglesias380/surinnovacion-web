@@ -1264,12 +1264,14 @@ html[data-tone="bright"] .glass-secondary-button {
 }
 
 .story-copy--intro p {
-  max-width: 34rem;
+  max-width: 32rem;
+  margin: 1rem 0 0;
   color: rgba(234, 242, 255, 0.92);
-  font-size: clamp(0.88rem, 1.25vw, 1.2rem);
-  font-weight: 700;
-  letter-spacing: 0.13em;
-  line-height: 1.35;
+  font-size: clamp(1rem, 1.55vw, 1.25rem);
+  font-weight: 500;
+  letter-spacing: normal;
+  line-height: 1.45;
+  text-transform: none;
 }
 
 .story-copy h1,
@@ -1867,11 +1869,6 @@ html[data-tone="bright"] .glass-secondary-button {
 
   .story-copy h1 {
     font-size: clamp(2.15rem, 10vw, 3.2rem);
-  }
-
-  .story-copy--intro p {
-    font-size: clamp(0.82rem, 3.8vw, 1rem);
-    letter-spacing: 0.1em;
   }
 
   .story-outro {

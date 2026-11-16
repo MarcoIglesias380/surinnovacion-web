@@ -12,8 +12,14 @@ export const organizationSchema = {
   logo: `${SITIO}/brand/isotipo2.png`,
   image: `${SITIO}/brand/isotipo2.png`,
   description:
-    "SurInnovacion crea soluciones con inteligencia artificial, automatizacion, sitios web y asesoria tecnologica para empresas y proyectos desde Puerto Montt, Chile.",
+    "Consultoría en innovación empresarial desde Puerto Montt, Chile. SurInnovacion evalúa procesos técnicos y administrativos y desarrolla soluciones de automatización, CRM, plataformas web e inteligencia artificial.",
   telephone: "+56 9 9289 1678",
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+56 9 9289 1678",
+    contactType: "sales",
+    availableLanguage: "es"
+  },
   address: {
     "@type": "PostalAddress",
     streetAddress: "Avenida Cuarta terraza 5098",
@@ -62,6 +68,8 @@ export const founderSchema = {
     }
   ],
   knowsAbout: [
+    "Innovación empresarial",
+    "Mejora de procesos",
     "Inteligencia artificial",
     "Agentes de IA",
     "Automatizacion de procesos",
