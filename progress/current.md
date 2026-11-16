@@ -1,6 +1,13 @@
 # Sesion actual
 
 - Feature en curso: ninguna
+- Última feature verificada: 10, blog editorial con tres análisis y fuentes primarias.
+
+## 2026-11-15, blog de IA e innovación
+
+- `/blog` y tres artículos prerenderizados con títulos propios, fuentes visibles, fechas, canonical y `BlogPosting`. Navegación, sitemap y `llms.txt` enlazan al blog.
+- `RUN_BUILD=1 ./init.sh` pasó (lint, typecheck y build). Se verificaron los tres enlaces en portada editorial y sitemap, un H1 por artículo y la correspondencia entre citas JSON-LD y enlaces visibles.
+- Para nuevas notas, agregar un registro al inicio de `content/blog.ts`. Describir el hecho, su contexto y su relevancia para empresas. Citar la fuente primaria dentro de la sección correspondiente y separar datos observados de perspectivas.
 - Última feature verificada: 22, posicionamiento de innovación empresarial. Pendiente de publicación.
 
 ## 2026-11-15, SEO y GEO

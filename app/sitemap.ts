@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { articles } from "@/content/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -25,6 +26,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date("2026-11-12"),
       changeFrequency: "monthly",
       priority: 0.9
-    }
+    },
+    { url: "https://surinnovacion.cl/blog" },
+    ...articles.map((article) => ({
+      url: `https://surinnovacion.cl/blog/${article.slug}`,
+      lastModified: new Date(article.date)
+    }))
   ];
 }

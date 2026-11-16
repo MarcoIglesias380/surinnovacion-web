@@ -656,3 +656,8 @@ Append-only. Cada cierre de sesion debe agregar una entrada nueva al final.
 - Se verificaron build, HTML, navegación y botones de contacto a 375 y 1440 px.
 - Cambios locales. El dominio publicado aún tiene el mensaje anterior.
 - [Auditoría SEO y GEO](auditoria-seo-geo-2026-11-15.md).
+
+## 2026-11-15 - Feature 10: Blog de IA e innovación
+
+- Se creó un índice editorial y tres artículos sobre lanzamientos de modelos, datos de adopción empresarial e infraestructura.
+- Lint, typecheck, build y revisión de HTML, canonicals, citas y sitemap pasaron.

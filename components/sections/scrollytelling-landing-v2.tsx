@@ -1,7 +1,8 @@
 "use client";
 
-import { ArrowUpRight, Check, ExternalLink, Loader2, MessageCircle, Send } from "lucide-react";
+import { ArrowUpRight, Check, Loader2, MessageCircle, Send } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { CSSProperties, FormEvent, useCallback, useEffect, useRef, useState } from "react";
 
 type SequenceProfile = {
@@ -35,12 +36,6 @@ const projects = [
   ["Ecommerce Ferreteria", "Catalogo digital de ferreteria, simple de recorrer.", "https://catalogo-distribuidora-oriente.vercel.app/"],
   ["Marco Iglesias", "Sitio de un salon de belleza: servicios, precios y reservas.", "https://marcoiglesias.cl/"],
   ["Marca Visible", "Una propuesta digital con identidad propia.", "https://marca-visible.vercel.app/"]
-] as const;
-
-const posts = [
-  ["IA en empresas", "OpenAI", "https://openai.com/index/how-the-world-is-putting-chatgpt-to-work/"],
-  ["Seguridad y agentes", "Anthropic", "https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals"],
-  ["Modelos y decisiones", "Vercel", "https://vercel.com/blog/ai-gateway-production-index-july-2026"]
 ] as const;
 
 type FormState = { name: string; email: string; whatsapp: string; message: string };
@@ -540,13 +535,13 @@ export function ScrollytellingLandingV2() {
           <div className="story-outro-shade" />
           <div className="story-outro-intro">
             <p>Blog Tech</p>
-            <h2>Divulgacion de IA para decidir mejor.</h2>
-            <h3>La innovacion ya no es opcional.</h3>
-            <p className="story-outro-description">La IA ya esta cambiando como las empresas venden, atienden, automatizan y crecen.</p>
+            <h2>Noticias de IA e innovación.</h2>
+            <p className="story-outro-description">Modelos, adopción empresarial e infraestructura con datos y fuentes verificables.</p>
           </div>
           <section className="story-hologram story-hologram--blog" aria-label="Blog Tech">
-            <h3>Blog Tech</h3>
-            <div className="story-sources">{posts.map(([title, source, href]) => <a key={title} href={href} target="_blank" rel="noreferrer"><span>{title}</span><small>{source}</small><ExternalLink aria-hidden="true" /></a>)}</div>
+            <div className="story-sources">
+              <Link href="/blog"><span>Leer el blog de SurInnovacion</span><ArrowUpRight aria-hidden="true" /></Link>
+            </div>
           </section>
         </div>
       </section>
