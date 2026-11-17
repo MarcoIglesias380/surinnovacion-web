@@ -37,7 +37,7 @@ const proyectos = [
 
 export default function MarcoIglesias() {
   return (
-    <main className="site-shell min-h-screen bg-void text-frost selection:bg-ion/30">
+    <main className="site-shell commercial-page min-h-screen bg-void text-frost selection:bg-ion/30">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify([organizationSchema, founderSchema]) }}
@@ -68,9 +68,9 @@ export default function MarcoIglesias() {
             Universidad Isabel I, Espana.
           </p>
           <p>
-            Es una formacion enfocada en aplicar la IA, no en investigarla: como se integra en un
-            negocio que ya esta funcionando, que problemas resuelve de verdad y cuales no. Esa
-            distincion es la que mas uso en el dia a dia.
+            Llevo cuatro anos dedicado a la investigacion y la educacion en inteligencia artificial.
+            En un campo donde lo que servia hace un ano puede no servir hoy, estudiarlo de forma
+            continua no es un adorno del curriculum: es parte del trabajo.
           </p>
         </section>
 
@@ -128,18 +128,6 @@ export default function MarcoIglesias() {
               de entregarlo.
             </li>
           </ul>
-        </section>
-
-        <section className="doc-section">
-          <h2>Desde Puerto Montt</h2>
-          <p>
-            Vivo y trabajo en Puerto Montt, region de Los Lagos. Atiendo a clientes de todo Chile por
-            videollamada, y si estas en la zona tambien nos podemos ver en persona.
-          </p>
-          <p>
-            Que la tecnologia se construya desde el sur y no solo se consuma aca es, en buena medida,
-            la razon por la que existe SurInnovacion.
-          </p>
         </section>
 
         <section className="doc-closing">

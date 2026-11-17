@@ -8,7 +8,7 @@ export type SiteSection = {
 };
 
 export const navItems = [
-  { label: "Historia", href: "/#hero" },
+  { label: "Historia", href: "/marco-iglesias" },
   { label: "Servicios", href: "/servicios" },
   { label: "Asesoria", href: "/asesoria-ia" },
   { label: "Proyectos", href: "/#proyectos" },
