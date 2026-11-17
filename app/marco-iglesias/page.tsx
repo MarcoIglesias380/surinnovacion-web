@@ -68,9 +68,10 @@ export default function MarcoIglesias() {
             Universidad Isabel I, Espana.
           </p>
           <p>
-            Llevo cuatro anos dedicado a la investigacion y la educacion en inteligencia artificial.
-            En un campo donde lo que servia hace un ano puede no servir hoy, estudiarlo de forma
-            continua no es un adorno del curriculum: es parte del trabajo.
+            En noviembre de 2022, cuando aparecio ChatGPT, empece a investigar y no pare. Al
+            principio fue una obsesion. Dos anos despues entre a estudiarlo de forma estructurada,
+            hace poco me titule, y hoy construyo sitios, plataformas y CRM, y divulgo lo que
+            aprendo.
           </p>
         </section>
 
