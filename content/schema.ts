@@ -84,3 +84,12 @@ export const founderSchema = {
     addressCountry: "CL"
   }
 };
+
+export const IMAGEN_SOCIAL = {
+  url: "/brand/isotipo2.png",
+  width: 500,
+  height: 500,
+  alt: "Isotipo de SurInnovacion"
+};
+
+export const RUTA_BLOG = "Noticias de IA e innovación";

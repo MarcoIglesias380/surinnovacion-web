@@ -1,6 +1,36 @@
 # Sesion actual
 
 - Feature en curso: ninguna
+- Ultima feature cerrada: 23, datos estructurados y metadatos del blog.
+  **Implementada y verificada en build de produccion local, sin desplegar.**
+  Falta la aprobacion del owner para hacer push, y recien despues se puede
+  confirmar en el dominio.
+
+## 2026-11-17, SEO como proyecto continuo
+
+El SEO pasa a llevarse en una linea propia, separada de las mejoras funcionales
+y visuales del sitio.
+
+- [Informe de estado del SEO](informe-seo-2026-11-17.md): estado medido de las
+  ocho URLs publicadas, hallazgos y prioridades.
+- [Recomendacion sobre el title de la portada](../docs/recomendacion-title-portada.md):
+  **espera decision del owner.** La portada no menciona "inteligencia
+  artificial" ni "innovacion empresarial" ni una vez en sus 273 palabras
+  visibles, y su title promete una frase que el cuerpo no dice.
+- Feature 23 corrigio el blog: `Blog` y `BreadcrumbList` en el indice,
+  `BreadcrumbList` e `isPartOf` en los articulos, titles de 82/68/80 a 56/52/56
+  sin tocar los H1, y `og:image` mas `twitter` propios en las cuatro rutas.
+- Hallazgo que queda abierto fuera del blog: `/servicios`, `/asesoria-ia` y
+  `/marco-iglesias` siguen anunciando en X el titulo de la portada, porque
+  ninguna sobrescribe `twitter`. La correccion de fondo es un helper compartido
+  que arme `openGraph` y `twitter` desde el title y la description de cada
+  pagina.
+- `scripts/auditar.py` de la skill tenia un defecto: reportaba como vacios los
+  encabezados que envuelven un enlace. Corregido, porque es el instrumento con
+  el que se mide.
+- Prioridad que no es de SEO pero condiciona todo: sin MX, SPF ni DMARC el
+  formulario no captura leads. Todo el trafico que el SEO consiga cae en ese
+  embudo. Feature 9 sigue `blocked` en `docs/contacto-setup.md`.
 - Feature 11, avance parcial: Servicios, Asesoría y portada del Blog comparten un fondo WebP de 99 804 bytes, generado a partir del concepto visual del hero. En Servicios y Asesoría el detalle se abre con controles nativos.
 - Verificación del avance: `RUN_BUILD=1 ./init.sh` pasó fuera del sandbox por la escritura de caché de Next.js. Chrome a 375×812 y 1440×900 confirmó el fondo, ausencia de desborde horizontal y apertura/cierre con Espacio y clic.
 - Última feature verificada: 10, blog editorial con tres análisis y fuentes primarias.

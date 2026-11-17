@@ -666,3 +666,58 @@ Append-only. Cada cierre de sesion debe agregar una entrada nueva al final.
 
 - Se integró un fondo común inspirado en el hero en Servicios, Asesoría y la portada del Blog.
 - Las páginas comerciales conservan sus títulos y muestran los detalles bajo demanda. Compilación y prueba local de fondo y desplegables en móvil y escritorio completadas.
+
+---
+
+## 2026-11-17 - Feature 23: Datos estructurados y metadatos del blog
+
+- Agente: Claude Code, sesion dedicada al SEO
+- Resultado: implementado y verificado en build de produccion local. **Sin
+  desplegar: falta la aprobacion del owner para hacer push.**
+- Diagnostico previo (skill `seo-geo-local`, criterio de `references/evidencia.md`):
+  - Se auditaron las 8 URLs publicadas. `/servicios` y `/asesoria-ia` sin
+    hallazgos; el problema estaba concentrado en el blog.
+  - `/blog` sin ningun JSON-LD y sin `og:image`.
+  - Los **tres** articulos superaban los 60 caracteres de title (82, 68 y 80):
+    era el patron, no un articulo suelto.
+  - Hallazgo nuevo: ninguna pagina del sitio sobrescribe `twitter`, asi que
+    todas anuncian en X el titulo de la portada.
+  - Hallazgo nuevo: la portada no menciona "inteligencia artificial" ni
+    "innovacion empresarial" **ni una vez** en sus 273 palabras visibles.
+- Cambios:
+  - `/blog` declara `Blog` con sus tres entradas, `BreadcrumbList` y el nodo de
+    organizacion.
+  - Los articulos suman `BreadcrumbList`, `@id`, `url`, `isPartOf` hacia el nodo
+    del blog, `image` y `mainEntityOfPage` como objeto.
+  - Campo `metaTitle` opcional en `content/blog.ts` y `absolute` en el title:
+    82/68/80 pasan a 56/52/56 sin tocar ningun H1.
+  - `og:image` y `twitter` propios en las cuatro rutas del blog.
+  - Ruta de navegacion **visible** ("Inicio › Noticias de IA e innovación")
+    antes de marcarla, con las etiquetas tomadas de la misma constante que el
+    marcado.
+  - `scripts/auditar.py`: corregida la captura de texto de encabezados, que
+    reportaba como vacios los H2 que envuelven un enlace.
+- Lo que se decidio NO hacer:
+  - No se agrego `FAQPage` al blog: no hay preguntas visibles y marcar contenido
+    invisible es motivo de penalizacion manual.
+  - No se cambio el posicionamiento de la portada; se entrego una recomendacion
+    escrita para que decida el owner.
+  - El `author` del `BlogPosting` sigue siendo la organizacion, porque la firma
+    visible dice "SurInnovacion".
+- Verificacion:
+  - `RUN_BUILD=1 ./init.sh`: lint, typecheck y build pasaron. Las cuatro rutas
+    del blog quedan prerenderizadas.
+  - Auditoria sobre build de produccion servido en local: `/blog` de 3 hallazgos
+    a 2, cada articulo de 3 a 1. Los restantes son los dos que se decidio no
+    forzar.
+  - JSON-LD parseado: tipos correctos, `@id` que resuelven entre si, 4 citas
+    conservadas.
+  - Chrome 375x812: ruta de navegacion visible, sin desborde horizontal, texto
+    identico al del marcado.
+- Entregables:
+  - `progress/informe-seo-2026-11-17.md`: estado, hallazgos y prioridades.
+  - `docs/recomendacion-title-portada.md`: tres opciones y una recomendacion
+    sobre el posicionamiento de la portada.
+- No verificado: indexacion, posiciones, citas en buscadores con IA, ficha de
+  Google Business Profile y Core Web Vitals de campo. Y nada esta en produccion
+  hasta que se apruebe el push.

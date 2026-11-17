@@ -107,7 +107,9 @@ class Extractor(HTMLParser):
             return
         if any(t in self.VACIAS for t in self._pila):
             return
-        if self.encabezados and self._pila and self._pila[-1] in ("h1", "h2", "h3", "h4"):
+        # Cualquier nivel del arbol, no solo el tope: un H2 que envuelve un enlace
+        # tiene su texto dentro del <a> y antes se reportaba como encabezado vacio.
+        if self.encabezados and any(t in ("h1", "h2", "h3", "h4") for t in self._pila):
             self.encabezados[-1][1] += data
         self.texto.append(data)
 

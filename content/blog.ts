@@ -3,6 +3,7 @@ type Source = { label: string; url: string };
 type Article = {
   slug: string;
   title: string;
+  metaTitle?: string;
   description: string;
   date: string;
   sections: { title: string; paragraphs: string[]; sources?: Source[] }[];
@@ -12,6 +13,7 @@ export const articles: Article[] = [
   {
     slug: "modelos-de-frontera-ia-noviembre-2026",
     title: "Modelos de IA en noviembre de 2026: GPT‑6.1, Claude 5.2 y Gemini 4",
+    metaTitle: "GPT‑6.1, Claude 5.2 y Gemini 4: los modelos de noviembre",
     description: "Qué anunciaron OpenAI, Anthropic y Google DeepMind, dónde se pueden usar sus modelos y cómo probarlos en procesos de una empresa.",
     date: "2026-11-15",
     sections: [
@@ -83,6 +85,7 @@ export const articles: Article[] = [
   {
     slug: "centros-de-datos-energia-ia-2026",
     title: "IA y centros de datos en 2026: la energía detrás del crecimiento",
+    metaTitle: "IA y centros de datos: la energía detrás del crecimiento",
     description: "Qué encontró la Agencia Internacional de Energía y qué puede evaluar una empresa que depende de servicios de IA en la nube.",
     date: "2026-11-15",
     sections: [

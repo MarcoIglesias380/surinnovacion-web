@@ -322,6 +322,21 @@
         "Lint, typecheck, build y una prueba automatizada de movil y rotacion pasan."
       ],
       "status": "done"
+    },
+    {
+      "id": 23,
+      "name": "seo-blog-datos-estructurados",
+      "title": "Datos estructurados y metadatos del blog",
+      "description": "Dar al indice del blog y a los articulos el marcado y los metadatos que les faltaban: Blog con sus entradas, BreadcrumbList sobre una ruta visible, titles dentro del limite y tarjeta social propia por pagina.",
+      "acceptance": [
+        "/blog declara Blog con sus entradas y BreadcrumbList; los articulos declaran BlogPosting y BreadcrumbList enlazados por @id.",
+        "La ruta de navegacion esta visible en la pagina antes de marcarse, y sus etiquetas salen de la misma fuente que el marcado.",
+        "Los titles de los tres articulos miden entre 30 y 60 caracteres sin cambiar sus H1.",
+        "Las cuatro rutas del blog declaran og:image y un twitter:title propio, no el de la portada.",
+        "No se marca ninguna pregunta ni contenido que no este visible en la pagina.",
+        "Se verifica con RUN_BUILD=1 ./init.sh y con el auditor sobre un build de produccion."
+      ],
+      "status": "done"
     }
   ]
 }

@@ -2097,6 +2097,20 @@ html[data-tone="bright"] .glass-secondary-button {
   padding-bottom: 2.75rem;
 }
 
+.doc-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1.25rem;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+}
+
+.doc-breadcrumb span[aria-hidden="true"] {
+  opacity: 0.5;
+}
+
 .doc-eyebrow {
   margin: 0 0 1rem;
   color: var(--brand-ion);
