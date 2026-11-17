@@ -5,7 +5,7 @@ const phoneHref = "https://wa.me/56992891678";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-white/10 bg-midnight">
+    <footer id="datos-contacto" className="border-t border-white/10 bg-midnight">
       <div className="mx-auto flex max-w-[1440px] flex-col items-center justify-between gap-9 px-5 py-14 text-center sm:flex-row sm:text-left">
         <Link href="/#hero" className="brand-lockup flex items-center gap-3" aria-label="Volver al inicio">
             <span className="brand-mark brand-mark--icon relative grid h-16 w-16 shrink-0 place-items-center overflow-visible sm:h-20 sm:w-20">

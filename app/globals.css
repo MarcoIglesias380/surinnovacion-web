@@ -1988,10 +1988,12 @@ html[data-tone="bright"] .glass-secondary-button {
 .commercial-page::before {
   position: absolute;
   inset: 0 0 auto;
-  height: 36rem;
+  /* Mas alto y menos velo que antes: la imagen se reconoce y el corte con el
+     fondo plano deja de verse como una linea a media pagina. */
+  height: 46rem;
   background:
-    linear-gradient(180deg, rgba(2, 6, 23, 0.36), rgba(2, 6, 23, 0.52) 55%, var(--bg-void, #020617)),
-    linear-gradient(90deg, rgba(2, 6, 23, 0.83), rgba(2, 6, 23, 0.24)),
+    linear-gradient(180deg, rgba(2, 6, 23, 0.26), rgba(2, 6, 23, 0.44) 50%, var(--bg-void, #020617)),
+    linear-gradient(90deg, rgba(2, 6, 23, 0.74), rgba(2, 6, 23, 0.18)),
     url("/sections/bahia-innovacion.webp") 65% 46% / cover no-repeat;
   content: "";
   pointer-events: none;
@@ -2396,4 +2398,57 @@ html[data-tone="bright"] .glass-secondary-button {
 .doc-proyectos svg {
   width: 1rem;
   height: 1rem;
+}
+
+/* Accesos del hero: suben aqui los dos botones que antes estaban al pie. */
+.story-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.6rem;
+}
+
+.story-hero-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(160, 244, 255, 0.46);
+  background: linear-gradient(135deg, rgba(181, 246, 255, 0.16), transparent 60%, rgba(112, 88, 255, 0.14));
+  padding: 0.7rem 1.1rem;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  transition: border-color 180ms ease, color 180ms ease;
+}
+
+.story-hero-actions a + a {
+  border-color: rgba(234, 242, 255, 0.26);
+  background: rgba(2, 6, 23, 0.34);
+}
+
+.story-hero-actions a:hover,
+.story-hero-actions a:focus-visible {
+  border-color: var(--brand-ion);
+  color: var(--brand-ion);
+  outline: none;
+}
+
+.story-hero-actions svg {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+@media (max-width: 767px) {
+  .story-hero-actions {
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+  }
+
+  .story-hero-actions a {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
 }

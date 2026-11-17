@@ -8,12 +8,12 @@ export type SiteSection = {
 };
 
 export const navItems = [
-  { label: "Historia", href: "/marco-iglesias" },
+  { label: "Inicio", href: "/" },
   { label: "Servicios", href: "/servicios" },
   { label: "Asesoria", href: "/asesoria-ia" },
   { label: "Proyectos", href: "/#proyectos" },
   { label: "Blog Tech", href: "/blog" },
-  { label: "Contacto", href: "/#contacto" }
+  { label: "Contacto", href: "/#datos-contacto" }
 ];
 
 export const siteSections: SiteSection[] = [

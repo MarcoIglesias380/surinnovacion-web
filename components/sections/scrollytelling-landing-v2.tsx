@@ -513,6 +513,10 @@ export function ScrollytellingLandingV2() {
           <div className="story-copy story-copy--intro" style={capaVisible(introOpacity)}>
             <h1>Sistemas a medida para tu empresa</h1>
             <p>Diseño e implemento soluciones para ordenar tu administración o mejorar tus procesos de producción.</p>
+            <div className="story-hero-actions">
+              <Link href="/servicios">Ver servicios y metodología <ArrowUpRight aria-hidden="true" /></Link>
+              <Link href="/marco-iglesias">Conocer a Marco Iglesias <ArrowUpRight aria-hidden="true" /></Link>
+            </div>
           </div>
           <div className="story-copy story-copy--city" style={capaVisible(cityOpacity)}>
             <p>Puerto Montt · Chile</p>
