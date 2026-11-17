@@ -6,6 +6,56 @@
   titles 57/56/52/56, `Blog` y `BreadcrumbList` en el indice, `isPartOf` en los
   articulos y tarjetas sociales propias, reauditado sobre el dominio.
 
+## 2026-11-17, correo corporativo montado
+
+Se desbloqueo la mitad de la feature 9. El dominio ya tiene correo.
+
+- Plan **Free Business Email** de Hostinger sobre `surinnovacion.cl`, sin costo:
+  el cupo gratuito ya estaba en la cuenta del owner.
+- Buzon `contacto@surinnovacion.cl`, activo.
+- Reenvio al Gmail personal, **activo** tras la confirmacion del owner, con
+  copia guardada en el buzon. El plan gratuito da una sola regla y esta usada.
+- Hostinger publico los registros DNS por su cuenta, porque la zona del dominio
+  ya se administra ahi (nameservers `dns-parking.com`).
+
+Verificado contra DNS publico, no contra el panel: MX `mx1`/`mx2.hostinger.com`,
+SPF `include:_spf.mail.hostinger.com`, DKIM con clave real en el selector `a` y
+DMARC `p=none`. El registro A del apex sigue en `76.76.21.21` (Vercel) y el
+sitio responde 200 en apex y en www: agregar el correo no toco el hosting.
+
+Dos cosas que conviene no olvidar:
+
+- El webmail mostro un aviso de "faltan registros de dominio" que era una foto
+  vieja: el chequeo corrio antes de que propagaran los registros, con TTL 300.
+  El propio verificador de Hostinger, en Ajustes de dominio, los daba por
+  correctos. Se descarto por DNS publico antes de tocar nada.
+- **Nunca aceptar que Hostinger "repare" o "restablezca" la zona DNS completa.**
+  Eso devuelve el registro A a sus servidores y tumba el sitio, que vive en
+  Vercel.
+
+El plan original era Zoho Mail. Se cambio porque el DNS ya estaba en Hostinger
+(cero registros a mano), el costo es el mismo y el plan incluye IMAP, que el
+gratuito de Zoho no da. Queda anotado en `docs/contacto-setup.md` y marcado como
+superado en `docs/estrategia-conversion-seo.md`.
+
+Prueba de punta a punta del owner: envio desde `contacto@marcoiglesias.cl` a
+`contacto@surinnovacion.cl` y llego al Gmail. Queda una salvedad: el origen es
+otro dominio de Hostinger, asi que el mensaje pudo enrutarse internamente sin
+pasar por el MX publico. Conviene repetirlo alguna vez desde un remitente
+externo, que es como llegaran los leads reales.
+
+### Lo que sigue faltando
+
+Tener buzon no es tener el formulario funcionando. El endpoint
+`POST /api/contacto` sigue respondiendo con `fallback: whatsapp` y **no captura
+nada**, porque le faltan `RESEND_API_KEY`, `LEAD_NOTIFY_TO` y
+`LEAD_NOTIFY_FROM`. La feature 9 sigue `blocked`, ahora por Resend, Supabase y
+las variables en Vercel.
+
+Nota tecnica para ese paso: verificar en Resend el subdominio
+`send.surinnovacion.cl`, no el apex. Asi su SPF no choca con el de Hostinger,
+que ya ocupa el unico registro SPF que admite el dominio.
+
 ## 2026-11-17, SEO como proyecto continuo
 
 El SEO pasa a llevarse en una linea propia, separada de las mejoras funcionales
@@ -28,9 +78,10 @@ y visuales del sitio.
 - `scripts/auditar.py` de la skill tenia un defecto: reportaba como vacios los
   encabezados que envuelven un enlace. Corregido, porque es el instrumento con
   el que se mide.
-- Prioridad que no es de SEO pero condiciona todo: sin MX, SPF ni DMARC el
-  formulario no captura leads. Todo el trafico que el SEO consiga cae en ese
-  embudo. Feature 9 sigue `blocked` en `docs/contacto-setup.md`.
+- Prioridad que no es de SEO pero condiciona todo: el formulario no captura
+  leads. El 2026-11-17 se resolvio el correo (MX, SPF, DKIM y DMARC estan), pero
+  falta conectar el aviso. Todo el trafico que el SEO consiga sigue cayendo en
+  ese embudo. Feature 9 sigue `blocked` en `docs/contacto-setup.md`.
 - Feature 11, avance parcial: Servicios, Asesoría y portada del Blog comparten un fondo WebP de 99 804 bytes, generado a partir del concepto visual del hero. En Servicios y Asesoría el detalle se abre con controles nativos.
 - Verificación del avance: `RUN_BUILD=1 ./init.sh` pasó fuera del sandbox por la escritura de caché de Next.js. Chrome a 375×812 y 1440×900 confirmó el fondo, ausencia de desborde horizontal y apertura/cierre con Espacio y clic.
 - Última feature verificada: 10, blog editorial con tres análisis y fuentes primarias.
@@ -117,8 +168,10 @@ footer. Leccion: no truncar la salida de verificacion.
 
 ## Riesgos pendientes
 
-- La feature 9 sigue bloqueada: el DNS no tiene MX ni SPF, el buzon no existe y
-  el formulario no captura leads.
+- La feature 9 sigue bloqueada, pero por menos: desde el 2026-11-17 el buzon
+  existe y el DNS de correo esta completo. Falta que el sitio avise, es decir
+  Resend, Supabase y las variables en Vercel. El formulario todavia no captura
+  leads.
 - Sin analitica no hay forma de medir si el contenido nuevo convierte.
 - No esta confirmado que el sitio este indexado. Falta verificar el dominio en
   Google Search Console y enviar el sitemap; requiere la cuenta del owner.

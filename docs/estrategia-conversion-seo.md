@@ -246,7 +246,11 @@ Donde tenerlo activo. Tres opciones honestas:
 Los precios provienen de blogs comparativos, no de las paginas oficiales, asi
 que hay que confirmarlos antes de contratar.
 
-Decidido: Zoho Mail gratis, con `contacto@surinnovacion.cl` y un alias
+**Superado el 2026-11-17:** se monto en Hostinger, no en Zoho, porque el DNS
+del dominio ya vivia ahi y el plan Free Business Email salio sin costo e incluye
+IMAP. Ver `docs/contacto-setup.md`, paso 1.
+
+Decision original: Zoho Mail gratis, con `contacto@surinnovacion.cl` y un alias
 `marco@surinnovacion.cl`, redirigido al Gmail personal de Marco para que la
 notificacion llegue al telefono de inmediato. Migrar a Workspace mas adelante
 si quiere la suite.
