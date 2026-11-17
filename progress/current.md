@@ -2,9 +2,9 @@
 
 - Feature en curso: ninguna
 - Ultima feature cerrada: 23, datos estructurados y metadatos del blog.
-  **Implementada y verificada en build de produccion local, sin desplegar.**
-  Falta la aprobacion del owner para hacer push, y recien despues se puede
-  confirmar en el dominio.
+  **Desplegada y verificada en produccion** el 2026-11-17 (commit `f18ee0f`):
+  titles 57/56/52/56, `Blog` y `BreadcrumbList` en el indice, `isPartOf` en los
+  articulos y tarjetas sociales propias, reauditado sobre el dominio.
 
 ## 2026-11-17, SEO como proyecto continuo
 

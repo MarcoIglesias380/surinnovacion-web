@@ -222,10 +222,14 @@ diferencia entre una tarjeta generica y una que invita al clic.
 
 Honestidad sobre el alcance de esta medicion:
 
-- **Nada de esto esta en produccion todavia.** Los cambios estan en el
-  repositorio y verificados contra un build de produccion servido en local. No
-  se hizo push: requiere la aprobacion del owner. Hasta que se despliegue y se
-  vuelva a auditar el dominio, la correccion no esta confirmada en el sitio real.
+- **Publicado y verificado en produccion** (commit `f18ee0f`, desplegado el
+  2026-11-17). Reauditado sobre el dominio: `/blog` queda en 2 hallazgos y cada
+  articulo en 1, los cuatro titles miden 57/56/52/56, el `Blog` del indice
+  declara sus tres entradas, cada `BlogPosting` enlaza al nodo del blog por
+  `isPartOf`, las cuatro rutas sirven `og:image` (HTTP 200) y un
+  `twitter:title` propio, y la ruta de navegacion se ve sin desborde horizontal
+  a 375 y 1440 px. Las cuatro paginas que no se tocaron siguen en HTTP 200 con
+  su title intacto.
 - **Indexacion y posiciones: sin dato.** No hay acceso a Search Console. Que el
   HTML sea correcto no prueba que Google lo haya indexado, ni que posicione.
 - **Citas en buscadores con IA: sin medir.** No se comprobo si ChatGPT, Gemini o
