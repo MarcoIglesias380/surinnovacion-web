@@ -521,10 +521,20 @@ export function ScrollytellingLandingV2() {
           <div className="story-copy story-copy--city" style={capaVisible(cityOpacity)}>
             <p>Puerto Montt · Chile</p>
             <h2>Mejora de procesos y tecnología para empresas.</h2>
+            <p className="story-scene-lede">
+              Si las cotizaciones quedan sin seguimiento, ordenamos el flujo comercial y evaluamos
+              un CRM. Si tu equipo ingresa los mismos datos en varios sistemas, evaluamos una
+              integración.
+            </p>
           </div>
           <div className="story-copy story-copy--future" style={capaVisible(futureOpacity)}>
             <p>SurInnovacion</p>
             <h2>Puerto Montt, hacia adelante.</h2>
+            <p className="story-scene-lede">
+              Cuando una tarea exige interpretar documentos o preparar respuestas, evaluamos IA con
+              revisión humana. Y cuando el problema se arregla ordenando el proceso, lo decimos: no
+              todo necesita un sistema nuevo.
+            </p>
           </div>
           <span id="proyectos" className="story-anchor story-anchor--projects" aria-hidden="true" />
           <section className="story-hologram story-hologram--projects" style={capaVisible(projectsOpacity)} aria-label="Proyectos">
