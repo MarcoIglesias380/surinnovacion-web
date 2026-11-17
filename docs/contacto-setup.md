@@ -109,33 +109,42 @@ Cuando el formulario este conectado, sus avisos llegan con asunto
 segundo filtro sobre ese asunto separa los leads del formulario del correo
 directo, y responder le llega al cliente.
 
-## Paso 2: envio de notificaciones con Resend
+## Paso 2: envio de notificaciones con Resend - HECHO el 2026-11-17
 
 Hace falta porque el buzon resuelve **recibir**, no que el sitio avise. El
 endpoint no habla SMTP: manda el aviso por HTTP, y por eso no suma dependencias.
 
-1. Crear cuenta en Resend.
-2. Agregar el subdominio `send.surinnovacion.cl`, no el apex. El porque esta
-   abajo, en la nota de SPF.
-3. Publicar en Hostinger los registros que pida Resend para firmar el envio:
-   su **DKIM** y el **SPF**, ambos sobre ese subdominio.
-4. Generar una API key.
+Como quedo:
 
-### SPF: no tocar el del apex
+- Cuenta de Resend **propia de SurInnovacion**, registrada con
+  `contacto@surinnovacion.cl`, separada de la que usa el CRM del salon. El plan
+  gratuito da tres dominios y la del salon ya tenia dos; ademas compartirian el
+  tope de 100 envios diarios y la reputacion de envio. Separar por equipos
+  dentro de una misma cuenta es funcion de pago.
+- Dominio de envio `send.surinnovacion.cl`, **Verified**, region Sao Paulo.
+- API key con permiso **Sending access** y limitada a ese dominio: no puede leer
+  envios ni administrar la cuenta.
 
-El apex ya tiene el SPF de Hostinger y el dominio admite **un solo** registro
-SPF. Para no tocarlo, verificar en Resend un subdominio de envio, por ejemplo
-`send.surinnovacion.cl`, que es ademas lo que Resend recomienda. Asi el SPF de
-Resend vive en el subdominio y el del correo entrante queda intacto.
+Registros publicados en Hostinger:
 
-Si en cambio se verificara el apex, habria que combinar los dos include en una
-sola linea, nunca en dos registros separados:
+| Tipo | Nombre | Contenido |
+|---|---|---|
+| TXT | `resend._domainkey.send` | la clave DKIM |
+| CNAME | `rsend.send` | `rsend-sae1.forge.rmta.net` |
+| CNAME | `send.send` | `send.forge.rmta.net` |
 
-```
-v=spf1 include:_spf.mail.hostinger.com include:amazonses.com ~all
-```
+### SPF: no hizo falta tocarlo
 
-Publicar dos registros SPF separados rompe la autenticacion de los dos.
+Este documento advertia que habria que combinar el SPF de Hostinger con el de
+Resend en una sola linea, porque el dominio admite **un solo** registro SPF.
+
+**No fue necesario.** Resend no pide ningun TXT de SPF: lo resuelve a traves del
+CNAME `send.send`, que delega el return-path a su infraestructura. El SPF del
+apex quedo intacto.
+
+La advertencia sigue valiendo para cualquier otro proveedor de envio que si pida
+un `include` en el apex: en ese caso hay que combinarlos en una linea, nunca
+publicar dos registros SPF separados.
 
 ### DMARC
 
@@ -211,6 +220,11 @@ curl -i -X POST https://surinnovacion.cl/api/contacto -H 'Content-Type: applicat
 Debe responder `200` con `{"ok":true,"channels":["almacen","correo"]}`. Si un
 canal falta, aparece solo el otro en `channels`, y eso indica que ese canal
 quedo mal configurado.
+
+Ejecutado el 2026-11-17 contra produccion: respondio
+`{"ok":true,"channels":["correo"]}` y Resend registro el envio como
+**Delivered** a `contacto@surinnovacion.cl`. Falta `almacen` porque Supabase,
+el paso 3, todavia no esta.
 
 Verificar luego:
 

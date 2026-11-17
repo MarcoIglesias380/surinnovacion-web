@@ -44,17 +44,46 @@ otro dominio de Hostinger, asi que el mensaje pudo enrutarse internamente sin
 pasar por el MX publico. Conviene repetirlo alguna vez desde un remitente
 externo, que es como llegaran los leads reales.
 
+### Formulario conectado el 2026-11-17
+
+El sitio ya avisa cuando alguien escribe. Verificado contra produccion:
+
+```
+POST https://surinnovacion.cl/api/contacto
+{"ok":true,"channels":["correo"]}
+```
+
+Resend registra el envio como **Delivered** a `contacto@surinnovacion.cl`, con
+asunto `Asesoria IA: Prueba tecnica`. De ahi el reenviador lo lleva al Gmail.
+
+Como quedo montado:
+
+- Cuenta de Resend **propia de SurInnovacion**, separada de la del salon. Se
+  descarto compartirla: el plan gratuito da tres dominios y la del salon ya
+  tenia dos, ademas de compartir el tope de 100 envios diarios y la reputacion.
+  Los equipos dentro de una misma cuenta son funcion de pago.
+- Dominio de envio `send.surinnovacion.cl`, **Verified**, region Sao Paulo.
+- Tres registros publicados en Hostinger: el TXT DKIM y dos CNAME. Resend **no
+  pidio SPF**: lo resuelve por el CNAME `send.send`, asi que el SPF del apex no
+  se toco. El riesgo que anticipaba este documento no existia.
+- API key con permiso **Sending access** y limitada a ese dominio, asi que no
+  puede leer envios ni administrar nada.
+- Variables en Vercel: `RESEND_API_KEY`, `LEAD_NOTIFY_TO` y `LEAD_NOTIFY_FROM`
+  con remitente `web@send.surinnovacion.cl`.
+
+Comprobado ademas que el apex no se movio: MX en `mx1`/`mx2.hostinger.com`,
+SPF de Hostinger intacto y el registro A en `76.76.21.21`.
+
 ### Lo que sigue faltando
 
-Tener buzon no es tener el formulario funcionando. El endpoint
-`POST /api/contacto` sigue respondiendo con `fallback: whatsapp` y **no captura
-nada**, porque le faltan `RESEND_API_KEY`, `LEAD_NOTIFY_TO` y
-`LEAD_NOTIFY_FROM`. La feature 9 sigue `blocked`, ahora por Resend, Supabase y
-las variables en Vercel.
+Queda el **almacen durable**. La feature 9 pide que el lead se guarde antes de
+intentar la notificacion, para que exista aunque el correo falle; hoy
+`channels` devuelve solo `["correo"]`. Mientras no este Supabase, si Resend
+falla el endpoint responde 502 y el visitante ve WhatsApp como salida, asi que
+el lead no se pierde en silencio, pero tampoco queda registrado.
 
-Nota tecnica para ese paso: verificar en Resend el subdominio
-`send.surinnovacion.cl`, no el apex. Asi su SPF no choca con el de Hostinger,
-que ya ocupa el unico registro SPF que admite el dominio.
+Por eso la feature 9 pasa de `blocked` a `in_progress`: ya no la bloquea nadie,
+falta trabajo.
 
 ## 2026-11-17, SEO como proyecto continuo
 
@@ -78,10 +107,9 @@ y visuales del sitio.
 - `scripts/auditar.py` de la skill tenia un defecto: reportaba como vacios los
   encabezados que envuelven un enlace. Corregido, porque es el instrumento con
   el que se mide.
-- Prioridad que no es de SEO pero condiciona todo: el formulario no captura
-  leads. El 2026-11-17 se resolvio el correo (MX, SPF, DKIM y DMARC estan), pero
-  falta conectar el aviso. Todo el trafico que el SEO consiga sigue cayendo en
-  ese embudo. Feature 9 sigue `blocked` en `docs/contacto-setup.md`.
+- El embudo dejo de estar roto: el 2026-11-17 se monto el correo y se conecto
+  el formulario, verificado en produccion. El trafico que el SEO consiga ya
+  llega a alguna parte.
 - Feature 11, avance parcial: Servicios, Asesoría y portada del Blog comparten un fondo WebP de 99 804 bytes, generado a partir del concepto visual del hero. En Servicios y Asesoría el detalle se abre con controles nativos.
 - Verificación del avance: `RUN_BUILD=1 ./init.sh` pasó fuera del sandbox por la escritura de caché de Next.js. Chrome a 375×812 y 1440×900 confirmó el fondo, ausencia de desborde horizontal y apertura/cierre con Espacio y clic.
 - Última feature verificada: 10, blog editorial con tres análisis y fuentes primarias.
@@ -168,10 +196,9 @@ footer. Leccion: no truncar la salida de verificacion.
 
 ## Riesgos pendientes
 
-- La feature 9 sigue bloqueada, pero por menos: desde el 2026-11-17 el buzon
-  existe y el DNS de correo esta completo. Falta que el sitio avise, es decir
-  Resend, Supabase y las variables en Vercel. El formulario todavia no captura
-  leads.
+- La feature 9 ya no esta bloqueada: desde el 2026-11-17 el formulario captura
+  y avisa, verificado en produccion. Falta el almacen durable en Supabase para
+  cumplir el criterio de que el lead exista aunque el correo falle.
 - Sin analitica no hay forma de medir si el contenido nuevo convierte.
 - No esta confirmado que el sitio este indexado. Falta verificar el dominio en
   Google Search Console y enviar el sitemap; requiere la cuenta del owner.

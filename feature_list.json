@@ -125,7 +125,7 @@
       "id": 9,
       "name": "contacto-real",
       "title": "Conectar contacto real sin perder leads",
-      "description": "Reescrita el 2026-11-02 segun docs/estrategia-conversion-seo.md. El formulario anterior solo abria WhatsApp con un texto prellenado: no enviaba correo ni guardaba nada, y el lead se perdia si el visitante no completaba el envio en la otra aplicacion. Codigo implementado y verificado. El 2026-11-17 se monto el correo corporativo: buzon contacto@surinnovacion.cl en Hostinger con Free Business Email, reenvio activo al Gmail personal, y MX, SPF, DKIM y DMARC verificados contra DNS publico. Sigue bloqueada en lo que falta para que el sitio avise: cuenta de Resend, almacen en Supabase y variables en Vercel, detallado en docs/contacto-setup.md. Mientras tanto el endpoint responde con fallback a WhatsApp y no captura nada.",
+      "description": "Reescrita el 2026-11-02 segun docs/estrategia-conversion-seo.md. El formulario anterior solo abria WhatsApp con un texto prellenado y el lead se perdia si el visitante no completaba el envio en la otra aplicacion. El 2026-11-17 quedo operativa la captura: buzon contacto@surinnovacion.cl en Hostinger con reenvio al Gmail, cuenta propia de Resend con el dominio send.surinnovacion.cl verificado, y las variables en Vercel. Verificado contra produccion: POST /api/contacto responde {\"ok\":true,\"channels\":[\"correo\"]} y Resend lo registra como Delivered. Pasa de blocked a in_progress porque falta el almacen durable en Supabase, que es el criterio de que el lead exista aunque el correo falle.",
       "acceptance": [
         "Existe un endpoint propio que recibe el formulario sin depender de servicios externos de formularios.",
         "El lead se guarda en un almacen durable antes de intentar la notificacion, para que exista aunque el correo falle.",
@@ -135,7 +135,7 @@
         "Existe correo corporativo en el dominio con notificacion que llega al telefono.",
         "La verificacion demuestra el flujo completo de punta a punta con un envio real."
       ],
-      "status": "blocked"
+      "status": "in_progress"
     },
     {
       "id": 18,
