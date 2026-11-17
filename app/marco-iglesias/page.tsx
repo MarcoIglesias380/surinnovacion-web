@@ -47,10 +47,7 @@ export default function MarcoIglesias() {
         <header className="doc-hero">
           <p className="doc-eyebrow">Quien esta detras</p>
           <h1>Marco Iglesias, Master en Inteligencia Artificial</h1>
-          <p className="doc-lede">
-            Fundador de SurInnovacion. Trabajo desde Puerto Montt con empresas de todo Chile,
-            aplicando inteligencia artificial y desarrollo a problemas concretos de negocio.
-          </p>
+          <p className="doc-lede">Fundador de SurInnovacion.</p>
           <div className="doc-actions">
             <Link className="doc-cta" href="/#contacto">
               Agendar la asesoria gratuita <ArrowUpRight aria-hidden="true" />
