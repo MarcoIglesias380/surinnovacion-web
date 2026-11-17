@@ -16,6 +16,8 @@
   --text-primary: #eaf2ff;
   --text-secondary: rgba(234, 242, 255, 0.74);
   --text-muted: rgba(234, 242, 255, 0.52);
+  --font-base: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
 }
 
 * {
@@ -40,7 +42,7 @@ body {
     var(--surface-void);
   color: var(--text-primary);
   cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='16' cy='16' r='12' fill='none' stroke='white' stroke-width='1.45' opacity='0.92'/%3E%3Ccircle cx='16' cy='16' r='3' fill='white'/%3E%3C/svg%3E") 16 16, auto;
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-base);
   transition: background 240ms ease, color 240ms ease;
 }
 
@@ -1278,7 +1280,7 @@ html[data-tone="bright"] .glass-secondary-button {
 .story-copy h2 {
   margin: 0;
   color: #fff;
-  font-family: var(--font-display, Inter, sans-serif);
+  font-family: var(--font-display);
   font-size: clamp(2.5rem, 5.5vw, 5.75rem);
   font-weight: 500;
   letter-spacing: -0.065em;
@@ -1407,7 +1409,7 @@ html[data-tone="bright"] .glass-secondary-button {
 .story-outro-intro h2 {
   margin: 0;
   color: #fff;
-  font-family: var(--font-display, Inter, sans-serif);
+  font-family: var(--font-display);
   font-size: clamp(2.5rem, 4.8vw, 5rem);
   font-weight: 500;
   letter-spacing: -0.06em;
@@ -2124,7 +2126,7 @@ html[data-tone="bright"] .glass-secondary-button {
 
 .doc-page h1 {
   margin: 0;
-  font-family: var(--font-display, Inter, sans-serif);
+  font-family: var(--font-display);
   font-size: clamp(2.1rem, 5.4vw, 3.5rem);
   font-weight: 500;
   letter-spacing: -0.045em;
@@ -2184,7 +2186,7 @@ html[data-tone="bright"] .glass-secondary-button {
 
 .doc-page h2 {
   margin: 0 0 1.15rem;
-  font-family: var(--font-display, Inter, sans-serif);
+  font-family: var(--font-display);
   font-size: clamp(1.45rem, 3.1vw, 2rem);
   font-weight: 500;
   letter-spacing: -0.03em;

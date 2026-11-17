@@ -19,8 +19,8 @@ const config: Config = {
         frost: "#EAF2FF"
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["Geist", "Inter", "ui-sans-serif", "system-ui", "sans-serif"]
+        sans: ["var(--font-poppins)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-poppins)", "ui-sans-serif", "system-ui", "sans-serif"]
       },
       boxShadow: {
         "soft-glow": "0 0 40px rgba(34, 211, 238, 0.16)",

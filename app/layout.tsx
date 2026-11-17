@@ -1,5 +1,15 @@
 import type { Metadata } from "next";
+import { Poppins } from "next/font/google";
 import "./globals.css";
+
+// next/font auto-hospeda la fuente: sin peticion a Google en runtime y sin
+// salto de maquetacion al cargar.
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-poppins"
+});
 
 const siteTitle = "Consultoría en innovación empresarial | SurInnovacion";
 const siteDescription =
@@ -76,7 +86,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es-CL">
+    <html lang="es-CL" className={poppins.variable}>
       <body>{children}</body>
     </html>
   );
