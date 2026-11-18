@@ -1312,11 +1312,26 @@ html[data-tone="bright"] .glass-secondary-button {
   position: absolute;
   height: 1px;
   width: 1px;
+  /* El sitio reserva 96px bajo el header fijo al saltar a un ancla. Esta es
+     invisible y de 1px, no necesita despejar nada, y esos 96px corrian el
+     aterrizaje y desviaban el punto del recorrido al que llega. */
+  scroll-margin-top: 0;
 }
 
+/* El progreso del recorrido es (scroll - inicioEscena) / (altoEscena - alto
+   ventana). El panel de proyectos se ve entre 0,83 y 0,90, asi que el ancla se
+   coloca en 0,86. Como el alto de la escena es 100svh + N, restar 86svh del
+   86% deja exactamente 0,86 de la distancia recorrible, sea cual sea el alto
+   de la ventana y el valor de N. */
 .story-anchor--projects {
   left: 0;
-  top: 68%;
+  /* `calc(P% - P svh)` equivale a P/100 de la distancia recorrible, sea cual
+     sea el alto de la ventana: el alto de la escena es 100svh + N, asi que
+     P% - P svh = N x P/100. El panel de proyectos se ve entero entre 0,83 y
+     0,90 del recorrido, de modo que 86,5 lo deja centrado, con margen por
+     ambos lados. Este es el unico sitio donde vive ese numero: el salto por
+     JavaScript lee la posicion del ancla en vez de repetirlo. */
+  top: calc(86.5% - 86.5svh);
 }
 
 .story-context-action {
@@ -1831,8 +1846,31 @@ html[data-tone="bright"] .glass-secondary-button {
   transform: translateY(-50%);
 }
 
+/* El 40vw original dejaba este bloque en 184 px utiles a 768 px de ancho, con
+   el titular partido en seis lineas. El tope de 590 px sigue mandando en
+   pantallas grandes. */
 .story-contact-copy {
-  max-width: min(590px, 40vw);
+  max-width: min(590px, 68vw);
+}
+
+/* Escritorio: los bloques de texto quedaban encajonados en 450 px sobre
+   pantallas de 1440, porque el relleno lateral de 8vw se come 230 px del
+   contenedor de 680. Eso partia los titulares en cuatro y cinco lineas, con
+   lineas de una sola palabra. Se ensancha el contenedor y se conserva el 8vw,
+   que es el que separa del borde y mantiene la alineacion con la tarjeta de
+   contacto. Movil y tablet no entran aqui. */
+@media (min-width: 1024px) {
+  .story-copy {
+    max-width: min(1040px, 78vw);
+  }
+
+  .story-copy--intro p {
+    max-width: 44rem;
+  }
+
+  .story-contact-copy {
+    max-width: min(880px, 62vw);
+  }
 }
 
 @media (max-width: 767px) {

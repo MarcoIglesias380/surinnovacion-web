@@ -481,26 +481,49 @@ export function ScrollytellingLandingV2() {
   }, [reducedMotion]);
 
   useEffect(() => {
-    const moveToNarrativeStation = () => {
-      if (window.location.hash === "#contacto") {
+    const irAEstacion = (hash: string) => {
+      if (hash === "#contacto") {
         const contact = document.getElementById("contacto");
         if (contact) window.scrollTo({ top: contact.offsetTop, behavior: "smooth" });
         return;
       }
-      if (window.location.hash === "#blog") {
+      if (hash === "#blog") {
         const blog = document.getElementById("blog");
         if (blog) window.scrollTo({ top: blog.offsetTop, behavior: "smooth" });
         return;
       }
-      if (window.location.hash !== "#proyectos") return;
+      if (hash !== "#proyectos") return;
       const scene = sceneRef.current;
-      if (!scene) return;
-      const distance = Math.max(scene.offsetHeight - window.innerHeight, 1);
-      window.scrollTo({ top: scene.offsetTop + distance * 0.84, behavior: "smooth" });
+      const ancla = document.getElementById("proyectos");
+      if (!scene || !ancla) return;
+      // El destino lo manda la posicion del ancla, que vive en el CSS. Antes
+      // estaba escrito aqui como 0.84 y habia que mantener dos numeros a la vez.
+      window.scrollTo({ top: scene.offsetTop + ancla.offsetTop, behavior: "smooth" });
     };
-    moveToNarrativeStation();
-    window.addEventListener("hashchange", moveToNarrativeStation);
-    return () => window.removeEventListener("hashchange", moveToNarrativeStation);
+
+    const desdeElHash = () => irAEstacion(window.location.hash);
+
+    // `hashchange` no se dispara cuando el hash ya es el mismo, asi que volver a
+    // pulsar "Proyectos" estando en /#proyectos no hacia nada. Escuchar el clic
+    // cubre ese caso y el de llegar desde otra pagina.
+    const alPulsar = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const objetivo = event.target as Element | null;
+      const enlace = objetivo?.closest?.("a[href]") as HTMLAnchorElement | null;
+      if (!enlace) return;
+      const hash = enlace.hash;
+      if (!hash || !["#proyectos", "#contacto", "#blog"].includes(hash)) return;
+      if (enlace.pathname !== window.location.pathname) return;
+      window.requestAnimationFrame(() => irAEstacion(hash));
+    };
+
+    desdeElHash();
+    window.addEventListener("hashchange", desdeElHash);
+    document.addEventListener("click", alPulsar);
+    return () => {
+      window.removeEventListener("hashchange", desdeElHash);
+      document.removeEventListener("click", alPulsar);
+    };
   }, []);
 
   const renderedProgress = reducedMotion ? 1 : progress;
@@ -555,12 +578,17 @@ export function ScrollytellingLandingV2() {
               todo necesita un sistema nuevo.
             </p>
           </div>
-          <span id="proyectos" className="story-anchor story-anchor--projects" aria-hidden="true" />
           <section className="story-hologram story-hologram--projects" style={capaVisible(projectsOpacity)} aria-label="Proyectos">
             <h2>Proyectos digitales publicados</h2>
             <div className="story-projects">{projects.map(([name, description, href]) => <a key={name} href={href} target="_blank" rel="noreferrer"><span><strong>{name}</strong><small>{description}</small></span><ArrowUpRight aria-hidden="true" /></a>)}</div>
           </section>
         </div>
+        {/* Fuera de .story-sticky a proposito. Dentro, el ancla heredaba la
+            posicion del elemento pegajoso, que se mueve con el scroll: el
+            navegador saltaba hacia un blanco movil y se caia en cualquier
+            parte del recorrido. Aqui su posicion en el documento es fija y
+            corresponde al punto del scroll donde el panel esta visible. */}
+        <span id="proyectos" className="story-anchor story-anchor--projects" aria-hidden="true" />
       </section>
       <section id="blog" className="story-outro">
         <div className="story-outro-stage">

@@ -33,6 +33,68 @@ Dos decisiones que conviene recordar, ambas detalladas en
   titles 57/56/52/56, `Blog` y `BreadcrumbList` en el indice, `isPartOf` en los
   articulos y tarjetas sociales propias, reauditado sobre el dominio.
 
+## 2026-11-18, dos arreglos pedidos por el owner
+
+### Los textos de la portada se partian en demasiadas lineas en escritorio
+
+Medido a 1440 px antes de tocar nada: **todos los bloques encajonados en
+450 px**, con titulares de cuatro y cinco lineas.
+
+La causa no era el ancho del contenedor sino el relleno: `.story-copy` tiene
+`max-width: 680px` y `padding: 0 8vw`, y a 1440 px ese 8vw son 115 px por lado,
+230 en total. Quedaban 450 px utiles. El bloque de contacto estaba peor: 576 px
+menos el mismo relleno dejaban **346 px**.
+
+Se ensancho el contenedor y **se conservo el 8vw**, que es lo que separa del
+borde y mantiene la alineacion con la tarjeta de contacto. Solo desde 1024 px:
+
+| Bloque | Antes | Ahora |
+|---|---|---|
+| Sistemas a medida para tu empresa | 3 lineas | **2** |
+| Diseno e implemento soluciones | 3 | **2** |
+| Mejora de procesos y tecnologia | 5 | **3** |
+| Puerto Montt, hacia adelante | 3 | **2** |
+| Agenda tu asesoria gratuita | 5 | **3** |
+
+Movil a 375 px: sin cambios, verificado (2, 4, 2, 4 lineas y los mismos anchos).
+
+De paso se encontro un defecto previo en tablet: a 768 px el bloque de contacto
+quedaba en **184 px utiles con el titular en seis lineas**, porque su
+`min(590px, 40vw)` colapsaba. Se subio a `68vw`.
+
+### El boton de Proyectos no siempre llegaba
+
+Dos fallos encadenados, y el segundo solo aparecio al medir.
+
+**Primero:** el ancla `#proyectos` era un `span` absoluto **dentro de
+`.story-sticky`**. Al ser el padre pegajoso, la posicion del ancla en el
+documento se mueve con el scroll: el navegador saltaba hacia un blanco movil.
+Se saco de ahi y pasa a ser hijo directo de `.story-scene`, con una posicion
+fija expresada como `calc(86.5% - 86.5svh)`. Esa formula equivale a 0,865 de la
+distancia recorrible sea cual sea el alto de la ventana, porque la escena mide
+`100svh + N`. Comprobado: a 1440 px el recorrido mide 6200 y a 375 px mide 5200,
+y en ambos aterriza en 0,865.
+
+**Segundo, el que de verdad lo rompia:** ya existia un `useEffect` que saltaba a
+`0.84` escrito a mano, enganchado solo a `hashchange`. **Ese evento no se
+dispara cuando el hash ya es el mismo**, asi que volver a pulsar "Proyectos"
+estando en `/#proyectos` no hacia absolutamente nada. Ese era el "no siempre
+llega". Ahora tambien escucha el clic sobre cualquier enlace a `#proyectos`,
+`#contacto` o `#blog` de la misma pagina.
+
+Ademas el salto dejo de repetir el 0,84: lee `ancla.offsetTop`, asi que el
+numero vive en un solo sitio, el CSS.
+
+**Verificacion**, pulsando el enlace real del menu desde seis posiciones de
+scroll distintas, incluidas las repeticiones con el hash ya puesto:
+
+```
+progreso tras el salto: 0.865  x6     opacidad del panel: 1  x6
+```
+
+En movil, tres de tres con el mismo resultado. `#blog` y `#contacto` siguen
+aterrizando exactos en sus secciones (7100 y 8495).
+
 ## 2026-11-18, analitica: feature 24
 
 El sitio ya captura leads, pero no sabiamos cuanta gente llega ni que
