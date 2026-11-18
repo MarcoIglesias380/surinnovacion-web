@@ -44,8 +44,10 @@ La eligio el owner entre tres opciones. Las razones:
 - **No usa cookies ni identificadores persistentes**, por lo que no obliga a un
   banner de consentimiento. Eso importa en este sitio: cualquier banner tapa
   parte de la portada, que es el activo visual que no se toca.
-- GA4 se descarto por tres cosas: el banner, un script unas cincuenta veces mas
-  pesado, y enviar datos de los visitantes a un tercero.
+- GA4 se descarto por tres cosas: el banner, el peso y enviar datos de los
+  visitantes a un tercero. El peso, medido y no estimado: el script de Vercel
+  Analytics pesa **2 080 bytes**; el `gtag.js` de Google, **157 441 bytes**
+  comprimido. Son 75 veces mas.
 
 ### Dependencias nuevas, justificadas
 
@@ -69,6 +71,31 @@ lead se envia igual. Medir nunca puede costar un cliente.
 
 Con eso se puede calcular la unica cifra que importa hoy: cuantas de las visitas
 terminan en alguien escribiendo.
+
+### Verificacion en produccion
+
+Los scripts no aparecen en el HTML servido: Vercel los inyecta al montar el
+componente y los sirve bajo **rutas aleatorias** para que los bloqueadores de
+anuncios no los reconozcan por el nombre. Buscarlos con `curl` sobre el HTML da
+cero; hay que mirar el navegador.
+
+Medido sobre el sitio en vivo:
+
+| | |
+|---|---|
+| `/bcf09d2d40e14856/script.js` | 2 080 bytes, analitica |
+| `/d997a92d2d885d6a/script.js` | 7 619 bytes, speed insights |
+| **Total** | **9 699 bytes** |
+
+Evidencia de que mide de verdad, no solo de que carga:
+
+```
+POST /bcf09d2d40e14856/view    200
+POST /d997a92d2d885d6a/vitals  200
+```
+
+Y la comprobacion que importaba para no necesitar banner: el sitio devuelve
+**cero cabeceras `Set-Cookie`** y `document.cookie` esta vacio.
 
 ### Hallazgo aparte, no introducido por este cambio
 
