@@ -22,7 +22,7 @@ Dos decisiones que conviene recordar, ambas detalladas en
 
 # Sesion actual
 
-- Feature en curso: ninguna
+- Feature en curso: **24, medir trafico, conversion e indexacion**
 - Ultima feature cerrada: **9, conectar contacto real sin perder leads**,
   el 2026-11-18. El formulario captura, guarda y avisa. Resumen en
   `progress/history.md`.
@@ -30,6 +30,52 @@ Dos decisiones que conviene recordar, ambas detalladas en
   **Desplegada y verificada en produccion** el 2026-11-17 (commit `f18ee0f`):
   titles 57/56/52/56, `Blog` y `BreadcrumbList` en el indice, `isPartOf` en los
   articulos y tarjetas sociales propias, reauditado sobre el dominio.
+
+## 2026-11-18, analitica: feature 24
+
+El sitio ya captura leads, pero no sabiamos cuanta gente llega ni que
+porcentaje escribe. Se monto medicion.
+
+### Decision: Vercel Web Analytics, no Google Analytics
+
+La eligio el owner entre tres opciones. Las razones:
+
+- Viene **incluida en el plan Pro** que ya paga, asi que no suma costo.
+- **No usa cookies ni identificadores persistentes**, por lo que no obliga a un
+  banner de consentimiento. Eso importa en este sitio: cualquier banner tapa
+  parte de la portada, que es el activo visual que no se toca.
+- GA4 se descarto por tres cosas: el banner, un script unas cincuenta veces mas
+  pesado, y enviar datos de los visitantes a un tercero.
+
+### Dependencias nuevas, justificadas
+
+`AGENTS.md` exige justificarlas aqui:
+
+| Paquete | Version | Por que |
+|---|---|---|
+| `@vercel/analytics` | 2.0.1 | Visitas, paginas y el evento de conversion |
+| `@vercel/speed-insights` | 2.1.0 | Metricas de carga reales de los visitantes, utiles para la feature 11 |
+
+Ambas fijadas sin `^`, siguiendo la convencion del resto de `package.json`.
+
+### El evento de conversion
+
+El formulario marca `contacto` con un unico campo, `desenlace`, que vale
+`enviado`, `whatsapp` o `fallido`. **No viaja ningun dato del visitante**: ni
+nombre, ni correo, ni mensaje. Solo cual de los tres finales ocurrio.
+
+La llamada va envuelta en `try/catch` a proposito: si la analitica falla, el
+lead se envia igual. Medir nunca puede costar un cliente.
+
+Con eso se puede calcular la unica cifra que importa hoy: cuantas de las visitas
+terminan en alguien escribiendo.
+
+### Hallazgo aparte, no introducido por este cambio
+
+`npm audit` reporta **31 vulnerabilidades** (22 altas, 1 critica) en el arbol de
+dependencias. Se verifico que **ninguna proviene de los dos paquetes nuevos**:
+vienen de `next`, `tailwindcss` y el instrumental de `eslint`. Queda anotado
+como trabajo propio, no se toco en esta feature para no mezclar.
 
 ## 2026-11-17, correo corporativo montado
 

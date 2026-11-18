@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 // next/font auto-hospeda la fuente: sin peticion a Google en runtime y sin
@@ -87,7 +89,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es-CL" className={poppins.variable}>
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* Analitica de Vercel: sin cookies ni identificadores persistentes, asi
+            que no requiere banner de consentimiento. SpeedInsights reporta las
+            metricas reales de carga de los visitantes, no de un laboratorio. */}
+        <Analytics />
+        <SpeedInsights />
+      </body>
     </html>
   );
 }

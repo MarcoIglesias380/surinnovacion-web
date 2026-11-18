@@ -337,6 +337,21 @@
         "Se verifica con RUN_BUILD=1 ./init.sh y con el auditor sobre un build de produccion."
       ],
       "status": "done"
+    },
+    {
+      "id": 24,
+      "name": "analitica-y-search-console",
+      "title": "Medir trafico, conversion e indexacion",
+      "description": "El sitio captura leads desde el 2026-11-18 pero no hay forma de saber cuanta gente llega, por donde entra ni que porcentaje termina escribiendo. Sin eso cualquier mejora es intuicion. Se elige Vercel Web Analytics, incluida en el plan Pro que el owner ya paga: no usa cookies ni identificadores persistentes, asi que no obliga a un banner de consentimiento ni toca el diseno. Se descarto Google Analytics 4 por el banner, el peso del script y el envio de datos de visitantes a un tercero. Incluye ademas verificar el dominio en Search Console, que es lo unico que dice si Google indexa el sitio y por que busquedas.",
+      "acceptance": [
+        "El sitio reporta visitas y paginas vistas sin usar cookies ni pedir consentimiento.",
+        "El envio del formulario queda registrado como evento, para poder calcular cuantas visitas terminan en lead.",
+        "El evento no envia ningun dato personal del visitante, solo el desenlace.",
+        "Si la analitica falla, el envio del lead sigue funcionando igual.",
+        "Se reportan las metricas reales de carga de los visitantes, no de un laboratorio.",
+        "El dominio esta verificado en Search Console y el sitemap enviado."
+      ],
+      "status": "in_progress"
     }
   ]
 }

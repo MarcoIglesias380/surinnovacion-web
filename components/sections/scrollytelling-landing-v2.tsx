@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import { ArrowUpRight, Check, Loader2, MessageCircle, Send } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -301,6 +302,17 @@ function ContactForm() {
     setStatus("error");
   };
 
+  // Marca el desenlace del formulario sin enviar un solo dato del visitante:
+  // solo cual de los tres finales ocurrio. Sirve para saber cuantas visitas
+  // terminan en lead y para notar si los envios empiezan a fallar.
+  const marcar = (desenlace: "enviado" | "whatsapp" | "fallido") => {
+    try {
+      track("contacto", { desenlace });
+    } catch {
+      // La analitica nunca debe romper el envio de un lead.
+    }
+  };
+
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (status === "sending") return;
@@ -329,14 +341,18 @@ function ContactForm() {
         | { ok?: boolean; error?: string; fallback?: string }
         | null;
       if (!response.ok || !payload?.ok) {
+        marcar("fallido");
         return fail(payload?.error ?? "No pudimos registrar tu mensaje. Puedes escribirme por WhatsApp.");
       }
       if (payload.fallback === "whatsapp") {
+        marcar("whatsapp");
         window.location.href = whatsappFallback;
         return;
       }
+      marcar("enviado");
       setStatus("sent");
     } catch {
+      marcar("fallido");
       fail("Se cayo la conexion antes de enviar. Puedes reintentar o escribirme por WhatsApp.");
     }
   };
