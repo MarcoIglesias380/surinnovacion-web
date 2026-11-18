@@ -1,7 +1,32 @@
+### Lo que faltaba, ya resuelto el 2026-11-18
+
+Se completo la cadena: cuenta propia de Resend con `send.surinnovacion.cl`
+verificado, tabla `public.leads` en Supabase con RLS activo, y las cinco
+variables en Vercel. Verificado contra produccion:
+
+```
+POST https://surinnovacion.cl/api/contacto
+{"ok":true,"channels":["almacen","correo"]}
+```
+
+En ese orden: el endpoint guarda antes de notificar, que era el criterio que
+faltaba. La feature 9 quedo `done`.
+
+Dos decisiones que conviene recordar, ambas detalladas en
+`docs/contacto-setup.md`:
+
+- La cuenta de Resend es **propia de SurInnovacion**, separada de la del salon.
+- La tabla vive en el proyecto `surinnovacion-social-ia` porque el plan gratuito
+  de Supabase limita a dos proyectos activos **por usuario**, no por
+  organizacion. Antes de cualquier reset de esa base, exportar `public.leads`.
+
 # Sesion actual
 
 - Feature en curso: ninguna
-- Ultima feature cerrada: 23, datos estructurados y metadatos del blog.
+- Ultima feature cerrada: **9, conectar contacto real sin perder leads**,
+  el 2026-11-18. El formulario captura, guarda y avisa. Resumen en
+  `progress/history.md`.
+- Anterior: 23, datos estructurados y metadatos del blog.
   **Desplegada y verificada en produccion** el 2026-11-17 (commit `f18ee0f`):
   titles 57/56/52/56, `Blog` y `BreadcrumbList` en el indice, `isPartOf` en los
   articulos y tarjetas sociales propias, reauditado sobre el dominio.
@@ -134,9 +159,15 @@ y visuales del sitio.
 
 ## Plan
 
-- Cerrar la feature 9 cuando el owner complete `docs/contacto-setup.md`.
-- Abrir despues la pagina `/marco-iglesias` de autoridad, y la feature de
-  analitica y Search Console.
+- La feature 11, pulido responsive y performance, es la unica que sigue
+  `pending`.
+- Decision abierta del owner: el title de la portada,
+  `docs/recomendacion-title-portada.md`.
+- Sigue sin existir analitica ni verificacion en Search Console. Ahora que el
+  formulario captura, medir cuanto convierte el trafico es el siguiente paso
+  con sentido.
+- Pendiente del owner, no bloqueante: el filtro de Gmail y el "Enviar como",
+  para que las respuestas no salgan desde su direccion personal.
 
 ## Bitacora
 
@@ -196,9 +227,8 @@ footer. Leccion: no truncar la salida de verificacion.
 
 ## Riesgos pendientes
 
-- La feature 9 ya no esta bloqueada: desde el 2026-11-17 el formulario captura
-  y avisa, verificado en produccion. Falta el almacen durable en Supabase para
-  cumplir el criterio de que el lead exista aunque el correo falle.
+- La feature 9 quedo cerrada el 2026-11-18. El embudo funciona de punta a
+  punta: el formulario guarda el lead y avisa por correo.
 - Sin analitica no hay forma de medir si el contenido nuevo convierte.
 - No esta confirmado que el sitio este indexado. Falta verificar el dominio en
   Google Search Console y enviar el sitemap; requiere la cuenta del owner.

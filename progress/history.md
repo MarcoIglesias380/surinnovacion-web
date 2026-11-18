@@ -721,3 +721,47 @@ Append-only. Cada cierre de sesion debe agregar una entrada nueva al final.
 - No verificado: indexacion, posiciones, citas en buscadores con IA, ficha de
   Google Business Profile y Core Web Vitals de campo. Y nada esta en produccion
   hasta que se apruebe el push.
+
+---
+
+## 2026-11-18 - Feature 9: Conectar contacto real sin perder leads
+
+- Agente lider: Claude Code
+- Resultado: APPROVED
+- Contexto: el codigo del endpoint estaba implementado y verificado desde el
+  2026-11-02, pero la feature quedo `blocked` dieciseis dias esperando cuentas y
+  DNS que solo podia crear el owner. El formulario respondia con fallback a
+  WhatsApp y no capturaba nada.
+- Cambios de infraestructura, ninguno de codigo:
+  - **Correo corporativo en Hostinger**, no en Zoho como preveia el plan: la
+    zona DNS del dominio ya vivia ahi, el plan Free Business Email salio sin
+    costo e incluye IMAP, que el gratuito de Zoho no da. Buzon
+    `contacto@surinnovacion.cl` con reenvio al Gmail del owner y copia guardada.
+  - **Cuenta de Resend propia de SurInnovacion**, separada de la del CRM del
+    salon, que ya ocupaba dos de los tres dominios del plan gratuito y
+    compartiria tope diario y reputacion de envio. Dominio de envio
+    `send.surinnovacion.cl`, region Sao Paulo, API key con permiso de solo envio
+    limitada a ese dominio.
+  - **Tabla `public.leads` en Supabase**, dentro del proyecto
+    `surinnovacion-social-ia`. No tiene proyecto propio porque el plan gratuito
+    limita a dos proyectos activos **por usuario**, no por organizacion, y los
+    dos cupos estaban tomados. Riesgo registrado en `docs/contacto-setup.md`.
+  - Variables en Vercel: `RESEND_API_KEY`, `LEAD_NOTIFY_TO`,
+    `LEAD_NOTIFY_FROM`, `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY`.
+- Hallazgo que corrige una advertencia previa de los docs: **Resend no pide
+  ningun registro SPF**. Lo delega por el CNAME `send.send`, asi que el SPF del
+  apex no se toco y el riesgo de fusionar dos `include` nunca existio.
+- Verificacion:
+  - `POST https://surinnovacion.cl/api/contacto` en produccion respondio
+    `{"ok":true,"channels":["almacen","correo"]}`, en ese orden.
+  - Resend registro el envio como **Delivered** a `contacto@surinnovacion.cl`.
+  - La tabla no es legible sin clave: `GET /rest/v1/leads` sin `apikey`
+    devuelve `No API key found in request`.
+  - DNS contra servidores publicos: MX `mx1`/`mx2.hostinger.com`, SPF de
+    Hostinger, DKIM con clave real y DMARC `p=none`. El registro A del apex
+    sigue en `76.76.21.21` y el sitio responde 200 en apex y en www.
+  - `npm run lint`, `npm run typecheck` y `npm run build`: pasaron, con la
+    salida completa a la vista.
+- Pendiente del owner, documentado y no bloqueante: el filtro de Gmail y el
+  "Enviar como", para que las respuestas a los clientes no salgan desde la
+  direccion personal.

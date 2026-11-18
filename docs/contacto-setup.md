@@ -163,10 +163,38 @@ v=DMARC1; p=none; rua=mailto:contacto@surinnovacion.cl
 
 Despues de unas semanas sin rechazos legitimos, endurecer a `p=quarantine`.
 
-## Paso 3: almacen de leads en Supabase
+## Paso 3: almacen de leads en Supabase - HECHO el 2026-11-18
 
 Garantiza que el lead exista aunque el correo falle. El endpoint escribe
 primero aqui y recien despues notifica.
+
+### Donde vive, y por que ahi
+
+La tabla vive en el proyecto **`surinnovacion-social-ia`**, que es la
+plataforma de contenido para redes que el owner esta construyendo. No tiene
+proyecto propio por una razon concreta: el plan gratuito de Supabase limita a
+**dos proyectos activos por usuario, no por organizacion**, y esos dos cupos ya
+estaban ocupados por `surinnovacion-social-ia` y por el CRM del salon. Pausar o
+borrar el del salon no era opcion: es produccion con datos de clientas.
+
+Se decidio el 2026-11-17 compartir proyecto en vez de pagar Pro o postergar,
+porque el sitio esta empezando a captar audiencia y conviene tener el registro
+desde el primer lead.
+
+**Riesgo asumido, y como se mitiga:** `surinnovacion-social-ia` esta en
+desarrollo activo, y una base en desarrollo se resetea. Si eso pasa, se llevaria
+la tabla `leads` por delante.
+
+> **Antes de cualquier reset o migracion destructiva de esa base, exportar
+> `public.leads`.**
+
+El dano real seria acotado igualmente: el registro de verdad de cada lead es el
+correo. Cada contacto queda en `contacto@surinnovacion.cl`, con copia guardada
+en el buzon, ademas del reenvio al Gmail. La tabla es el libro de consulta y
+seguimiento, no la unica copia.
+
+Si la plataforma crece y conviene separarlas, migrar una tabla de unos cientos
+de filas es trabajo de media hora.
 
 Crear la tabla en el proyecto de Supabase:
 
@@ -192,7 +220,7 @@ puede leer ni escribir con la clave publica. El endpoint usa la
 La `service_role` nunca debe quedar en codigo del cliente ni en una variable
 con prefijo `NEXT_PUBLIC_`.
 
-## Paso 4: variables de entorno en Vercel
+## Paso 4: variables de entorno en Vercel - HECHO el 2026-11-18
 
 En el proyecto `surinnovacion-web`, en Settings, Environment Variables, para
 Production y Preview:
@@ -203,13 +231,13 @@ Production y Preview:
 | `LEAD_NOTIFY_TO` | `contacto@surinnovacion.cl` | Destino del aviso. Admite varios separados por coma |
 | `LEAD_NOTIFY_FROM` | `SurInnovacion <web@send.surinnovacion.cl>` | Remitente. Debe ser del dominio o subdominio verificado en Resend |
 | `SUPABASE_URL` | URL del proyecto Supabase | Almacen |
-| `SUPABASE_SERVICE_ROLE_KEY` | clave `service_role` | Almacen |
+| `SUPABASE_SERVICE_ROLE_KEY` | la clave secreta de Supabase | Almacen |
 | `LEADS_TABLE` | opcional, por defecto `leads` | Nombre de la tabla |
 
 Despues de agregarlas hay que redesplegar: Vercel no inyecta variables nuevas
 en un build ya hecho.
 
-## Paso 5: comprobar que funciona
+## Paso 5: comprobar que funciona - HECHO el 2026-11-18
 
 Con las variables puestas y el deploy listo:
 
@@ -221,16 +249,36 @@ Debe responder `200` con `{"ok":true,"channels":["almacen","correo"]}`. Si un
 canal falta, aparece solo el otro en `channels`, y eso indica que ese canal
 quedo mal configurado.
 
-Ejecutado el 2026-11-17 contra produccion: respondio
-`{"ok":true,"channels":["correo"]}` y Resend registro el envio como
-**Delivered** a `contacto@surinnovacion.cl`. Falta `almacen` porque Supabase,
-el paso 3, todavia no esta.
+Ejecutado el 2026-11-18 contra produccion, con todo configurado:
+
+```
+{"ok":true,"channels":["almacen","correo"]}
+```
+
+En ese orden, porque el endpoint guarda antes de notificar. Resend registra los
+envios como **Delivered** a `contacto@surinnovacion.cl`, y la tabla no es
+legible sin clave: `GET /rest/v1/leads` sin `apikey` devuelve
+`No API key found in request`.
 
 Verificar luego:
 
 1. Que llego el correo a `contacto@surinnovacion.cl` y al Gmail personal.
 2. Que la fila existe en la tabla `leads` de Supabase.
 3. Que el formulario del sitio muestra el estado de exito.
+
+### Sobre la clave secreta de Supabase
+
+El proyecto usa el formato nuevo de claves (`sb_secret_...`, no el
+`service_role` en JWT, que Supabase retira a principios de 2027). El endpoint
+funciona con las dos sin cambios, porque manda la clave en `apikey` y en
+`Authorization: Bearer`. El nombre de la variable se mantiene como
+`SUPABASE_SERVICE_ROLE_KEY` porque es el que lee el codigo.
+
+Esa clave da acceso privilegiado a **todo el proyecto**, no solo a `leads`, y
+Supabase todavia no permite limitarla a tablas concretas. Como el proyecto se
+comparte con `surinnovacion-social-ia`, una filtracion expondria tambien los
+datos de esa plataforma. Vive solo en Vercel, marcada como Sensitive, y nunca
+llega al navegador. Separar los proyectos algun dia tambien resuelve esto.
 
 ## Pendiente despues del setup
 

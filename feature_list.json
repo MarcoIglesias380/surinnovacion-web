@@ -125,7 +125,7 @@
       "id": 9,
       "name": "contacto-real",
       "title": "Conectar contacto real sin perder leads",
-      "description": "Reescrita el 2026-11-02 segun docs/estrategia-conversion-seo.md. El formulario anterior solo abria WhatsApp con un texto prellenado y el lead se perdia si el visitante no completaba el envio en la otra aplicacion. El 2026-11-17 quedo operativa la captura: buzon contacto@surinnovacion.cl en Hostinger con reenvio al Gmail, cuenta propia de Resend con el dominio send.surinnovacion.cl verificado, y las variables en Vercel. Verificado contra produccion: POST /api/contacto responde {\"ok\":true,\"channels\":[\"correo\"]} y Resend lo registra como Delivered. Pasa de blocked a in_progress porque falta el almacen durable en Supabase, que es el criterio de que el lead exista aunque el correo falle.",
+      "description": "Reescrita el 2026-11-02 segun docs/estrategia-conversion-seo.md. El formulario anterior solo abria WhatsApp con un texto prellenado y el lead se perdia si el visitante no completaba el envio en la otra aplicacion. Cerrada el 2026-11-18: buzon contacto@surinnovacion.cl en Hostinger con reenvio al Gmail, cuenta propia de Resend con send.surinnovacion.cl verificado, y tabla public.leads en Supabase con RLS activo. Verificado contra produccion: POST /api/contacto responde {\"ok\":true,\"channels\":[\"almacen\",\"correo\"]}, en ese orden, porque el endpoint guarda antes de notificar. Setup documentado en docs/contacto-setup.md.",
       "acceptance": [
         "Existe un endpoint propio que recibe el formulario sin depender de servicios externos de formularios.",
         "El lead se guarda en un almacen durable antes de intentar la notificacion, para que exista aunque el correo falle.",
@@ -135,7 +135,7 @@
         "Existe correo corporativo en el dominio con notificacion que llega al telefono.",
         "La verificacion demuestra el flujo completo de punta a punta con un envio real."
       ],
-      "status": "in_progress"
+      "status": "done"
     },
     {
       "id": 18,
