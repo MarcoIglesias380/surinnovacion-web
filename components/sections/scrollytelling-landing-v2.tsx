@@ -346,6 +346,9 @@ function ContactForm() {
       }
       if (payload.fallback === "whatsapp") {
         marcar("whatsapp");
+        // El destino es https://wa.me/..., una URL externa, no una ruta de este
+        // sitio. La regla no puede resolver la plantilla y avisa de mas.
+        // eslint-disable-next-line @next/next/no-location-assign-relative-destination
         window.location.href = whatsappFallback;
         return;
       }

@@ -137,12 +137,53 @@ Google conoce 39 URLs de ese ecommerce y no acepto ninguna. No se toco porque es
 otro proyecto, pero el informe de "Paginas no indexadas" dice exactamente por
 que las rechaza, y es trabajo que vale la pena.
 
-### Hallazgo aparte, no introducido por este cambio
+### Seguridad de dependencias, revisada el 2026-11-18
 
-`npm audit` reporta **31 vulnerabilidades** (22 altas, 1 critica) en el arbol de
-dependencias. Se verifico que **ninguna proviene de los dos paquetes nuevos**:
-vienen de `next`, `tailwindcss` y el instrumental de `eslint`. Queda anotado
-como trabajo propio, no se toco en esta feature para no mezclar.
+`npm audit` reportaba **31 vulnerabilidades**. Ninguna provenia de los paquetes
+de analitica agregados ese dia.
+
+Lo primero fue separar lo que importa de lo que no. De las 31, **solo 6 estaban
+en dependencias de produccion**; las otras 25 son instrumental de construccion
+(`eslint`, `tailwindcss`, tipos) que no llega al visitante.
+
+De esas 6, una era directa y **critica**: `next` 16.2.9 arrastraba 21 avisos,
+cinco de ellos criticos.
+
+**Que aplicaba de verdad a este sitio**, comprobado uno por uno:
+
+| Aviso | Aplica |
+|---|---|
+| RCE en la API de optimizacion de imagenes con AVIF | **Si**, el sitio usa `next/image` y sirve AVIF |
+| SSRF en la API de optimizacion de imagenes | **Si**, aunque acotado: no hay `remotePatterns`, las URLs externas devuelven 400 |
+| RCE en `next/og` | No, el sitio no lo usa |
+| DoS y SSRF en Server Actions | No, el sitio no las usa |
+| Bypass de middleware con Turbopack y un solo locale | No, no hay middleware ni i18n |
+| RCE en servidores Windows | No, Vercel corre Linux |
+| Envenenamiento de cache en SSG autoalojado | No, no es autoalojado |
+| RCE en funciones `use cache` | No, el sitio no las usa |
+
+**Correccion aplicada:** `next` y `eslint-config-next` de 16.2.9 a **16.4.6**,
+un salto menor, sin cambios de API. Produccion paso de 6 avisos (1 critico,
+4 altos) a **2 (0 criticos)**: quedan `baseline-browser-mapping` y
+`source-map-js`, ambos transitivos y sin correccion publicada.
+
+El linter nuevo trajo una advertencia que es **falso positivo**: marca
+`window.location.href` como navegacion interna cuando el destino es
+`https://wa.me/...`, una URL externa que la regla no puede resolver desde una
+plantilla. Se silencio en esa linea con el motivo escrito al lado.
+
+**Verificacion visual tras la actualizacion**, porque un salto de framework
+puede romper el scrollytelling sin que lo note el build:
+
+- Portada en 375 px: H1 en dos lineas, Poppins, sin desborde, lienzo de
+  750x1624 dibujando imagen real (brillo medio 112, rango 25-227).
+- `/servicios` en 1280 px: los seis enlaces del menu en una fila, sin desborde,
+  ninguna imagen rota.
+- `/blog`: seis enlaces a articulos, sin desborde.
+- Consola del navegador: **sin errores** en ninguna de las tres.
+
+Se agrego `.claude/launch.json` para poder levantar el sitio y revisarlo
+visualmente sin inventar el comando cada vez.
 
 ## 2026-11-17, correo corporativo montado
 
