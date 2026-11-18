@@ -351,7 +351,7 @@
         "Se reportan las metricas reales de carga de los visitantes, no de un laboratorio.",
         "El dominio esta verificado en Search Console y el sitemap enviado."
       ],
-      "status": "in_progress"
+      "status": "done"
     }
   ]
 }

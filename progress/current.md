@@ -22,11 +22,13 @@ Dos decisiones que conviene recordar, ambas detalladas en
 
 # Sesion actual
 
-- Feature en curso: **24, medir trafico, conversion e indexacion**
+- Feature en curso: ninguna
+- Ultima feature cerrada: **24, medir trafico, conversion e indexacion**, el
+  2026-11-18. Resumen en `progress/history.md`.
 - Ultima feature cerrada: **9, conectar contacto real sin perder leads**,
-  el 2026-11-18. El formulario captura, guarda y avisa. Resumen en
-  `progress/history.md`.
-- Anterior: 23, datos estructurados y metadatos del blog.
+- Anterior: 9, conectar contacto real sin perder leads, cerrada el mismo dia:
+  el formulario captura, guarda y avisa.
+- Antes: 23, datos estructurados y metadatos del blog.
   **Desplegada y verificada en produccion** el 2026-11-17 (commit `f18ee0f`):
   titles 57/56/52/56, `Blog` y `BreadcrumbList` en el indice, `isPartOf` en los
   articulos y tarjetas sociales propias, reauditado sobre el dominio.
@@ -96,6 +98,44 @@ POST /d997a92d2d885d6a/vitals  200
 
 Y la comprobacion que importaba para no necesitar banner: el sitio devuelve
 **cero cabeceras `Set-Cookie`** y `document.cookie` esta vacio.
+
+### Search Console
+
+Propiedad **de dominio** `surinnovacion.cl`, no de prefijo de URL: cubre `www` y
+sin `www`, `http` y `https`, y cualquier subdominio futuro de una sola vez. Con
+la otra habria que crear propiedades separadas y los datos saldrian partidos.
+
+Verificada por DNS el 2026-11-18. El TXT se publico en el apex **junto al SPF**,
+no en su lugar:
+
+```
+"v=spf1 include:_spf.mail.hostinger.com ~all"
+"google-site-verification=xdNfOw_zxrD4rGkoueMviyXnxPemGjXm8KrjmyqiZcI"
+```
+
+Un dominio admite todos los TXT que quiera; la regla de "uno solo" aplica al
+SPF en particular. Comprobado tras el cambio: sigue habiendo exactamente **un**
+registro SPF, y los MX y el registro A del apex no se movieron.
+
+El sitio ya estaba listo para que Google lo leyera: `robots.txt` con `Allow: /`
+y declarando el sitemap, y `sitemap.xml` con las ocho URLs.
+
+Los datos tardan dos o tres dias en aparecer y la indexacion una o dos semanas.
+Ver todo en cero al dia siguiente no es sintoma de nada.
+
+### Hallazgo de otro proyecto, anotado al pasar
+
+Al abrir Search Console se vio la propiedad de **columbaboutique.com**, que es
+uno de los proyectos de la vitrina de este sitio:
+
+```
+0 clics en la busqueda web
+39 paginas no indexadas, 0 paginas indexadas
+```
+
+Google conoce 39 URLs de ese ecommerce y no acepto ninguna. No se toco porque es
+otro proyecto, pero el informe de "Paginas no indexadas" dice exactamente por
+que las rechaza, y es trabajo que vale la pena.
 
 ### Hallazgo aparte, no introducido por este cambio
 
@@ -233,12 +273,13 @@ y visuales del sitio.
 ## Plan
 
 - La feature 11, pulido responsive y performance, es la unica que sigue
-  `pending`.
+  `pending`. Ahora cuenta con datos reales de carga via Speed Insights, en vez
+  de mediciones de laboratorio.
 - Decision abierta del owner: el title de la portada,
   `docs/recomendacion-title-portada.md`.
-- Sigue sin existir analitica ni verificacion en Search Console. Ahora que el
-  formulario captura, medir cuanto convierte el trafico es el siguiente paso
-  con sentido.
+- Ya hay analitica y Search Console. Los datos tardan dos o tres dias en
+  aparecer y la indexacion una o dos semanas, asi que la primera lectura util
+  es hacia el 21 de noviembre.
 - Pendiente del owner, no bloqueante: el filtro de Gmail y el "Enviar como",
   para que las respuestas no salgan desde su direccion personal.
 

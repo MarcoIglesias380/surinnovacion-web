@@ -765,3 +765,52 @@ Append-only. Cada cierre de sesion debe agregar una entrada nueva al final.
 - Pendiente del owner, documentado y no bloqueante: el filtro de Gmail y el
   "Enviar como", para que las respuestas a los clientes no salgan desde la
   direccion personal.
+
+---
+
+## 2026-11-18 - Feature 24: Medir trafico, conversion e indexacion
+
+- Agente lider: Claude Code
+- Resultado: APPROVED
+- Contexto: desde el 2026-11-18 el sitio captura leads, pero no habia forma de
+  saber cuanta gente llega ni que porcentaje escribe. Cualquier mejora era
+  intuicion.
+- Decision del owner entre tres opciones: **Vercel Web Analytics**, no Google
+  Analytics 4. Viene incluida en el plan Pro que ya paga y no usa cookies, asi
+  que no obliga a un banner de consentimiento, que en este sitio taparia la
+  portada. Peso medido, no estimado: 2 080 bytes el script de Vercel contra
+  157 441 del `gtag.js` comprimido de Google, 75 veces mas.
+- Cambios:
+  - `@vercel/analytics` 2.0.1 y `@vercel/speed-insights` 2.1.0, fijadas sin `^`
+    siguiendo la convencion de `package.json` y justificadas en
+    `progress/current.md`, como exige AGENTS.md.
+  - `<Analytics />` y `<SpeedInsights />` en el layout raiz.
+  - El formulario marca el evento `contacto` con un unico campo, `desenlace`,
+    que vale `enviado`, `whatsapp` o `fallido`. **No viaja ningun dato del
+    visitante.** La llamada va en `try/catch`: si la analitica falla, el lead se
+    envia igual.
+  - Search Console: propiedad **de dominio** `surinnovacion.cl`, verificada por
+    DNS. El TXT se publico junto al SPF, no en su lugar.
+- Verificacion:
+  - Los scripts no aparecen en el HTML servido porque Vercel los inyecta al
+    montar y los sirve bajo rutas aleatorias para esquivar bloqueadores.
+    Buscarlos con `curl` da cero; hubo que medir en el navegador.
+  - En vivo: 9 699 bytes entre los dos scripts, con `POST /view` y
+    `POST /vitals` respondiendo 200. Eso prueba que mide, no solo que carga.
+  - El sitio devuelve **cero cabeceras `Set-Cookie`** y `document.cookie` esta
+    vacio, que era la condicion para no necesitar banner.
+  - Tras publicar el TXT de Google: sigue habiendo **un solo** registro SPF, y
+    los MX y el registro A del apex no se movieron.
+  - Sitemap enviado y aceptado: **8 paginas descubiertas**, que son exactamente
+    las ocho URLs declaradas.
+  - `./init.sh` con `RUN_BUILD=1`: lint, typecheck y build pasaron.
+- Correcciones de cifras que habia dado mal durante la sesion: la analitica no
+  pesa 1 KB sino 9 699 bytes, y la ventaja frente a GA4 no es de 50 veces sino
+  de 75. Ambas quedaron medidas en vez de estimadas.
+- Error propio corregido en el momento: se indico enviar el sitemap como
+  `sitemap.xml`, que es lo correcto en una propiedad de prefijo de URL pero no
+  en una de dominio, donde Google exige la URL completa. El owner ya lo habia
+  enviado bien antes.
+- Hallazgo de otro proyecto, anotado y no tocado: `columbaboutique.com`, que
+  figura en la vitrina de este sitio, tiene **0 paginas indexadas de 39
+  conocidas** y cero clics en busqueda.
