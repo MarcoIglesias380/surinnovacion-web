@@ -11,6 +11,46 @@ type Article = {
 
 export const articles: Article[] = [
   {
+    slug: "openai-para-chile-acuerdo-empresas-2026",
+    title: "OpenAI para Chile: qué se anunció y qué puede preparar una empresa",
+    metaTitle: "OpenAI para Chile: alcances del acuerdo y próximos pasos",
+    description: "El anuncio del 17 de noviembre contempla capacitación y apoyo a startups. Sus límites y cómo preparar un piloto de IA con resultados medibles.",
+    date: "2026-11-19",
+    sections: [
+      {
+        title: "El anuncio y su alcance",
+        paragraphs: [
+          "El 17 de noviembre de 2026, OpenAI anunció OpenAI para Chile, una colaboración con el Gobierno encabezada por el Ministerio de Ciencia. Según la compañía, busca explorar IA en la gestión administrativa del Ministerio, formar a funcionarios y apoyar aplicaciones desarrolladas por startups locales.",
+          "La comunicación contempla orientación técnica y mentoría. Las actividades, los requisitos y el acceso a tecnología se acordarán por separado. El memorándum no establece compromisos de inversión ni de compra."
+        ],
+        sources: [{ label: "OpenAI · Presentamos OpenAI para Chile, 17 de noviembre de 2026", url: "https://openai.com/es-419/index/introducing-openai-for-chile/" }]
+      },
+      {
+        title: "Qué confirmó la cobertura independiente",
+        paragraphs: [
+          "BioBioChile publicó el 17 de noviembre una revisión del memorándum, firmada por Megam Ossandón y Constanza Carrillo Silva. El medio informó que el documento no obliga a contratar servicios ni establece exclusividad. También recogió la aclaración del Ministerio de que la firma no entrega acceso a sistemas del Estado o datos personales y que la capacitación utilizará datos abiertos y sintéticos.",
+          "Esto describe el marco anunciado. Las condiciones de cada implementación futura requieren acuerdos y evaluación propios."
+        ],
+        sources: [{ label: "BioBioChile · Revisión del acuerdo y respuesta del Ministerio, 17 de noviembre de 2026", url: "https://www.biobiochile.cl/noticias/nacional/chile/2026/11/17/los-detalles-del-acuerdo-entre-lincolao-y-openai-confidencialidad-reunion-mensual-y-uso-de-datos.shtml" }]
+      },
+      {
+        title: "Análisis de SurInnovacion: preparar un caso de uso",
+        paragraphs: [
+          "Para una pyme, una preparación útil es describir un problema concreto y cómo comprobar una mejora. Por ejemplo, si una persona copia solicitudes de clientes al CRM, se puede probar un asistente que proponga los campos y deje la aprobación al equipo. Es un ejemplo de evaluación, sin relación comercial con este acuerdo.",
+          "Antes del piloto, registra cuánto tarda la tarea y cuántos datos se corrigen. Usa una muestra autorizada, limita los accesos y compara tiempo de revisión, errores y costo por solicitud aceptada. Si la revisión consume lo mismo que el proceso actual, habrá que ajustar la propuesta."
+        ]
+      },
+      {
+        title: "Qué seguir antes de planificar una participación",
+        paragraphs: [
+          "OpenAI indica que un grupo conjunto definirá prioridades e indicadores. Las condiciones específicas siguen pendientes. El anuncio no permite asumir una postulación abierta ni acceso garantizado.",
+          "Como escenario futuro, una convocatoria podría resultar útil para un proyecto local. SurInnovacion recomienda evaluar las bases cuando existan y mantener el presupuesto sujeto a esas condiciones."
+        ],
+        sources: [{ label: "OpenAI · Plan de trabajo y condiciones pendientes, comunicado del 17 de noviembre de 2026", url: "https://openai.com/es-419/index/introducing-openai-for-chile/" }]
+      }
+    ]
+  },
+  {
     slug: "modelos-de-frontera-ia-noviembre-2026",
     title: "Modelos de IA en noviembre de 2026: GPT‑6.1, Claude 5.2 y Gemini 4",
     metaTitle: "GPT‑6.1, Claude 5.2 y Gemini 4: los modelos de noviembre",
