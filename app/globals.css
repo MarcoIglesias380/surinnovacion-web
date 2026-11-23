@@ -1191,13 +1191,13 @@ html[data-tone="bright"] .glass-secondary-button {
 .story-frame-loader {
   position: absolute;
   inset: 0;
-  z-index: 5;
-  display: flex;
+  z-index: 0;
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.9rem;
-  background: #020617;
+  background: radial-gradient(circle at 50% 50%, rgba(5, 8, 22, 0.48), rgba(2, 6, 23, 0.9));
   color: rgba(234, 242, 255, 0.74);
   font-size: 0.68rem;
   font-weight: 650;
@@ -1246,6 +1246,7 @@ html[data-tone="bright"] .glass-secondary-button {
 .story-copy {
   position: absolute;
   z-index: 1;
+  width: min(680px, 100%);
   max-width: 680px;
   padding: 0 8vw;
   transition: opacity 150ms linear;
@@ -2448,6 +2449,35 @@ html[data-tone="bright"] .glass-secondary-button {
   margin-top: 1.6rem;
 }
 
+.story-copy .story-copy__eyebrow {
+  margin: 0 0 1rem;
+  color: rgba(234, 242, 255, 0.78);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.story-hero-outcomes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 1.35rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.story-hero-outcomes li {
+  border: 1px solid rgba(234, 242, 255, 0.24);
+  background: rgba(2, 6, 23, 0.28);
+  padding: 0.36rem 0.6rem;
+  color: rgba(234, 242, 255, 0.88);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
 .story-hero-actions a {
   display: inline-flex;
   align-items: center;
@@ -2469,6 +2499,18 @@ html[data-tone="bright"] .glass-secondary-button {
   background: rgba(2, 6, 23, 0.34);
 }
 
+.story-hero-actions a.story-hero-actions__primary {
+  border-color: rgba(160, 244, 255, 0.7);
+  background: rgba(22, 211, 238, 0.2);
+  color: #fff;
+}
+
+.story-hero-actions a.story-hero-actions__primary:hover,
+.story-hero-actions a.story-hero-actions__primary:focus-visible {
+  background: rgba(22, 211, 238, 0.3);
+  color: #fff;
+}
+
 .story-hero-actions a:hover,
 .story-hero-actions a:focus-visible {
   border-color: var(--brand-ion);
@@ -2482,6 +2524,14 @@ html[data-tone="bright"] .glass-secondary-button {
 }
 
 @media (max-width: 767px) {
+  .story-copy--intro .story-hero-description {
+    max-width: 21rem;
+  }
+
+  .story-copy--intro .story-hero-description span {
+    display: block;
+  }
+
   .story-hero-actions {
     gap: 0.5rem;
     margin-top: 1.2rem;
@@ -2490,6 +2540,16 @@ html[data-tone="bright"] .glass-secondary-button {
   .story-hero-actions a {
     flex: 1 1 100%;
     justify-content: center;
+  }
+
+  .story-copy .story-copy__eyebrow {
+    margin-bottom: 0.75rem;
+    font-size: 0.64rem;
+  }
+
+  .story-hero-outcomes {
+    gap: 0.35rem;
+    margin-top: 1rem;
   }
 }
 
