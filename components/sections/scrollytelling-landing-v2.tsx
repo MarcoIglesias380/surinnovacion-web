@@ -36,7 +36,8 @@ const projects = [
   ["Columba Boutique", "Identidad y vitrina digital para una boutique.", "https://www.columbaboutique.com/"],
   ["Ecommerce Ferreteria", "Catalogo digital de ferreteria, simple de recorrer.", "https://catalogo-distribuidora-oriente.vercel.app/"],
   ["Marco Iglesias", "Sitio de un salon de belleza: servicios, precios y reservas.", "https://marcoiglesias.cl/"],
-  ["Marca Visible", "Una propuesta digital con identidad propia.", "https://marca-visible.vercel.app/"]
+  ["Marca Visible", "Una propuesta digital con identidad propia.", "https://marca-visible.vercel.app/"],
+  ["Desarme 3D", "Visita el sitio de Desarme 3D.", "https://annual-lightseagreen-mule-39.hostingersite.com/"]
 ] as const;
 
 type FormState = { name: string; email: string; whatsapp: string; message: string };

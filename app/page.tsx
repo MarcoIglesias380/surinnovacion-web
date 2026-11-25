@@ -1,6 +1,7 @@
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
+import { WhatsAppChat } from "@/components/layout/whatsapp-chat";
 import { ScrollytellingLandingV2 } from "@/components/sections/scrollytelling-landing-v2";
 import { founderSchema, organizationSchema } from "@/content/schema";
 
@@ -55,6 +56,7 @@ export default function Home() {
       <ScrollytellingLandingV2 />
       <SiteFooter />
       <ScrollToTop />
+      <WhatsAppChat />
     </main>
   );
 }
