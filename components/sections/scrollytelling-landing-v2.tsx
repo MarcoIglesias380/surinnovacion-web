@@ -2,7 +2,7 @@
 
 import { track } from "@vercel/analytics";
 import { ArrowUpRight, Check, Loader2, MessageCircle, Send } from "lucide-react";
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import Link from "next/link";
 import { CSSProperties, FormEvent, useCallback, useEffect, useRef, useState } from "react";
 
@@ -93,7 +93,7 @@ class ProgressiveFrameLoader {
   constructor(
     private readonly profile: SequenceProfile,
     private readonly avif: boolean,
-    private readonly concurrency = 4
+    private readonly concurrency = profile.key === "mobile" ? 2 : 3
   ) {}
 
   updateWindow(indexes: number[]) {
@@ -156,9 +156,10 @@ class ProgressiveFrameLoader {
         this.pump();
       };
 
-      image.onload = () => {
-        image.decode().catch(() => undefined).then(() => finish(image));
-      };
+      image.onload = () => image.decode().then(() => finish(image), () => {
+        this.cache.delete(task.index);
+        finish(null);
+      });
       image.onerror = () => {
         this.cache.delete(task.index);
         finish(null);
@@ -190,6 +191,27 @@ function useSequenceProfile() {
   return profileKey ? sequenceProfiles[profileKey] : null;
 }
 
+function HeroPoster() {
+  const { props } = getImageProps({
+    src: getFrameSource(sequenceProfiles.desktop, 0),
+    alt: "",
+    width: 1280,
+    height: 720,
+    unoptimized: true,
+    loading: "eager",
+    fetchPriority: "high",
+    className: "story-frame"
+  });
+  const mobile = "(max-width: 767px), (pointer: coarse)";
+  return (
+    <picture>
+      <source media={mobile} type="image/avif" srcSet={getFrameSource(sequenceProfiles.mobile, 0, true)} />
+      <source media={mobile} srcSet={getFrameSource(sequenceProfiles.mobile, 0)} />
+      <img {...props} alt="" />
+    </picture>
+  );
+}
+
 function FrameSequence({ profile, avif, progress }: { profile: SequenceProfile; avif: boolean; progress: number }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const desiredIndexRef = useRef(-1);
@@ -201,7 +223,11 @@ function FrameSequence({ profile, avif, progress }: { profile: SequenceProfile; 
     const canvas = canvasRef.current;
     if (!canvas || image.naturalWidth === 0 || image.naturalHeight === 0) return;
     const bounds = canvas.getBoundingClientRect();
-    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    const pixelRatio = Math.min(
+      window.devicePixelRatio || 1,
+      profile.key === "mobile" ? 1 : 1.5,
+      Math.sqrt(1_600_000 / Math.max(1, bounds.width * bounds.height))
+    );
     const outputWidth = Math.max(1, Math.round(bounds.width * pixelRatio));
     const outputHeight = Math.max(1, Math.round(bounds.height * pixelRatio));
     if (canvas.width !== outputWidth || canvas.height !== outputHeight) {
@@ -217,7 +243,7 @@ function FrameSequence({ profile, avif, progress }: { profile: SequenceProfile; 
     context.clearRect(0, 0, bounds.width, bounds.height);
     context.drawImage(image, (bounds.width - width) / 2, (bounds.height - height) / 2, width, height);
     lastImageRef.current = image;
-  }, []);
+  }, [profile.key]);
 
   useEffect(() => {
     const loader = new ProgressiveFrameLoader(profile, avif);
@@ -246,30 +272,26 @@ function FrameSequence({ profile, avif, progress }: { profile: SequenceProfile; 
     const index = Math.round(progress * (profile.count - 1));
     if (desiredIndexRef.current === index) return;
     desiredIndexRef.current = index;
-    const offsets = [0, 1, 2, 3, 4, 5, 6, 8, 10, -1, -2, -3];
+    const offsets = profile.key === "mobile" ? [0, 1, -1, 2, -2, 3] : [0, 1, -1, 2, -2, 3, -3, 4, 5];
     const windowIndexes = offsets
       .map((offset) => index + offset)
       .filter((candidate) => candidate >= 0 && candidate < profile.count);
     loader.updateWindow(windowIndexes);
     windowIndexes.forEach((frameIndex, order) => {
       loader.load(frameIndex, order === 0).then((image) => {
-        if (!image || loaderRef.current !== loader || desiredIndexRef.current !== frameIndex) return;
+        const canvas = canvasRef.current;
+        const target = desiredIndexRef.current;
+        if (!image || !canvas || loaderRef.current !== loader || !windowIndexes.includes(target)) return;
+        const shown = Number(canvas.dataset.frame) - 1;
+        if (Number.isFinite(shown) && Math.abs(shown - target) <= Math.abs(frameIndex - target)) return;
         drawImage(image);
-        if (canvasRef.current) canvasRef.current.dataset.frame = String(frameIndex + 1);
+        canvas.dataset.frame = String(frameIndex + 1);
         setReady(true);
       });
     });
   }, [drawImage, profile, progress]);
 
-  return (
-    <>
-      <canvas ref={canvasRef} className="story-frame" aria-hidden="true" />
-      <div className={`story-frame-loader${ready ? " story-frame-loader--ready" : ""}`} aria-hidden="true">
-        <span>Preparando experiencia</span>
-        <i />
-      </div>
-    </>
-  );
+  return <canvas ref={canvasRef} className={`story-frame story-frame--canvas${ready && progress > 0 ? " is-ready" : ""}`} aria-hidden="true" />;
 }
 
 function ContactForm() {
@@ -410,6 +432,7 @@ export function ScrollytellingLandingV2() {
   const sceneRef = useRef<HTMLElement | null>(null);
   const progressRef = useRef(0);
   const [progress, setProgress] = useState(0);
+  const [started, setStarted] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const profile = useSequenceProfile();
   const avifSoportado = useAvifSupport();
@@ -432,8 +455,9 @@ export function ScrollytellingLandingV2() {
       const scene = sceneRef.current;
       if (!scene) return;
       const bounds = scene.getBoundingClientRect();
-      const distance = Math.max(scene.offsetHeight - window.innerHeight, 1);
-      const nextProgress = reducedMotion ? 1 : clamp(-bounds.top / distance);
+      const distance = Math.max(scene.offsetHeight - (scene.firstElementChild?.clientHeight ?? window.innerHeight), 1);
+      const nextProgress = reducedMotion ? 0 : clamp(-bounds.top / distance);
+      if (nextProgress > 0) setStarted(true);
       progressRef.current = nextProgress;
       setProgress((current) => Math.abs(current - nextProgress) > 0.001 ? nextProgress : current);
     };
@@ -448,8 +472,8 @@ export function ScrollytellingLandingV2() {
       const scene = sceneRef.current;
       if (!scene || preservedProgress === null) return;
       const savedProgress = preservedProgress;
-      const distance = Math.max(scene.offsetHeight - window.innerHeight, 1);
-      window.scrollTo({ top: scene.offsetTop + distance * savedProgress, behavior: "auto" });
+      const distance = Math.max(scene.offsetHeight - (scene.firstElementChild?.clientHeight ?? window.innerHeight), 1);
+      window.scrollTo({ top: scene.offsetTop + distance * savedProgress, behavior: "instant" });
       preservedProgress = null;
       update();
     };
@@ -457,7 +481,8 @@ export function ScrollytellingLandingV2() {
     const handleResize = () => {
       const nextLandscape = window.innerWidth > window.innerHeight;
       if (nextLandscape !== landscape && preservedProgress === null) {
-        preservedProgress = progressRef.current;
+        const previous = progressRef.current;
+        if (!reducedMotion && previous > 0 && previous < 1) preservedProgress = previous;
         landscape = nextLandscape;
       }
       if (preservedProgress !== null) {
@@ -483,23 +508,28 @@ export function ScrollytellingLandingV2() {
 
   useEffect(() => {
     const irAEstacion = (hash: string) => {
+      const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth";
       if (hash === "#contacto") {
         const contact = document.getElementById("contacto");
-        if (contact) window.scrollTo({ top: contact.offsetTop, behavior: "smooth" });
+        if (contact) window.scrollTo({ top: contact.offsetTop, behavior });
         return;
       }
       if (hash === "#blog") {
         const blog = document.getElementById("blog");
-        if (blog) window.scrollTo({ top: blog.offsetTop, behavior: "smooth" });
+        if (blog) window.scrollTo({ top: blog.offsetTop, behavior });
         return;
       }
       if (hash !== "#proyectos") return;
       const scene = sceneRef.current;
       const ancla = document.getElementById("proyectos");
       if (!scene || !ancla) return;
+      if (behavior === "instant") {
+        scene.querySelector(".story-hologram--projects")?.scrollIntoView({ behavior });
+        return;
+      }
       // El destino lo manda la posicion del ancla, que vive en el CSS. Antes
       // estaba escrito aqui como 0.84 y habia que mantener dos numeros a la vez.
-      window.scrollTo({ top: scene.offsetTop + ancla.offsetTop, behavior: "smooth" });
+      window.scrollTo({ top: scene.offsetTop + ancla.offsetTop, behavior });
     };
 
     const desdeElHash = () => irAEstacion(window.location.hash);
@@ -527,7 +557,6 @@ export function ScrollytellingLandingV2() {
     };
   }, []);
 
-  const renderedProgress = reducedMotion ? 1 : progress;
   const introOpacity = reducedMotion ? 1 : clamp((0.27 - progress) / 0.07);
   const cityOpacity = reducedMotion ? 0 : clamp(Math.min((progress - 0.27) / 0.07, (0.72 - progress) / 0.07));
   const futureOpacity = reducedMotion ? 0 : clamp(Math.min((progress - 0.6) / 0.07, (0.94 - progress) / 0.07));
@@ -539,56 +568,48 @@ export function ScrollytellingLandingV2() {
     <>
       <section ref={sceneRef} id="hero" className="story-scene">
         <div className="story-sticky">
-          {profile && avifSoportado !== null ? (
+          <HeroPoster />
+          {started && !reducedMotion && profile && avifSoportado !== null ? (
             <FrameSequence
               key={`${profile.key}-${avifSoportado ? "avif" : "webp"}`}
               profile={profile}
               avif={avifSoportado}
-              progress={renderedProgress}
+              progress={progress}
             />
-          ) : (
-            <>
-              <canvas className="story-frame" aria-hidden="true" />
-              <div className="story-frame-loader" aria-hidden="true"><span>Preparando experiencia</span><i /></div>
-            </>
-          )}
+          ) : null}
           <div className="story-shade" />
-          <div className="story-copy story-copy--intro" style={capaVisible(introOpacity)}>
-            <p className="story-copy__eyebrow">Tecnología para empresas</p>
-            <h1>Mejora la administración y producción de tu empresa.</h1>
+          <div className="story-copy story-copy--intro" style={capaVisible(introOpacity)} inert={introOpacity < 0.05}>
+            <p className="story-copy__eyebrow">Marco Iglesias · Divulgador de IA</p>
+            <h1>Entiende la <span>inteligencia artificial</span></h1>
             <p className="story-hero-description">
-              <span>Evalúo tu proceso.</span> Diseño una solución a medida: automatización, CRM,
-              plataformas o IA con revisión humana.
+              Soy Marco Iglesias, fundador de SurInnovación. Hablemos de cómo llegamos a ChatGPT, cómo funcionan los modelos de lenguaje y qué podría venir en 2027 con la IA general y la superinteligencia.
             </p>
-            <ul className="story-hero-outcomes" aria-label="Áreas que podemos mejorar">
-              <li>Administración</li>
-              <li>Ventas</li>
-              <li>Producción</li>
-            </ul>
             <div className="story-hero-actions">
-              <Link className="story-hero-actions__primary" href="/#contacto">Evaluar un proceso</Link>
-              <Link href="/servicios">Ver soluciones para tu empresa</Link>
+              <Link className="story-hero-actions__primary" href="/#contacto">Agenda tu asesoría gratuita</Link>
+              <Link href="/marco-iglesias">Conoce mi trayectoria</Link>
             </div>
+          </div>
+          <div className="story-scroll-cue" style={{ opacity: clamp(1 - progress * 12) }} aria-hidden="true">
+            <span /> Desliza para seguir
           </div>
           <div className="story-copy story-copy--city" style={capaVisible(cityOpacity)}>
             <p>Puerto Montt · Chile</p>
-            <h2>Primero entendemos dónde se atasca el trabajo.</h2>
+            <h2>Aprende a usar la IA con ejemplos de tu día a día.</h2>
             <p className="story-scene-lede">
-              Si las cotizaciones quedan sin seguimiento, ordenamos el flujo comercial y evaluamos
-              un CRM. Si tu equipo ingresa los mismos datos en varios sistemas, evaluamos una
-              integración.
+              En una conversación individual o grupal, vemos cómo usar la IA para estudiar, preparar una clase o resolver una tarea de tu trabajo.
             </p>
           </div>
-          <div className="story-copy story-copy--future" style={capaVisible(futureOpacity)}>
+          <div className="story-copy story-copy--future" style={capaVisible(futureOpacity)} inert={futureOpacity < 0.05}>
             <p>SurInnovacion</p>
-            <h2>La tecnología se adapta a tu proceso.</h2>
+            <h2>Asesoría en IA y automatización</h2>
             <p className="story-scene-lede">
-              Cuando una tarea exige interpretar documentos o preparar respuestas, evaluamos IA con
-              revisión humana. Y cuando el problema se arregla ordenando el proceso, lo decimos: no
-              todo necesita un sistema nuevo.
+              Trabajo con profesionales, empresas, colegios y organizaciones para identificar tareas repetitivas, automatizar procesos y mejorar la productividad con revisión humana.
             </p>
+            <div className="story-hero-actions">
+              <Link href="/servicios">Ver servicios</Link>
+            </div>
           </div>
-          <section className="story-hologram story-hologram--projects" style={capaVisible(projectsOpacity)} aria-label="Proyectos">
+          <section className="story-hologram story-hologram--projects" style={capaVisible(projectsOpacity)} inert={projectsOpacity < 0.05} aria-label="Proyectos">
             <h2>Proyectos digitales publicados</h2>
             <div className="story-projects">{projects.map(([name, description, href]) => <a key={name} href={href} target="_blank" rel="noreferrer"><span><strong>{name}</strong><small>{description}</small></span><ArrowUpRight aria-hidden="true" /></a>)}</div>
           </section>
@@ -602,12 +623,12 @@ export function ScrollytellingLandingV2() {
       </section>
       <section id="blog" className="story-outro">
         <div className="story-outro-stage">
-          <Image className="story-outro-frame" src="/sections/fundador-bahia-marco-v3.png" alt="Marco Iglesias frente a la bahia de Puerto Montt" fill sizes="100vw" quality={82} />
+          <Image className="story-outro-frame" src="/sections/fundador-bahia-marco-v3.png" alt="Marco Iglesias frente a la bahía de Puerto Montt" fill sizes="100vw" quality={82} />
           <div className="story-outro-shade" />
           <div className="story-outro-intro">
             <p>Blog Tech</p>
-            <h2>Noticias de IA e innovación.</h2>
-            <p className="story-outro-description">Modelos, adopción empresarial e infraestructura con datos y fuentes verificables.</p>
+            <h2>Inteligencia artificial rumbo a 2027</h2>
+            <p className="story-outro-description">Modelos de lenguaje, aplicaciones reales y preguntas abiertas sobre la IA general (AGI) y la superinteligencia.</p>
           </div>
           <section className="story-hologram story-hologram--blog" aria-label="Blog Tech">
             <div className="story-sources">
@@ -621,10 +642,10 @@ export function ScrollytellingLandingV2() {
         <div className="story-contact-shade" />
         <div className="story-contact-copy">
           <p>Contacto</p>
-          <h2>Agenda tu asesoria gratuita de 30 minutos.</h2>
+          <h2>Agenda tu asesoría gratuita de 30 minutos</h2>
         </div>
         <section className="story-hologram story-hologram--contact" aria-label="Formulario de contacto">
-          <h3>Cuentame de tu empresa</h3>
+          <h3>¿Qué te gustaría aprender o resolver?</h3>
           <ContactForm />
         </section>
       </section>

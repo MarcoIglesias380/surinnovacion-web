@@ -5,9 +5,9 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { articles, formatArticleDate } from "@/content/blog";
 import { ID_ORGANIZACION, IMAGEN_SOCIAL, organizationSchema, RUTA_BLOG, SITIO } from "@/content/schema";
 
-const blogTitle = "Noticias de IA e innovación para empresas";
+const blogTitle = "Inteligencia artificial rumbo a 2027";
 const blogDescription =
-  "Análisis de modelos de frontera, adopción empresarial e infraestructura de inteligencia artificial, con datos y fuentes originales.";
+  "Modelos de lenguaje, aplicaciones reales y preguntas abiertas sobre la inteligencia artificial general (AGI) y la superinteligencia.";
 const blogUrl = `${SITIO}/blog`;
 
 export const metadata: Metadata = {
@@ -78,7 +78,7 @@ export default function BlogPage() {
           </nav>
           <h1>{blogTitle}</h1>
           <p className="doc-lede">
-            Qué está cambiando en IA y qué significa para las empresas, con datos y fuentes originales.
+            Explora cómo evolucionan los modelos de lenguaje y qué usos ya podemos observar. De cara a 2027, seguimos las preguntas abiertas sobre la inteligencia artificial general (AGI) y la superinteligencia con datos y fuentes originales.
           </p>
         </header>
         {articles.map((article) => (

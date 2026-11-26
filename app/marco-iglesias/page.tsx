@@ -47,7 +47,7 @@ export default function MarcoIglesias() {
         <header className="doc-hero">
           <p className="doc-eyebrow">Quien esta detras</p>
           <h1>Marco Iglesias, Master en Inteligencia Artificial</h1>
-          <p className="doc-lede">Fundador de SurInnovacion.</p>
+          <p className="doc-lede">Divulgador de inteligencia artificial y fundador de SurInnovación, en Puerto Montt.</p>
           <div className="doc-actions">
             <Link className="doc-cta" href="/#contacto">
               Agendar la asesoria gratuita <ArrowUpRight aria-hidden="true" />
@@ -65,10 +65,7 @@ export default function MarcoIglesias() {
             Universidad Isabel I, Espana.
           </p>
           <p>
-            En noviembre de 2022, cuando aparecio ChatGPT, empece a investigar y no pare. Al
-            principio fue una obsesion. Dos anos despues entre a estudiarlo de forma estructurada,
-            hace poco me titule, y hoy construyo sitios, plataformas y CRM, y divulgo lo que
-            aprendo.
+            Llevo cuatro años investigando la inteligencia artificial, desde el lanzamiento de ChatGPT en noviembre de 2022. Hoy comparto lo que aprendo con personas, profesionales y grupos, y aplico ese conocimiento al construir sitios, plataformas y CRM.
           </p>
         </section>
 

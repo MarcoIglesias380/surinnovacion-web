@@ -24,7 +24,7 @@ const webpageSchema = {
   "@type": "WebPage",
   "@id": "https://surinnovacion.cl/#webpage",
   url: "https://surinnovacion.cl",
-  name: "Consultoría en innovación empresarial | SurInnovacion",
+  name: "Inteligencia artificial con Marco Iglesias | SurInnovación",
   isPartOf: {
     "@id": "https://surinnovacion.cl/#website"
   },

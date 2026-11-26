@@ -1161,8 +1161,9 @@ html[data-tone="bright"] .glass-secondary-button {
 }
 
 .story-scene {
+  --story-travel: 3000px;
   position: relative;
-  min-height: calc(100svh + 6200px);
+  min-height: calc(100svh + var(--story-travel));
   background: #020617;
 }
 
@@ -1188,59 +1189,20 @@ html[data-tone="bright"] .glass-secondary-button {
   object-fit: cover;
 }
 
-.story-frame-loader {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.9rem;
-  background: radial-gradient(circle at 50% 50%, rgba(5, 8, 22, 0.48), rgba(2, 6, 23, 0.9));
-  color: rgba(234, 242, 255, 0.74);
-  font-size: 0.68rem;
-  font-weight: 650;
-  letter-spacing: 0.2em;
-  pointer-events: none;
-  text-transform: uppercase;
-  transition: opacity 320ms ease, visibility 320ms ease;
-}
-
-.story-frame-loader i {
-  position: relative;
-  display: block;
-  width: min(190px, 46vw);
-  height: 1px;
-  overflow: hidden;
-  background: rgba(234, 242, 255, 0.16);
-}
-
-.story-frame-loader i::after {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, var(--brand-ion), transparent);
-  content: "";
-  transform: translateX(-100%);
-  animation: story-frame-loading 1.1s ease-in-out infinite;
-}
-
-.story-frame-loader--ready {
-  visibility: hidden;
+.story-frame--canvas {
   opacity: 0;
+  transition: opacity 180ms ease-out;
 }
 
-@keyframes story-frame-loading {
-  to {
-    transform: translateX(100%);
-  }
+.story-frame--canvas.is-ready {
+  opacity: 1;
 }
 
 .story-shade {
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(2, 6, 23, 0.7) 0%, rgba(2, 6, 23, 0.16) 48%, rgba(2, 6, 23, 0.2) 100%),
-    linear-gradient(180deg, rgba(2, 6, 23, 0.52) 0%, transparent 30%, rgba(2, 6, 23, 0.72) 100%);
+    linear-gradient(90deg, rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.58) 34%, transparent 76%),
+    linear-gradient(180deg, rgba(2, 6, 23, 0.56), transparent 28%, rgba(2, 6, 23, 0.85));
 }
 
 .story-copy {
@@ -1290,12 +1252,38 @@ html[data-tone="bright"] .glass-secondary-button {
 }
 
 .story-copy h1 {
-  font-size: clamp(2.25rem, 4.7vw, 4.9rem);
+  font-size: clamp(2.25rem, 5.3vw, 5.25rem);
+  line-height: 0.98;
+  animation: none;
+}
+
+.story-copy h1 span {
+  display: block;
+  color: #baf2fc;
 }
 
 .story-copy--intro {
   left: 0;
-  top: 27%;
+  top: 50%;
+  transform: translateY(-44%);
+}
+
+.story-scroll-cue {
+  position: absolute;
+  bottom: 5%;
+  left: 8vw;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: #dbe9f9;
+  font-size: 0.8rem;
+  pointer-events: none;
+}
+
+.story-scroll-cue span {
+  width: 2rem;
+  height: 1px;
+  background: #8ce7f5;
 }
 
 .story-copy--city {
@@ -1862,6 +1850,7 @@ html[data-tone="bright"] .glass-secondary-button {
    contacto. Movil y tablet no entran aqui. */
 @media (min-width: 1024px) {
   .story-copy {
+    width: min(1040px, 78vw);
     max-width: min(1040px, 78vw);
   }
 
@@ -1876,11 +1865,11 @@ html[data-tone="bright"] .glass-secondary-button {
 
 @media (max-width: 767px) {
   .story-scene {
-    min-height: calc(100svh + 5200px);
+    --story-travel: 2100px;
   }
 
   .story-shade {
-    background: linear-gradient(180deg, rgba(2, 6, 23, 0.62) 0%, rgba(2, 6, 23, 0.08) 45%, rgba(2, 6, 23, 0.82) 100%);
+    background: linear-gradient(180deg, rgba(2, 6, 23, 0.5), rgba(2, 6, 23, 0.55) 34%, rgba(2, 6, 23, 0.88) 80%, #020617);
   }
 
   .story-copy {
@@ -1892,7 +1881,12 @@ html[data-tone="bright"] .glass-secondary-button {
   }
 
   .story-copy--intro {
-    top: 20%;
+    inset-block: auto 15%;
+    transform: none;
+  }
+
+  .story-scroll-cue {
+    left: 1.5rem;
   }
 
   .story-copy--city {
@@ -1983,7 +1977,7 @@ html[data-tone="bright"] .glass-secondary-button {
 
 @media (pointer: coarse) {
   .story-scene {
-    min-height: calc(100svh + 5200px);
+    --story-travel: 2100px;
   }
 }
 
@@ -2459,25 +2453,6 @@ html[data-tone="bright"] .glass-secondary-button {
   text-transform: uppercase;
 }
 
-.story-hero-outcomes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  margin: 1.35rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.story-hero-outcomes li {
-  border: 1px solid rgba(234, 242, 255, 0.24);
-  background: rgba(2, 6, 23, 0.28);
-  padding: 0.36rem 0.6rem;
-  color: rgba(234, 242, 255, 0.88);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
 .story-hero-actions a {
   display: inline-flex;
   align-items: center;
@@ -2528,10 +2503,6 @@ html[data-tone="bright"] .glass-secondary-button {
     max-width: 21rem;
   }
 
-  .story-copy--intro .story-hero-description span {
-    display: block;
-  }
-
   .story-hero-actions {
     gap: 0.5rem;
     margin-top: 1.2rem;
@@ -2547,10 +2518,45 @@ html[data-tone="bright"] .glass-secondary-button {
     font-size: 0.64rem;
   }
 
-  .story-hero-outcomes {
-    gap: 0.35rem;
-    margin-top: 1rem;
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .story-copy--intro {
+    inset-block: 5rem auto;
+    transform: none;
   }
+
+  .story-copy h1 { font-size: clamp(1.85rem, 5vw, 2.55rem); }
+  .story-copy--intro p { font-size: 0.95rem; }
+  .story-copy--intro .story-hero-description { max-width: 38rem; }
+  .story-hero-actions { margin-top: 0.75rem; }
+  .story-hero-actions a { flex: 0 1 auto; }
+  .story-scroll-cue { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-scene { min-height: 0; }
+  .story-sticky { position: relative; height: auto; }
+  .story-frame--canvas, .story-scroll-cue { display: none; }
+  .story-copy--intro {
+    position: relative;
+    inset: auto;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: 6rem 2rem;
+    transform: none;
+  }
+  .story-hologram--projects {
+    position: relative;
+    inset: auto;
+    width: auto;
+    max-height: none;
+    margin: 0 clamp(1.5rem, 8vw, 8rem) 2rem;
+    scroll-margin-top: 88px;
+  }
+  .story-anchor--projects { top: 100svh; scroll-margin-top: 80px; }
 }
 
 /* Bajada de escena: el parrafo generico de .story-copy es tamaño etiqueta,

@@ -13,9 +13,9 @@ const poppins = Poppins({
   variable: "--font-poppins"
 });
 
-const siteTitle = "Consultoría en innovación empresarial | SurInnovacion";
+const siteTitle = "Inteligencia artificial con Marco Iglesias | SurInnovación";
 const siteDescription =
-  "Evaluamos tus procesos y recursos técnicos y administrativos. Asesoría en innovación, automatización y soluciones digitales desde Puerto Montt para Chile.";
+  "Aprende sobre inteligencia artificial y modelos de lenguaje con Marco Iglesias. Agenda una asesoría gratuita de 30 minutos con SurInnovación, desde Puerto Montt.";
 
 export const metadata: Metadata = {
   title: {

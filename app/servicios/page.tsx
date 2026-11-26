@@ -168,12 +168,11 @@ export default function Servicios() {
         <header className="doc-hero">
           <h1>Consultoría en innovación y mejora de procesos</h1>
           <p className="doc-lede">
-            Evalúo cómo trabaja tu empresa y desarrollo sistemas a medida para mejorar
-            la administración o la producción. Atiendo desde Puerto Montt a todo Chile.
+            Asesoro a profesionales, empresas, colegios y organizaciones que quieren incorporar la IA o automatizar un proceso. Revisamos un caso concreto y vemos qué puede ahorrar tiempo o mejorar el trabajo. Atiendo desde Puerto Montt a todo Chile.
           </p>
           <div className="doc-actions">
             <a className="doc-cta" href={phoneHref} target="_blank" rel="noreferrer">
-              Agendar asesoría por WhatsApp <MessageCircle aria-hidden="true" />
+              Agendar asesoría gratuita por WhatsApp <MessageCircle aria-hidden="true" />
             </a>
             <a className="doc-cta doc-cta--ghost" href="#soluciones">
               Explorar soluciones <ArrowUpRight aria-hidden="true" />
@@ -182,7 +181,7 @@ export default function Servicios() {
         </header>
 
         <section className="doc-section" id="soluciones">
-          <h2>Soluciones para tu empresa</h2>
+          <h2>Servicios de IA, automatización y desarrollo digital</h2>
           <div className="commercial-disclosures">
             {servicios.map((s) => (
               <details id={s.id} key={s.id}>
